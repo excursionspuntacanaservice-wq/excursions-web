@@ -167,20 +167,26 @@
     if (ref && box && /^EPC-[0-9]{12}-[0-9]{1,3}$/.test(ref)) { $('b', box).textContent = ref; box.hidden = false; }
   } catch (err) { /* old browser: notices stay hidden */ }
 
-  // hero video: play the one that fits the screen; if the phone blocks autoplay, keep the still photo (never a play button)
+  // hero video: the photo shows first; only the video that fits the screen is downloaded, after the page has loaded,
+  // and it fades in once it really plays. Slow / data-saver connections keep the photo. Never a play button.
   var media = $('.hero-media');
   if (media) {
-    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    var mob = window.matchMedia('(max-width:760px)').matches;
-    var v = $(mob ? '.hv-m' : '.hv-d', media), other = $(mob ? '.hv-d' : '.hv-m', media);
-    if (other) { other.removeAttribute('autoplay'); other.pause(); }
-    if (reduce || !v) { media.classList.add('novid'); }
-    else {
-      v.muted = true; v.defaultMuted = true; v.setAttribute('muted', ''); v.playsInline = true; v.preload = 'auto';
+    var startVid = function () {
+      var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var c = navigator.connection || {};
+      var slow = c.saveData || /(^|-)2g$/.test(c.effectiveType || '');
+      var mob = window.matchMedia('(max-width:760px)').matches;
+      var v = $(mob ? '.hv-m' : '.hv-d', media);
+      if (reduce || slow || !v || !v.getAttribute('data-src')) { media.classList.add('novid'); return; }
       var fail = function () { media.classList.add('novid'); };
-      try { var p = v.play(); if (p && p.catch) p.catch(fail); } catch (err) { fail(); }
+      v.muted = true; v.defaultMuted = true; v.setAttribute('muted', ''); v.playsInline = true;
+      v.addEventListener('playing', function () { media.classList.add('vplay'); });
       v.addEventListener('error', fail);
+      v.preload = 'auto'; v.src = v.getAttribute('data-src');
+      try { var p = v.play(); if (p && p.catch) p.catch(fail); } catch (err) { fail(); }
       document.addEventListener('visibilitychange', function () { if (!document.hidden && !media.classList.contains('novid')) { var q = v.play(); if (q && q.catch) q.catch(function () {}); } });
-    }
+    };
+    if (document.readyState === 'complete') setTimeout(startVid, 300);
+    else window.addEventListener('load', function () { setTimeout(startVid, 300); });
   }
 })();
