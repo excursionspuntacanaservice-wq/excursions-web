@@ -167,8 +167,20 @@
     if (ref && box && /^EPC-[0-9]{12}-[0-9]{1,3}$/.test(ref)) { $('b', box).textContent = ref; box.hidden = false; }
   } catch (err) { /* old browser: notices stay hidden */ }
 
-  // pause hero video when user prefers reduced motion
-  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    $$('video').forEach(function (v) { v.removeAttribute('autoplay'); v.pause(); });
+  // hero video: play the one that fits the screen; if the phone blocks autoplay, keep the still photo (never a play button)
+  var media = $('.hero-media');
+  if (media) {
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var mob = window.matchMedia('(max-width:760px)').matches;
+    var v = $(mob ? '.hv-m' : '.hv-d', media), other = $(mob ? '.hv-d' : '.hv-m', media);
+    if (other) { other.removeAttribute('autoplay'); other.pause(); }
+    if (reduce || !v) { media.classList.add('novid'); }
+    else {
+      v.muted = true; v.defaultMuted = true; v.setAttribute('muted', ''); v.playsInline = true; v.preload = 'auto';
+      var fail = function () { media.classList.add('novid'); };
+      try { var p = v.play(); if (p && p.catch) p.catch(fail); } catch (err) { fail(); }
+      v.addEventListener('error', fail);
+      document.addEventListener('visibilitychange', function () { if (!document.hidden && !media.classList.contains('novid')) { var q = v.play(); if (q && q.catch) q.catch(function () {}); } });
+    }
   }
 })();

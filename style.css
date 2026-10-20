@@ -67,7 +67,11 @@ ul,ol{margin:0;padding:0;list-style:none}
 
 /* hero */
 .hero{position:relative;isolation:isolate;color:#fff;background:var(--ink);overflow:hidden}
-.hero-media{position:absolute;inset:0;z-index:-2}
+.hero-media{position:absolute;inset:0;z-index:-2;background:var(--ink) url(img/hero_desk_poster.jpg) center/cover no-repeat}
+@media (max-width:760px){.hero-media{background-image:url(img/hero_mob_poster.jpg)}}
+.hv{pointer-events:none}
+.hero-media.novid .hv{display:none!important}
+.hv::-webkit-media-controls,.hv::-webkit-media-controls-panel,.hv::-webkit-media-controls-play-button,.hv::-webkit-media-controls-start-playback-button,.hv::-webkit-media-controls-overlay-play-button{display:none!important;-webkit-appearance:none;opacity:0}
 .hv{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .hv-m{display:none}
 @media (max-width:760px){.hv-d{display:none}.hv-m{display:block}}
