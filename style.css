@@ -67,7 +67,7 @@ ul,ol{margin:0;padding:0;list-style:none}
 
 /* hero */
 .hero{position:relative;isolation:isolate;color:#fff;background:var(--ink);overflow:hidden}
-.hero-media{position:absolute;inset:0;z-index:-2;background:var(--ink) url(img/home_hero_saona-1600.jpg) 60% 40%/cover no-repeat;background-image:image-set(url(img/home_hero_saona-1600.webp) type("image/webp"),url(img/home_hero_saona-1600.jpg) type("image/jpeg"))}
+.hero-media{position:absolute;inset:0;z-index:-2;background:var(--ink) url(img/saona_pool-2400.jpg) center/cover no-repeat;background-image:image-set(url(img/saona_pool-2400.webp) type("image/webp"),url(img/saona_pool-2400.jpg) type("image/jpeg"))}
 @media (max-width:760px){.hero-media{background-image:url(img/saona_c1-1600.jpg);background-image:image-set(url(img/saona_c1-1600.webp) type("image/webp"),url(img/saona_c1-1600.jpg) type("image/jpeg"))}}
 .hv{pointer-events:none}
 .hero-media.novid .hv{display:none!important}
