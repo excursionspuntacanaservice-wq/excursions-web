@@ -316,3 +316,11 @@ body.lock{overflow:hidden}
 .opt input{margin-top:.25rem;accent-color:var(--sea);flex:none;width:18px;height:18px}
 .opt b{display:block;font-size:.95rem}
 .opt small{display:block;color:var(--ink-2);font-size:.84rem;line-height:1.4;margin-top:2px}
+
+.g-rev{display:grid;gap:6px;margin-top:14px;padding:12px 14px;border:1px solid rgba(14,42,58,.12);border-radius:12px;background:#fff;color:var(--ink);text-decoration:none;font-size:.9rem;line-height:1.4}
+.g-rev:hover{border-color:var(--sea)}
+.g-top{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.g-stars{color:#F4B400;letter-spacing:1px;font-size:1rem}
+.g-n{color:var(--ink-2)}
+.g-rev q{font-style:italic;color:var(--ink)}
+.g-by{font-size:.8rem;color:var(--ink-2)}
