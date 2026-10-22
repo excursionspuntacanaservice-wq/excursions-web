@@ -167,6 +167,65 @@
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !modal.hidden) closeM(); });
   }
 
+  // hotel suggestions: faster typing on phones
+  var HOTELS = ['Riu Palace Bávaro','Riu Palace Punta Cana','Riu Republica','Riu Naiboa','Occidental Caribe','Occidental Punta Cana','Royalton Bávaro','Royalton Punta Cana','Royalton Chic','Majestic Elegance','Majestic Colonial','Majestic Mirage','Bahía Príncipe','Iberostar Selection Bávaro','Iberostar Dominicana','Iberostar Punta Cana','Ocean Blue & Sand','Princess Punta Cana','Vik Arena Blanca','Grand Palladium','Impressive Punta Cana','Dreams Royal Beach','Dreams Onyx','Dreams Macao','Dreams Palm Beach','Live Aqua','Nickelodeon Punta Cana','Hard Rock Punta Cana','Zoetry Agua','Sivory','Excellence Punta Cana','Excellence El Carmen','Sirenis','Breathless Punta Cana','Meliá Caribe Beach','Paradisus Palma Real','Lopesan Costa Bávaro','Barceló Bávaro Palace','Be Live Collection','Serenade Punta Cana','Catalonia Bávaro','Catalonia Royal Bávaro','Radisson Blu Punta Cana','Club Med Punta Cana','Four Points Punta Cana','The Westin Puntacana','Tortuga Bay','Sanctuary Cap Cana','Hyatt Ziva Cap Cana','Hyatt Zilara Cap Cana','Secrets Cap Cana','Secrets Royal Beach','Eden Roc Cap Cana','TRS Cap Cana','TRS Turquesa','Ancora Punta Cana','Viva Dominicus','Iberostar Hacienda Dominicus','Hilton La Romana','Sunscape Dominicus','Casa de Campo','Bahía La Romana','La Estancia'];
+  var hl = $('#hotel-list');
+  if (!hl && $('input[name=hotel]')) {
+    hl = document.createElement('datalist'); hl.id = 'hotel-list';
+    HOTELS.forEach(function (h) { var o = document.createElement('option'); o.value = h; hl.appendChild(o); });
+    document.body.appendChild(hl);
+    $$('input[name=hotel], input[name=near]').forEach(function (i) { i.setAttribute('list', 'hotel-list'); });
+  }
+  $$('input[name=email]').forEach(function (i) { i.setAttribute('inputmode', 'email'); i.setAttribute('autocapitalize', 'off'); i.setAttribute('spellcheck', 'false'); });
+
+  // phone booking sheet in two steps: 1) date + people  2) pickup + contact + pay
+  var fm = $('#bk-m');
+  if (fm && fm.dataset.mode === 'pay') {
+    var es = fm.dataset.lang === 'es';
+    var dIn = $('[name=date]', fm), payB = $('button.pay', fm);
+    var s1 = [$('.fld.dp', fm), $('.row2', fm)].filter(Boolean);
+    var s2 = [$('.pk-sel', fm), $('[name=name]', fm) && $('[name=name]', fm).closest('.fld'), $('[name=whatsapp]', fm) && $('[name=whatsapp]', fm).closest('.row2'), $('.hint', fm), payB].filter(Boolean);
+    if (dIn && payB && s1.length === 2 && s2.length >= 4) {
+      var nxt = document.createElement('button'); nxt.type = 'button'; nxt.className = 'btn btn-sea btn-block btn-lg bk-next';
+      var sum = document.createElement('div'); sum.className = 'bk-sum'; sum.hidden = true;
+      var sumT = document.createElement('span'), sumE = document.createElement('button');
+      sumE.type = 'button'; sumE.className = 'bk-edit'; sumE.textContent = es ? 'Cambiar' : 'Change';
+      sum.appendChild(sumT); sum.appendChild(sumE);
+      var note = document.createElement('p'); note.className = 'bk-step'; note.textContent = es ? 'Paso 1 de 2 · Fecha y personas' : 'Step 1 of 2 · Date and people';
+      s1[0].parentNode.insertBefore(note, s1[0]);
+      s1[0].parentNode.insertBefore(sum, s1[0]);
+      payB.parentNode.insertBefore(nxt, payB);
+      var amount = function () { var m = (payB.textContent || '').match(/\$[\d,.]+/); return m ? m[0] : ''; };
+      var label = function () { var t = amount(); nxt.textContent = (es ? 'Continuar' : 'Continue') + (t ? ' · ' + t : ''); };
+      var show = function (step) {
+        s1.forEach(function (el) { el.hidden = step === 2; });
+        s2.forEach(function (el) { el.hidden = step === 1; });
+        nxt.hidden = step === 2; sum.hidden = step === 1;
+        note.textContent = step === 1 ? (es ? 'Paso 1 de 2 · Fecha y personas' : 'Step 1 of 2 · Date and people') : (es ? 'Paso 2 de 2 · Recogida y contacto' : 'Step 2 of 2 · Pickup and contact');
+        if (step === 1) label();
+      };
+      var tmr = function () { var d = new Date(); d.setDate(d.getDate() + 1); return d.getFullYear() + '-' + ('0' + (d.getMonth() + 1)).slice(-2) + '-' + ('0' + d.getDate()).slice(-2); };
+      nxt.addEventListener('click', function () {
+        var msgE = $('.msg', fm);
+        if (!(dIn.value && dIn.value >= tmr())) {
+          var b = $('.dp-btn', fm); if (b) { b.setAttribute('aria-invalid', 'true'); setTimeout(function () { b.click(); }, 0); }
+          if (msgE) { msgE.textContent = es ? 'Elige una fecha para continuar.' : 'Choose a date to continue.'; msgE.hidden = false; }
+          return;
+        }
+        if (msgE) msgE.hidden = true;
+        var dv = $('.dp-v', fm), a = $('[name=adults]', fm), c = $('[name=children]', fm);
+        var ppl = a.value + (es ? (a.value === '1' ? ' adulto' : ' adultos') : (a.value === '1' ? ' adult' : ' adults')) + (c && +c.value > 0 ? ', ' + c.value + (es ? ' niños' : ' kids') : '');
+        sumT.textContent = (dv ? dv.textContent : dIn.value) + ' · ' + ppl + ' · ' + amount();
+        show(2);
+        var h = $('[name=hotel]', fm); if (h && !h.closest('[hidden]')) h.focus();
+      });
+      sumE.addEventListener('click', function () { show(1); });
+      $$('.sb, input', fm).forEach(function (el) { el.addEventListener('click', function () { setTimeout(label, 0); }); el.addEventListener('change', function () { setTimeout(label, 0); }); });
+      new MutationObserver(label).observe(payB, { childList: true, characterData: true, subtree: true });
+      show(1);
+    }
+  }
+
   // payment cancelled notice / thanks reference (only plain query values, never injected as HTML)
   try {
     var q = new URLSearchParams(window.location.search);

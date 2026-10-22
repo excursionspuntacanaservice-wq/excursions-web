@@ -353,3 +353,9 @@ body.lock{overflow:hidden}
 .own-k{margin:0;font-weight:700;color:var(--sea-d);font-size:.9rem;text-transform:uppercase;letter-spacing:.06em}
 .own-q{margin:.4rem 0 1rem;font-size:1.15rem;line-height:1.5}
 .band-in .an-p{font-size:2.1rem}
+
+/* two-step phone booking */
+.bk-step{margin:0 0 2px;font-size:.8rem;font-weight:700;color:var(--sea-d);text-transform:uppercase;letter-spacing:.05em}
+.bk-sum{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 14px;border-radius:var(--r-sm);background:var(--lagoon);font-weight:600;font-size:.95rem}
+.bk-edit{border:0;background:none;color:var(--sea-d);font:700 .9rem var(--body);text-decoration:underline;cursor:pointer;padding:4px}
+.bk .bk-next[hidden],.bk [hidden]{display:none!important}
