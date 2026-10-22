@@ -10,11 +10,12 @@
     return d.getFullYear() + '-' + (m < 10 ? '0' : '') + m + '-' + (day < 10 ? '0' : '') + day; }
   function waLink(text) { return 'https://wa.me/' + WA + '?text=' + encodeURIComponent(text); }
   // Google Ads secondary counters (observation only, not used for bidding)
+  function ev(name) { try { if (typeof window.clarity === 'function') window.clarity('event', name); } catch (e) {} }
   function conv(label) { try { if (typeof window.gtag === 'function') window.gtag('event', 'conversion', { send_to: 'AW-18525941849/' + label }); } catch (e) {} }
   var CV_BOOK = 'JUcZCPfonaUdENng7YFF', CV_WA = 'Qk6_CPronaUdENng7YFF';
   document.addEventListener('click', function (e) {
     var l = e.target && e.target.closest ? e.target.closest('a[href*="wa.me/"]') : null;
-    if (l) conv(CV_WA);
+    if (l) { conv(CV_WA); ev('whatsapp_click'); }
   }, true);
   function fmtDate(v, lang) { if (!v) return ''; var p = v.split('-'); return lang === 'es' ? p[2] + '/' + p[1] + '/' + p[0] : p[1] + '/' + p[2] + '/' + p[0]; }
 
@@ -126,9 +127,9 @@
         i.setAttribute('aria-invalid', ok ? 'false' : 'true'); if (!ok) bad.push(i);
       });
       if (date && !(date.value && date.value >= tomorrow())) { dp.el.setAttribute('aria-invalid', 'true'); bad.unshift(dp.el); } else if (dp) { dp.el.setAttribute('aria-invalid', 'false'); }
-      if (bad.length) { msg.textContent = T.err_fields; msg.hidden = false; bad[0].focus(); return; }
+      if (bad.length) { msg.textContent = T.err_fields; msg.hidden = false; ev('book_missing_fields'); bad[0].focus(); return; }
       msg.hidden = true;
-      conv(CV_BOOK);
+      conv(CV_BOOK); ev('book_submit');
       var hp = $('[name=website]', form);
       var body = new URLSearchParams({
         tour: form.dataset.tour, slug: form.dataset.slug, date: date.value, adults: a.value, children: c ? c.value : '0',
@@ -147,16 +148,17 @@
         })
         .catch(function () {
           clearTimeout(timer); pay.disabled = false; refresh();
-          msg.textContent = T.err_pay; msg.hidden = false; if (chat) chat.focus();
+          msg.textContent = T.err_pay; msg.hidden = false; ev('book_pay_error'); if (chat) chat.focus();
         });
     });
     $$('input', form).forEach(function (i) { i.addEventListener('input', function () { if (i.getAttribute('aria-invalid') === 'true') i.setAttribute('aria-invalid', 'false'); }); });
   }
   $$('form.bk').forEach(setup);
+  $$('form.bk').forEach(function (f) { var once = false; f.addEventListener('focusin', function () { if (!once) { once = true; ev('book_start'); } }); f.addEventListener('click', function () { if (!once) { once = true; ev('book_start'); } }); });
 
   // mobile modal
   var modal = $('#bk-modal'), lastFocus = null;
-  function openM() { if (!modal) return; lastFocus = document.activeElement; modal.hidden = false; document.body.classList.add('lock'); var f = $('input,button.pay,a.chat', modal); if (f) f.focus(); }
+  function openM() { if (!modal) return; ev('book_open'); lastFocus = document.activeElement; modal.hidden = false; document.body.classList.add('lock'); var f = $('input,button.pay,a.chat', modal); if (f) f.focus(); }
   function closeM() { if (!modal) return; modal.hidden = true; document.body.classList.remove('lock'); if (lastFocus) lastFocus.focus(); }
   $$('[data-open]').forEach(function (b) { b.addEventListener('click', openM); });
   $$('.hero-cta, .final-b a[href="#bk-hero"]').forEach(function (a) {
@@ -216,7 +218,7 @@
         var dv = $('.dp-v', fm), a = $('[name=adults]', fm), c = $('[name=children]', fm);
         var ppl = a.value + (es ? (a.value === '1' ? ' adulto' : ' adultos') : (a.value === '1' ? ' adult' : ' adults')) + (c && +c.value > 0 ? ', ' + c.value + (es ? ' niños' : ' kids') : '');
         sumT.textContent = (dv ? dv.textContent : dIn.value) + ' · ' + ppl + ' · ' + amount();
-        show(2);
+        show(2); ev('book_step2');
         var h = $('[name=hotel]', fm); if (h && !h.closest('[hidden]')) h.focus();
       });
       sumE.addEventListener('click', function () { show(1); });
