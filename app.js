@@ -229,7 +229,7 @@
   // payment cancelled notice / thanks reference (only plain query values, never injected as HTML)
   try {
     var q = new URLSearchParams(window.location.search);
-    if (q.get('cancelled') === '1') { var n = $('[data-cancelled]'); if (n) n.hidden = false; }
+    if (q.get('cancelled') === '1') { var n = $('[data-cancelled]'); if (n) { n.textContent = (document.documentElement.lang || 'en').indexOf('es') === 0 ? 'El pago no se completó, así que el tour todavía no está reservado. Puedes intentarlo de nuevo o escribirnos.' : 'Your payment wasn\u2019t completed, so the tour isn\u2019t booked yet. You can try again or message us.'; n.hidden = false; } }
     var ref = q.get('ref'), box = $('[data-ref]');
     if (ref && box && /^EPC-[0-9]{12}-[0-9]{1,3}$/.test(ref)) { $('b', box).textContent = ref; box.hidden = false; }
   } catch (err) { /* old browser: notices stay hidden */ }
