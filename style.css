@@ -365,3 +365,15 @@ body.lock{overflow:hidden}
 .th .th-btn{display:inline-flex}
 .th-promise{margin:0;color:#E6F0F3;font-size:.95rem;max-width:46ch}
 @media (max-width:979px){.th-cta{display:none}}
+
+/* hero trust line + safe-payment line (visible on mobile) */
+.th-proof{margin:.7rem 0 0;color:#fff;font-size:1rem;display:flex;flex-wrap:wrap;gap:4px 8px;align-items:center}
+.th-proof .g-stars{color:#F4B400;letter-spacing:1px}
+.th-proof s{color:#E6F0F3;opacity:.85}
+.th-safe{margin:.7rem 0 0;color:#E6F0F3;font-size:.92rem;max-width:46ch}
+.mbar-act{display:flex;gap:8px;align-items:center}
+.mbar .mbar-act .btn{min-width:0}
+.mbar .mbar-act .btn-sea{min-width:120px}
+.mbar-wa{padding-left:12px;padding-right:12px}
+.mbar-wa span{color:inherit;font-size:inherit}
+@media (max-width:979px){.mbar ~ .wa-fab{display:none}}
