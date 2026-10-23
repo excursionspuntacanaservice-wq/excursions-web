@@ -228,6 +228,29 @@
     }
   }
 
+  // photo viewer: tapping a gallery photo opens it large (was a dead click)
+  var gimgs = $$('.gal img, picture.m1 img, picture.m2 img, picture.m3 img');
+  if (gimgs.length) {
+    var es2 = (document.documentElement.lang || 'en').indexOf('es') === 0;
+    var lb = document.createElement('div'); lb.className = 'lb'; lb.hidden = true;
+    lb.setAttribute('role', 'dialog'); lb.setAttribute('aria-modal', 'true'); lb.setAttribute('aria-label', es2 ? 'Foto' : 'Photo');
+    lb.innerHTML = '<button type="button" class="lb-x" aria-label="' + (es2 ? 'Cerrar' : 'Close') + '">×</button><button type="button" class="lb-p" aria-label="' + (es2 ? 'Anterior' : 'Previous') + '">‹</button><img alt=""><button type="button" class="lb-n" aria-label="' + (es2 ? 'Siguiente' : 'Next') + '">›</button>';
+    document.body.appendChild(lb);
+    var lbImg = $('img', lb), cur = 0, sx = null;
+    var srcOf = function (im) { var so = im.parentNode && im.parentNode.querySelector ? im.parentNode.querySelector('source[srcset]') : null; if (so) { var c = so.getAttribute('srcset').split(',').map(function (x) { return x.trim().split(' ')[0]; }); if (c.length) return c[c.length - 1]; } return im.currentSrc || im.src; };
+    var show = function (i) { cur = (i + gimgs.length) % gimgs.length; lbImg.src = srcOf(gimgs[cur]); lbImg.alt = gimgs[cur].alt || ''; };
+    var open = function (i) { show(i); lb.hidden = false; document.body.classList.add('lock'); ev('photo_open'); };
+    var close = function () { lb.hidden = true; document.body.classList.remove('lock'); };
+    gimgs.forEach(function (im, i) { im.style.cursor = 'zoom-in'; im.addEventListener('click', function () { open(i); }); });
+    $('.lb-x', lb).addEventListener('click', close);
+    $('.lb-p', lb).addEventListener('click', function (e) { e.stopPropagation(); show(cur - 1); });
+    $('.lb-n', lb).addEventListener('click', function (e) { e.stopPropagation(); show(cur + 1); });
+    lb.addEventListener('click', function (e) { if (e.target === lb) close(); });
+    document.addEventListener('keydown', function (e) { if (lb.hidden) return; if (e.key === 'Escape') close(); if (e.key === 'ArrowLeft') show(cur - 1); if (e.key === 'ArrowRight') show(cur + 1); });
+    lb.addEventListener('touchstart', function (e) { sx = e.touches[0].clientX; }, { passive: true });
+    lb.addEventListener('touchend', function (e) { if (sx === null) return; var dx = e.changedTouches[0].clientX - sx; if (Math.abs(dx) > 40) show(cur + (dx < 0 ? 1 : -1)); sx = null; });
+  }
+
   // payment cancelled notice / thanks reference (only plain query values, never injected as HTML)
   try {
     var q = new URLSearchParams(window.location.search);

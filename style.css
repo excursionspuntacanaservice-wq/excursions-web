@@ -377,3 +377,12 @@ body.lock{overflow:hidden}
 .mbar-wa{padding-left:12px;padding-right:12px}
 .mbar-wa span{color:inherit;font-size:inherit}
 @media (max-width:979px){.mbar ~ .wa-fab{display:none}}
+
+/* photo viewer */
+.lb{position:fixed;inset:0;z-index:60;background:rgba(6,22,32,.92);display:flex;align-items:center;justify-content:center;padding:16px}
+.lb[hidden]{display:none!important}
+.lb img{max-width:100%;max-height:88svh;border-radius:12px;object-fit:contain}
+.lb button{position:absolute;border:0;background:rgba(255,255,255,.14);color:#fff;border-radius:999px;width:46px;height:46px;font-size:28px;line-height:1;cursor:pointer}
+.lb-x{top:14px;right:14px}
+.lb-p{left:10px;top:50%;transform:translateY(-50%)}
+.lb-n{right:10px;top:50%;transform:translateY(-50%)}
