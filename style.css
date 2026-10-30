@@ -389,3 +389,6 @@ body.lock{overflow:hidden}
 
 .faq-ask{margin-top:1.4rem;padding:16px;border:1px solid var(--line);border-radius:12px;background:#fff;display:grid;gap:10px;justify-items:start}
 .faq-ask p{margin:0}
+
+.seg.seg4{grid-template-columns:1fr 1fr}
+.pk-time{margin:6px 0 0;font-size:.88rem;font-weight:700;color:var(--sea,#0a7f7b);line-height:1.35}

@@ -19,6 +19,58 @@
   }, true);
   function fmtDate(v, lang) { if (!v) return ''; var p = v.split('-'); return lang === 'es' ? p[2] + '/' + p[1] + '/' + p[0] : p[1] + '/' + p[2] + '/' + p[0]; }
 
+  // ---------- pickup time by hotel (same tables Sofia uses on WhatsApp) ----------
+  // isl: Saona / Catalina / Santo Domingo (one morning pickup). pb: Party Boat / Snorkel [12 PM boat, 3 PM boat].
+  // hr: Horseback [early morning, morning, afternoon, late afternoon]. null = no fixed time, we confirm on WhatsApp.
+  var PK = {
+    isl: [['zoetry','6:20'],['sivory','6:35'],['excellence punta cana','6:40'],['excellence pc','6:40'],['sirenis','6:40'],['breathless','6:40'],['excellence el carmen','6:45'],['excellence del carmen','6:45'],['finest','6:45'],
+      ['dreams onyx','6:35'],['now onyx','6:35'],['live aqua','6:40'],['dreams punta cana','6:45'],['nickelodeon','6:45'],['royalton chic','6:45'],['chic punta cana','6:45'],['el faro','6:45'],
+      ['hard rock','6:45'],['dreams macao','6:50'],
+      ['riu republica','7:00'],['occidental caribe','7:05'],['royalton','7:05'],['majestic','7:05'],['bahia principe','7:10'],['riu','7:15'],['iberostar','7:30'],
+      ['ocean blue','7:20'],['punta cana princess','7:25'],['princess punta cana','7:25'],['vik arena','7:30'],['caribe deluxe','7:40'],
+      ['occidental punta cana','7:00'],['palladium','7:35'],['vista sol','7:40'],['impressive','7:45'],['whala','7:50'],['whalas','7:50'],['dreams royal beach','7:55'],
+      ['melia','8:00'],['lopesan','8:00'],['barcelo','8:10'],
+      ['natura park','7:50'],['dreams palm beach','7:50'],['be live','7:50'],['serenade','7:50'],['catalonia','8:00'],['radisson','8:10'],
+      ['club med','7:45'],['four points','7:45'],['westin','8:00'],['tortuga bay','8:00'],
+      ['sanctuary','7:30'],['margaritaville','7:30'],['hyatt','7:30'],['secrets cap cana','7:30'],['eden roc','7:30'],['trs cap cana','7:30'],['ancora','7:30'],
+      ['cadaques','9:10'],['sunscape dominicus','9:10'],['iberostar hacienda','9:10'],['hacienda dominicus','9:10'],['dreams dominicus','9:10'],['viva dominicus','9:10'],['hilton la romana','9:10'],
+      ['bahia la romana','8:30'],['casa de campo','9:00'],['la estancia','9:25']],
+    pb: [['sivory','10:20','1:20'],['zoetry','10:20','1:20'],['excellence punta cana','10:20','1:20'],['excellence pc','10:20','1:20'],
+      ['sirenis','10:30','1:30'],['excellence el carmen','10:30','1:30'],['excellence del carmen','10:30','1:30'],['breathless','10:30','1:30'],
+      ['now onyx','10:40','1:40'],['dreams onyx','10:40','1:40'],['live aqua','10:40','1:40'],['wyndham alltra','10:40','1:40'],
+      ['nickelodeon','10:45','1:45'],['royalton chic','10:45','1:45'],['chic punta cana','10:45','1:45'],['el faro','10:45','1:45'],['dreams macao','11:00','2:00'],
+      ['hard rock','10:15','1:15'],['riu republica','10:25','1:25'],['occidental caribe','10:25','1:25'],['royalton punta cana','10:25','1:25'],['royalton','10:30','1:30'],['majestic','10:30','1:30'],['bahia principe','10:40','1:40'],['riu','10:55','1:55'],['iberostar','11:15','2:15'],
+      ['punta cana princess','10:35','1:35'],['princess punta cana','10:35','1:35'],['vik arena','10:35','1:35'],['ocean blue','10:40','1:40'],['caribe deluxe','10:50','1:50'],['bavaro princess','10:55','1:55'],['occidental punta cana','11:00','2:00'],['palladium','11:10','2:10'],
+      ['vista sol','11:20','2:20'],['impressive','11:20','2:20'],['whala','11:25','2:25'],['dreams royal beach','11:30','2:30'],['secrets royal','11:30','2:30'],['melia','11:35','2:35'],['palma real','11:35','2:35'],['lopesan','11:40','2:40'],['barcelo bavaro beach','11:40','2:40'],['barcelo','11:35','2:35'],
+      ['dreams flora','11:00','2:00'],['jewel palm','11:00','2:00'],['be live','11:00','2:00'],['radisson','11:10','2:10'],['serenade','11:10','2:10'],['catalonia','11:10','2:10'],
+      ['sanctuary','10:30','1:30'],['secrets cap cana','10:30','1:30'],['trs cap cana','10:30','1:30'],['hyatt','10:30','1:30'],['margaritaville','10:30','1:30'],
+      ['westin','10:45','1:45'],['tortuga bay','10:45','1:45'],['club med','10:45','1:45'],
+      ['hacienda dominicus',null],['dominicus',null],['la romana',null],['casa de campo',null]],
+    hr: [['hard rock','7:50','9:00','1:40','3:00'],['riu republica','8:00','9:10','1:50','3:10'],['occidental caribe','8:05','9:15','1:55','3:15'],['royalton','8:05','9:15','1:55','3:15'],['majestic','8:05','9:15','1:55','3:15'],
+      ['bahia principe','8:10','9:20','2:00','3:20'],['riu','8:15','9:25','2:05','3:25'],['iberostar','8:15','9:25','2:05','3:25'],['ocean blue','8:20','9:30','2:10','3:30'],['vik arena','8:20','9:30','2:10','3:30'],
+      ['punta cana princess','8:20','9:30','2:10','3:30'],['princess punta cana','8:20','9:30','2:10','3:30'],['caribe deluxe','8:25','9:35','2:15','3:35'],['bavaro princess','8:25','9:35','2:15','3:35'],['occidental punta cana','8:25','9:35','2:15','3:35'],['palladium','8:25','9:35','2:15','3:35'],
+      ['vista sol','8:30','9:40','2:20','3:40'],['impressive','8:30','9:40','2:20','3:40'],['whala','8:30','9:40','2:20','3:40'],['secrets royal','8:35','9:45','2:25','3:45'],['dreams royal beach','8:35','9:45','2:25','3:45'],['palma real','8:35','9:45','2:25','3:45'],['melia','8:35','9:45','2:25','3:45'],
+      ['lopesan','8:40','9:50','2:30','3:50'],['barcelo','8:45','9:55','2:35','3:55'],['dreams flora','8:15','9:25','2:05','3:25'],['be live','8:15','9:25','2:05','3:25'],['radisson','8:20','9:30','2:10','3:30'],['serenade','8:20','9:30','2:10','3:30'],['catalonia','8:25','9:35','2:15','3:35'],
+      ['royalton chic',null],['chic punta cana',null],['hacienda dominicus',null],['dominicus',null],['la romana',null],['casa de campo',null]]
+  };
+  var PK_GROUP = { 'saona-island': 'isl', 'catalina-island': 'isl', 'santo-domingo': 'isl', 'party-boat': 'pb', 'snorkeling-punta-cana': 'pb', 'horseback-riding': 'hr' };
+  var PK_SHIFTS = {
+    pb: { en: ['12:00 PM boat', '3:00 PM boat'], es: ['Barco 12:00 PM', 'Barco 3:00 PM'], pm: [false, true] },
+    hr: { en: ['Early morning', 'Morning', 'Afternoon', 'Late afternoon'], es: ['Temprano', 'Mañana', 'Tarde', 'Tarde (2do)'], pm: [false, false, true, true] }
+  };
+  function normH(s) { return ' ' + String(s || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]+/g, ' ').trim() + ' '; }
+  // returns "6:45 AM", or '' when the hotel is not in the table (we confirm the time on WhatsApp)
+  function pickupTime(slug, hotel, shift) {
+    var g = PK_GROUP[slug], rows = g && PK[g], h = normH(hotel), best = null;
+    if (!rows || h.length < 4) return '';
+    rows.forEach(function (r) { if (h.indexOf(' ' + r[0] + ' ') >= 0 && (!best || r[0].length > best[0].length)) best = r; });
+    if (!best) return '';
+    var i = g === 'isl' ? 0 : (shift | 0), t = best[1 + i];
+    if (!t) return '';
+    var pm = g === 'isl' ? false : PK_SHIFTS[g].pm[i];
+    return t + (pm ? ' PM' : ' AM');
+  }
+
 
   // ---------- calendar (replaces the browser date field) ----------
   function iso(d) { var m = d.getMonth() + 1, x = d.getDate(); return d.getFullYear() + '-' + (m < 10 ? '0' : '') + m + '-' + (x < 10 ? '0' : '') + x; }
@@ -109,6 +161,34 @@
       if (pkMode() === 'hotel') return hotelIn.value.trim();
       return nhMode() === 'meet' ? T.pk_val_meet : T.pk_val_near + nearIn.value.trim();
     }
+    // departure choice (Party Boat / Snorkel / Horseback) + pickup time shown before paying
+    var slug = form.dataset.slug, grp = PK_GROUP[slug], shiftIdx = 0, pkTime = null;
+    if (grp && hotelIn && mode === 'pay') {
+      var pkSel = $('.pk-sel', form);
+      if (PK_SHIFTS[grp] && pkSel) {
+        var labs = PK_SHIFTS[grp][L === 'es' ? 'es' : 'en'], sh = document.createElement('div');
+        sh.className = 'fld pk-shift';
+        sh.innerHTML = '<span class="lbl">' + (L === 'es' ? 'Salida' : 'Departure') + '</span><div class="seg' + (labs.length > 2 ? ' seg4' : '') + '" role="radiogroup"></div>';
+        labs.forEach(function (t, i) {
+          var lb = document.createElement('label');
+          lb.innerHTML = '<input type="radio" name="' + form.id + '-shift" value="' + i + '"' + (i === 0 ? ' checked' : '') + '><span></span>';
+          $('span', lb).textContent = t; $('.seg', sh).appendChild(lb);
+        });
+        pkSel.parentNode.insertBefore(sh, pkSel);
+        $$('input', sh).forEach(function (r) { r.addEventListener('change', function () { shiftIdx = +r.value; showTime(); }); });
+      }
+      pkTime = document.createElement('p'); pkTime.className = 'pk-time'; pkTime.setAttribute('aria-live', 'polite'); pkTime.hidden = true;
+      hotelIn.parentNode.appendChild(pkTime);
+    }
+    function curTime() { return grp && pkMode() === 'hotel' ? pickupTime(slug, hotelIn.value, shiftIdx) : ''; }
+    function showTime() {
+      if (!pkTime) return;
+      var t = curTime(), v = hotelIn.value.trim();
+      if (t) { pkTime.textContent = (L === 'es' ? 'Hora de recogida en tu hotel: ' : 'Pickup time at your hotel: ') + t; pkTime.hidden = false; }
+      else if (v.length >= 3) { pkTime.textContent = L === 'es' ? 'Te confirmamos la hora de recogida por WhatsApp.' : 'We confirm your pickup time on WhatsApp.'; pkTime.hidden = false; }
+      else pkTime.hidden = true;
+    }
+    if (pkTime) { ['input', 'change'].forEach(function (k) { hotelIn.addEventListener(k, showTime); }); $$('input[type=radio]', form).forEach(function (r) { r.addEventListener('change', showTime); }); showTime(); }
     $$('.sb', form).forEach(function (b) {
       b.addEventListener('click', function () { var inp = $('input', b.parentNode); inp.value = (+inp.value || 0) + (+b.dataset.step); clamp(inp); refresh(); });
     });
@@ -127,7 +207,9 @@
         i.setAttribute('aria-invalid', ok ? 'false' : 'true'); if (!ok) bad.push(i);
       });
       if (date && !(date.value && date.value >= tomorrow())) { dp.el.setAttribute('aria-invalid', 'true'); bad.unshift(dp.el); } else if (dp) { dp.el.setAttribute('aria-invalid', 'false'); }
-      if (bad.length) { msg.textContent = T.err_fields; msg.hidden = false; ev('book_missing_fields'); bad[0].focus(); return; }
+      if (bad.length) {
+        var lbE = bad[0].id ? $('label[for="' + bad[0].id + '"]', form) : null, fl = bad[0].closest('.fld'), nm = lbE ? lbE.textContent : (fl && $('.lbl', fl) ? $('.lbl', fl).textContent : '');
+        msg.textContent = T.err_fields + (nm ? ' (' + nm.trim() + ')' : ''); msg.hidden = false; ev('book_missing_fields'); bad[0].focus(); return; }
       msg.hidden = true;
       conv(CV_BOOK); ev('book_submit');
       var hp = $('[name=website]', form);
@@ -135,7 +217,7 @@
         tour: form.dataset.tour, slug: form.dataset.slug, date: date.value, adults: a.value, children: c ? c.value : '0',
         hotel: pickupValue(), name: $('[name=name]', form).value.trim(),
         whatsapp: (function (v) { var d = v.replace(/\D/g, ''); return (d.length === 10 && v.trim().charAt(0) !== '+') ? '1' + d : d; })($('[name=whatsapp]', form).value), email: $('[name=email]', form).value.trim(),
-        lang: L, website: hp ? hp.value : ''
+        lang: L, website: hp ? hp.value : '', pickup_time: curTime()
       });
       pay.disabled = true; pay.textContent = T.opening;
       var ctl = window.AbortController ? new AbortController() : null, timer = setTimeout(function () { if (ctl) ctl.abort(); }, 25000);
@@ -199,7 +281,7 @@
       payB.parentNode.insertBefore(nxt, payB);
       var amount = function () { var m = (payB.textContent || '').match(/\$[\d,.]+/); return m ? m[0] : ''; };
       var label = function () { var t = amount(); nxt.textContent = (es ? 'Continuar' : 'Continue') + (t ? ' · ' + t : ''); };
-      var show = function (step) {
+      var showStep = function (step) {
         s1.forEach(function (el) { el.hidden = step === 2; });
         s2.forEach(function (el) { el.hidden = step === 1; });
         nxt.hidden = step === 2; sum.hidden = step === 1;
@@ -218,13 +300,13 @@
         var dv = $('.dp-v', fm), a = $('[name=adults]', fm), c = $('[name=children]', fm);
         var ppl = a.value + (es ? (a.value === '1' ? ' adulto' : ' adultos') : (a.value === '1' ? ' adult' : ' adults')) + (c && +c.value > 0 ? ', ' + c.value + (es ? ' niños' : ' kids') : '');
         sumT.textContent = (dv ? dv.textContent : dIn.value) + ' · ' + ppl + ' · ' + amount();
-        show(2); ev('book_step2');
+        showStep(2); ev('book_step2');
         var h = $('[name=hotel]', fm); if (h && !h.closest('[hidden]')) h.focus();
       });
-      sumE.addEventListener('click', function () { show(1); });
+      sumE.addEventListener('click', function () { showStep(1); });
       $$('.sb, input', fm).forEach(function (el) { el.addEventListener('click', function () { setTimeout(label, 0); }); el.addEventListener('change', function () { setTimeout(label, 0); }); });
       new MutationObserver(label).observe(payB, { childList: true, characterData: true, subtree: true });
-      show(1);
+      showStep(1);
     }
   }
 
