@@ -386,6 +386,8 @@ body.lock{overflow:hidden}
 .lb-x{top:14px;right:14px}
 .lb-p{left:10px;top:50%;transform:translateY(-50%)}
 .lb-n{right:10px;top:50%;transform:translateY(-50%)}
+.lb img{max-height:76svh}
+.lb .lb-cta{position:absolute;left:50%;bottom:max(18px,env(safe-area-inset-bottom));transform:translateX(-50%);width:auto;height:auto;border-radius:12px;padding:14px 22px;font-size:17px;font-weight:700;white-space:nowrap;box-shadow:0 6px 24px rgba(0,0,0,.35)}
 
 .faq-ask{margin-top:1.4rem;padding:16px;border:1px solid var(--line);border-radius:12px;background:#fff;display:grid;gap:10px;justify-items:start}
 .faq-ask p{margin:0}

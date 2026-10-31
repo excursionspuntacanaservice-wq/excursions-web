@@ -316,7 +316,8 @@
     var es2 = (document.documentElement.lang || 'en').indexOf('es') === 0;
     var lb = document.createElement('div'); lb.className = 'lb'; lb.hidden = true;
     lb.setAttribute('role', 'dialog'); lb.setAttribute('aria-modal', 'true'); lb.setAttribute('aria-label', es2 ? 'Foto' : 'Photo');
-    lb.innerHTML = '<button type="button" class="lb-x" aria-label="' + (es2 ? 'Cerrar' : 'Close') + '">×</button><button type="button" class="lb-p" aria-label="' + (es2 ? 'Anterior' : 'Previous') + '">‹</button><img alt=""><button type="button" class="lb-n" aria-label="' + (es2 ? 'Siguiente' : 'Next') + '">›</button>';
+    lb.innerHTML = '<button type="button" class="lb-x" aria-label="' + (es2 ? 'Cerrar' : 'Close') + '">×</button><button type="button" class="lb-p" aria-label="' + (es2 ? 'Anterior' : 'Previous') + '">‹</button><img alt=""><button type="button" class="lb-n" aria-label="' + (es2 ? 'Siguiente' : 'Next') + '">›</button>' +
+      (document.getElementById('bk-side') ? '<a class="btn btn-sea lb-cta" href="#bk-side">' + (es2 ? 'Reservar · $75 por adulto' : 'Book now · $75 per adult') + '</a>' : '');
     document.body.appendChild(lb);
     var lbImg = $('img', lb), cur = 0, sx = null;
     var srcOf = function (im) { var so = im.parentNode && im.parentNode.querySelector ? im.parentNode.querySelector('source[srcset]') : null; if (so) { var c = so.getAttribute('srcset').split(',').map(function (x) { return x.trim().split(' ')[0]; }); if (c.length) return c[c.length - 1]; } return im.currentSrc || im.src; };
@@ -325,6 +326,8 @@
     var close = function () { lb.hidden = true; document.body.classList.remove('lock'); };
     gimgs.forEach(function (im, i) { im.style.cursor = 'zoom-in'; im.addEventListener('click', function () { open(i); }); });
     $('.lb-x', lb).addEventListener('click', close);
+    var lbCta = $('.lb-cta', lb);
+    if (lbCta) lbCta.addEventListener('click', function (e) { e.stopPropagation(); close(); ev('photo_book_cta'); });
     $('.lb-p', lb).addEventListener('click', function (e) { e.stopPropagation(); show(cur - 1); });
     $('.lb-n', lb).addEventListener('click', function (e) { e.stopPropagation(); show(cur + 1); });
     lb.addEventListener('click', function (e) { if (e.target === lb) close(); });
