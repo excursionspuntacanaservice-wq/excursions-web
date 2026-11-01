@@ -1,7 +1,7 @@
 /* Excursions Punta Cana — booking logic. No secrets here: prices are recomputed on the server (Make). */
 (function () {
   'use strict';
-  var HOOK = 'https://hook.us2.make.com/spazsnvez9twnync65aglpm35tbem80q', WA = '18299621705', S = {"en": {"book": "Book now", "book_total": "Book now · {t}", "opening": "Opening secure payment…", "err_pay": "We couldn't open the payment page. Tap \"Chat on WhatsApp\" and we'll send you a secure payment link right away.", "err_fields": "Please fill in the highlighted fields.", "wa_msg": "Hi! I'd like to book {tour}", "wa_on": " on {d}", "wa_for": " for {a} adult(s)", "wa_kids": " and {c} child(ren)", "date_ph": "Choose a date", "pk_val_near": "Entrance of a hotel near: ", "pk_val_meet": "Meeting point: Petromovil Las Canas del Este"}, "es": {"book": "Reservar", "book_total": "Reservar · {t}", "opening": "Abriendo el pago seguro…", "err_pay": "No pudimos abrir la página de pago. Toca \"Escríbenos por WhatsApp\" y te enviamos el link de pago seguro al momento.", "err_fields": "Completa los campos marcados.", "wa_msg": "¡Hola! Quiero reservar {tour}", "wa_on": " para el {d}", "wa_for": " para {a} adulto(s)", "wa_kids": " y {c} niño(s)", "date_ph": "Elige una fecha", "pk_val_near": "Entrada de hotel cerca de: ", "pk_val_meet": "Punto de encuentro: Petromovil Las Canas del Este"}};
+  var HOOK = 'https://hook.us2.make.com/spazsnvez9twnync65aglpm35tbem80q', LEAD_HOOK = 'https://hook.us2.make.com/ckkn6bita5ehxtn5tykmfxfv6b6cnobb', WA = '18299621705', S = {"en": {"book": "Book now", "book_total": "Book & pay securely · {t}", "opening": "Opening secure payment…", "err_pay": "We couldn't open the payment page. Tap \"Chat on WhatsApp\" and we'll send you a secure payment link right away.", "err_fields": "Please fill in the highlighted fields.", "wa_msg": "Hi! I'd like to book {tour}", "wa_on": " on {d}", "wa_for": " for {a} adult(s)", "wa_kids": " and {c} child(ren)", "date_ph": "Choose a date", "pk_val_near": "Entrance of a hotel near: ", "pk_val_meet": "Meeting point: Petromovil Las Canas del Este", "avail": "Check availability · {t}", "avail_ok": "Available on {d}", "step1": "Step 1 of 2 · Date and people", "step2": "Step 2 of 2 · Pickup and contact", "pick_date": "Choose a date to check availability.", "change": "Change", "adult": " adult", "adults": " adults", "kids": " kids", "lead_ok": "Sent! Check your inbox (and the spam folder, just in case). We’ll also remind you before your trip.", "lead_err": "We couldn’t send it right now. Try again in a minute or message us on WhatsApp.", "lead_email": "Enter a valid email.", "save_t": "Not booking today? Save this tour", "save_p": "We email you your hotel’s pickup time, the price and the link to book. No payment.", "save_b": "Send", "close": "Close"}, "es": {"book": "Reservar", "book_total": "Reservar y pagar seguro · {t}", "opening": "Abriendo el pago seguro…", "err_pay": "No pudimos abrir la página de pago. Toca \"Escríbenos por WhatsApp\" y te enviamos el link de pago seguro al momento.", "err_fields": "Completa los campos marcados.", "wa_msg": "¡Hola! Quiero reservar {tour}", "wa_on": " para el {d}", "wa_for": " para {a} adulto(s)", "wa_kids": " y {c} niño(s)", "date_ph": "Elige una fecha", "pk_val_near": "Entrada de hotel cerca de: ", "pk_val_meet": "Punto de encuentro: Petromovil Las Canas del Este", "avail": "Ver disponibilidad · {t}", "avail_ok": "Disponible el {d}", "step1": "Paso 1 de 2 · Fecha y personas", "step2": "Paso 2 de 2 · Recogida y contacto", "pick_date": "Elige una fecha para ver disponibilidad.", "change": "Cambiar", "adult": " adulto", "adults": " adultos", "kids": " niños", "lead_ok": "¡Enviado! Revisa tu correo (y la carpeta de spam, por si acaso). También te recordamos antes de tu viaje.", "lead_err": "No pudimos enviarlo ahora. Inténtalo en un minuto o escríbenos por WhatsApp.", "lead_email": "Escribe un correo válido.", "save_t": "¿Hoy no reservas? Guarda este tour", "save_p": "Te mandamos por correo la hora de recogida de tu hotel, el precio y el link para reservar. Sin pago.", "save_b": "Enviar", "close": "Cerrar"}};
   var $ = function (s, r) { return (r || document).querySelector(s); };
   var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
 
@@ -262,52 +262,119 @@
   }
   $$('input[name=email]').forEach(function (i) { i.setAttribute('inputmode', 'email'); i.setAttribute('autocapitalize', 'off'); i.setAttribute('spellcheck', 'false'); });
 
-  // phone booking sheet in two steps: 1) date + people  2) pickup + contact + pay
-  var fm = $('#bk-m');
-  if (fm && fm.dataset.mode === 'pay') {
-    var es = fm.dataset.lang === 'es';
+  // booking in two steps (sidebar and phone sheet): 1) date + people → "Check availability"  2) availability confirmed, pickup + contact + pay
+  function twoStep(fm) {
+    var L = fm.dataset.lang === 'es' ? 'es' : 'en', T = S[L];
     var dIn = $('[name=date]', fm), payB = $('button.pay', fm);
     var s1 = [$('.fld.dp', fm), $('.row2', fm)].filter(Boolean);
-    var s2 = [$('.pk-sel', fm), $('[name=name]', fm) && $('[name=name]', fm).closest('.fld'), $('[name=whatsapp]', fm) && $('[name=whatsapp]', fm).closest('.row2'), $('.hint', fm), payB].filter(Boolean);
-    if (dIn && payB && s1.length === 2 && s2.length >= 4) {
-      var nxt = document.createElement('button'); nxt.type = 'button'; nxt.className = 'btn btn-sea btn-block btn-lg bk-next';
-      var sum = document.createElement('div'); sum.className = 'bk-sum'; sum.hidden = true;
-      var sumT = document.createElement('span'), sumE = document.createElement('button');
-      sumE.type = 'button'; sumE.className = 'bk-edit'; sumE.textContent = es ? 'Cambiar' : 'Change';
-      sum.appendChild(sumT); sum.appendChild(sumE);
-      var note = document.createElement('p'); note.className = 'bk-step'; note.textContent = es ? 'Paso 1 de 2 · Fecha y personas' : 'Step 1 of 2 · Date and people';
-      s1[0].parentNode.insertBefore(note, s1[0]);
-      s1[0].parentNode.insertBefore(sum, s1[0]);
-      payB.parentNode.insertBefore(nxt, payB);
-      var amount = function () { var m = (payB.textContent || '').match(/\$[\d,.]+/); return m ? m[0] : ''; };
-      var label = function () { var t = amount(); nxt.textContent = (es ? 'Continuar' : 'Continue') + (t ? ' · ' + t : ''); };
-      var showStep = function (step) {
-        s1.forEach(function (el) { el.hidden = step === 2; });
-        s2.forEach(function (el) { el.hidden = step === 1; });
-        nxt.hidden = step === 2; sum.hidden = step === 1;
-        note.textContent = step === 1 ? (es ? 'Paso 1 de 2 · Fecha y personas' : 'Step 1 of 2 · Date and people') : (es ? 'Paso 2 de 2 · Recogida y contacto' : 'Step 2 of 2 · Pickup and contact');
-        if (step === 1) label();
-      };
-      var tmr = function () { var d = new Date(); d.setDate(d.getDate() + 1); return d.getFullYear() + '-' + ('0' + (d.getMonth() + 1)).slice(-2) + '-' + ('0' + d.getDate()).slice(-2); };
-      nxt.addEventListener('click', function () {
-        var msgE = $('.msg', fm);
-        if (!(dIn.value && dIn.value >= tmr())) {
-          var b = $('.dp-btn', fm); if (b) { b.setAttribute('aria-invalid', 'true'); setTimeout(function () { b.click(); }, 0); }
-          if (msgE) { msgE.textContent = es ? 'Elige una fecha para continuar.' : 'Choose a date to continue.'; msgE.hidden = false; }
-          return;
-        }
-        if (msgE) msgE.hidden = true;
-        var dv = $('.dp-v', fm), a = $('[name=adults]', fm), c = $('[name=children]', fm);
-        var ppl = a.value + (es ? (a.value === '1' ? ' adulto' : ' adultos') : (a.value === '1' ? ' adult' : ' adults')) + (c && +c.value > 0 ? ', ' + c.value + (es ? ' niños' : ' kids') : '');
-        sumT.textContent = (dv ? dv.textContent : dIn.value) + ' · ' + ppl + ' · ' + amount();
-        showStep(2); ev('book_step2');
-        var h = $('[name=hotel]', fm); if (h && !h.closest('[hidden]')) h.focus();
+    var s2 = [$('.pk-shift', fm), $('.pk-sel', fm), $('[name=name]', fm) && $('[name=name]', fm).closest('.fld'), $('[name=whatsapp]', fm) && $('[name=whatsapp]', fm).closest('.row2'), $('.hint', fm), payB].filter(Boolean);
+    if (!(dIn && payB && s1.length === 2 && s2.length >= 4)) return;
+    var nxt = document.createElement('button'); nxt.type = 'button'; nxt.className = 'btn btn-sea btn-block btn-lg bk-next';
+    var sum = document.createElement('div'); sum.className = 'bk-sum ok'; sum.hidden = true;
+    var sumT = document.createElement('b'), sumS = document.createElement('span'), sumE = document.createElement('button');
+    sumT.className = 'bk-ok'; sumE.type = 'button'; sumE.className = 'bk-edit'; sumE.textContent = T.change;
+    sum.appendChild(sumT); sum.appendChild(sumS); sum.appendChild(sumE);
+    var note = document.createElement('p'); note.className = 'bk-step'; note.textContent = T.step1;
+    s1[0].parentNode.insertBefore(note, s1[0]);
+    s1[0].parentNode.insertBefore(sum, s1[0]);
+    payB.parentNode.insertBefore(nxt, payB);
+    var amount = function () { var m = (payB.textContent || '').match(/\$[\d,.]+/); return m ? m[0] : ''; };
+    var label = function () { nxt.textContent = T.avail.replace('{t}', amount() || '$75'); };
+    var showStep = function (step) {
+      s1.forEach(function (el) { el.hidden = step === 2; });
+      s2.forEach(function (el) { el.hidden = step === 1; });
+      nxt.hidden = step === 2; sum.hidden = step === 1;
+      note.textContent = step === 1 ? T.step1 : T.step2;
+      if (step === 1) label();
+    };
+    nxt.addEventListener('click', function () {
+      var msgE = $('.msg', fm);
+      if (!(dIn.value && dIn.value >= tomorrow())) {
+        var b = $('.dp-btn', fm); if (b) { b.setAttribute('aria-invalid', 'true'); setTimeout(function () { b.click(); }, 0); }
+        if (msgE) { msgE.textContent = T.pick_date; msgE.hidden = false; }
+        return;
+      }
+      if (msgE) msgE.hidden = true;
+      var dv = $('.dp-v', fm), a = $('[name=adults]', fm), c = $('[name=children]', fm);
+      var ppl = a.value + (a.value === '1' ? T.adult : T.adults) + (c && +c.value > 0 ? ', ' + c.value + T.kids : '');
+      sumT.textContent = T.avail_ok.replace('{d}', dv ? dv.textContent : dIn.value);
+      sumS.textContent = ppl + ' · ' + amount();
+      showStep(2); ev('book_step2');
+      var h = $('[name=hotel]', fm); if (h && !h.closest('[hidden]')) h.focus({ preventScroll: true });
+    });
+    sumE.addEventListener('click', function () { showStep(1); });
+    $$('.sb, input', fm).forEach(function (el) { el.addEventListener('click', function () { setTimeout(label, 0); }); el.addEventListener('change', function () { setTimeout(label, 0); }); });
+    new MutationObserver(label).observe(payB, { childList: true, characterData: true, subtree: true });
+    showStep(1);
+  }
+  $$('form.bk[data-mode="pay"]').forEach(twoStep);
+
+  // "save this tour": one email, no payment → Make (Leads sheet + email with pickup time + alert)
+  var leadDone = false;
+  try { leadDone = localStorage.getItem('epc_lead') === '1'; } catch (err) {}
+  function setupLead(f) {
+    var L = f.dataset.lang === 'es' ? 'es' : 'en', T = S[L];
+    var em = $('[name=email]', f), btn = $('button[type=submit]', f), msg = $('.msg', f), ok = $('.lead-ok', f), hp = $('[name=website]', f);
+    var hotel = $('[name=hotel]', f), when = $('[name=when]', f);
+    if (!em || !btn) return;
+    em.setAttribute('inputmode', 'email'); em.setAttribute('autocapitalize', 'off'); em.setAttribute('spellcheck', 'false');
+    var once = false;
+    f.addEventListener('focusin', function () { if (!once) { once = true; ev('lead_start'); } });
+    f.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var v = em.value.trim();
+      if (!(em.checkValidity() && /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v))) { em.setAttribute('aria-invalid', 'true'); if (msg) { msg.textContent = T.lead_email; msg.hidden = false; } em.focus(); return; }
+      em.setAttribute('aria-invalid', 'false'); if (msg) msg.hidden = true;
+      var q = ''; try { var u = new URLSearchParams(window.location.search); q = (u.get('gad_campaignid') ? 'ads ' + u.get('gad_campaignid') : (u.get('utm_source') || document.referrer || 'direct')); } catch (err) {}
+      var body = new URLSearchParams({
+        email: v, hotel: hotel ? hotel.value.trim() : '', when: when ? when.value.trim() : '',
+        tour: f.dataset.tour || 'Saona Island', slug: f.dataset.slug || 'saona-island', lang: L,
+        pickup_time: hotel ? pickupTime(f.dataset.slug || 'saona-island', hotel.value, 0) : '',
+        source: ('web ' + q).slice(0, 120), website: hp ? hp.value : ''
       });
-      sumE.addEventListener('click', function () { showStep(1); });
-      $$('.sb, input', fm).forEach(function (el) { el.addEventListener('click', function () { setTimeout(label, 0); }); el.addEventListener('change', function () { setTimeout(label, 0); }); });
-      new MutationObserver(label).observe(payB, { childList: true, characterData: true, subtree: true });
-      showStep(1);
-    }
+      var old = btn.textContent; btn.disabled = true; btn.textContent = '…';
+      var ctl = window.AbortController ? new AbortController() : null, timer = setTimeout(function () { if (ctl) ctl.abort(); }, 20000);
+      fetch(LEAD_HOOK, { method: 'POST', body: body, signal: ctl ? ctl.signal : undefined, credentials: 'omit', referrerPolicy: 'strict-origin' })
+        .then(function (r) { if (!r.ok) throw new Error('bad'); return r.text(); })
+        .then(function () {
+          clearTimeout(timer); ev('lead_submit'); leadDone = true;
+          try { localStorage.setItem('epc_lead', '1'); } catch (err) {}
+          $$('.lead-r, .save-r, .hp, button[type=submit], .lead-fine', f).forEach(function (el) { el.hidden = true; });
+          if (ok) { ok.textContent = T.lead_ok; ok.hidden = false; }
+          var bar = f.closest('.save'); if (bar) setTimeout(function () { bar.remove(); }, 6000);
+        })
+        .catch(function () { clearTimeout(timer); btn.disabled = false; btn.textContent = old; if (msg) { msg.textContent = T.lead_err; msg.hidden = false; } ev('lead_error'); });
+    });
+    $$('input', f).forEach(function (i) { i.addEventListener('input', function () { if (i.getAttribute('aria-invalid') === 'true') i.setAttribute('aria-invalid', 'false'); }); });
+  }
+  $$('form.lead').forEach(setupLead);
+
+  // slide-up "save this tour" after 45 s or 55% scroll, once per visit, never after a lead or while a sheet is open
+  var leadIn = $('#lead-in');
+  if (leadIn && !leadDone) {
+    var shown = false, dismissed = false;
+    try { dismissed = sessionStorage.getItem('epc_save') === '1'; } catch (err) {}
+    var L2 = leadIn.dataset.lang === 'es' ? 'es' : 'en', T2 = S[L2];
+    var showSave = function () {
+      if (shown || dismissed || leadDone) return;
+      if (document.body.classList.contains('lock')) { setTimeout(showSave, 4000); return; }
+      shown = true;
+      var bar = document.createElement('div'); bar.className = 'save'; bar.setAttribute('role', 'dialog'); bar.setAttribute('aria-label', T2.save_t);
+      bar.innerHTML = '<button type="button" class="x" aria-label="' + T2.close + '">×</button><b></b><p></p>' +
+        '<form class="lead" novalidate><div class="save-r"><input name="email" type="email" maxlength="80" required autocomplete="email" placeholder="you@email.com" aria-label="Email"><button class="btn btn-sea" type="submit"></button></div>' +
+        '<div class="hp" aria-hidden="true"><label>Website<input name="website" tabindex="-1" autocomplete="off"></label></div><p class="msg" role="alert" hidden></p><p class="lead-ok" role="status" hidden></p></form>';
+      $('b', bar).textContent = T2.save_t; $('p', bar).textContent = T2.save_p; $('button[type=submit]', bar).textContent = T2.save_b;
+      if (L2 === 'es') $('input[name=email]', bar).placeholder = 'tu@correo.com';
+      var lf = $('form.lead', bar); lf.dataset.lang = L2; lf.dataset.tour = leadIn.dataset.tour; lf.dataset.slug = leadIn.dataset.slug;
+      document.body.appendChild(bar); setupLead(lf); ev('save_bar_shown');
+      $('.x', bar).addEventListener('click', function () { bar.remove(); dismissed = true; try { sessionStorage.setItem('epc_save', '1'); } catch (err) {} ev('save_bar_closed'); });
+    };
+    setTimeout(showSave, 45000);
+    var onScroll = function () {
+      var h = document.documentElement, pct = (h.scrollTop + window.innerHeight) / Math.max(1, h.scrollHeight);
+      if (pct > 0.55) { window.removeEventListener('scroll', onScroll); setTimeout(showSave, 1500); }
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
   }
 
   // photo viewer: tapping a gallery photo opens it large (was a dead click)

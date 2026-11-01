@@ -396,3 +396,59 @@ body.lock{overflow:hidden}
 
 .seg.seg4{grid-template-columns:1fr 1fr}
 .pk-time{margin:6px 0 0;font-size:.88rem;font-weight:700;color:var(--sea,#0a7f7b);line-height:1.35}
+
+/* Google rating (hero, booking card) */
+.th-rate{display:inline-flex;align-items:center;gap:.45rem;margin:.6rem 0 0;color:#fff;text-decoration:none;font-weight:700;font-size:.98rem;text-shadow:0 1px 10px rgba(0,0,0,.35)}
+.th-rate .g-stars{color:#F4B400;letter-spacing:1px}
+.th-rate u{text-decoration:underline;text-underline-offset:3px;font-weight:500;opacity:.92}
+.hero .th-rate{margin-top:.2rem}
+.bk-rate{display:flex;align-items:center;gap:.4rem;margin:2px 0 0;font-size:.86rem;color:var(--ink-2);text-decoration:none}
+.bk-rate .g-stars{color:#F4B400;letter-spacing:1px;font-size:.95rem}
+.bk-rate b{color:var(--ink)}
+/* reviews */
+.revs{margin-top:.4rem}
+.revs h2{margin-bottom:.4rem}
+.rev-top{display:flex;align-items:center;flex-wrap:wrap;gap:.3rem .7rem;margin:0 0 1rem;color:var(--ink-2)}
+.rev-top .g-stars{color:#F4B400;letter-spacing:2px;font-size:1.25rem}
+.rev-top b{font:800 1.6rem/1 var(--display);color:var(--ink)}
+.rev-g{display:grid;gap:14px}
+@media (min-width:760px){.rev-g{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.rv{display:grid;gap:8px;align-content:start;padding:18px;border-radius:var(--r-md);background:var(--sand);border:1px solid var(--line)}
+.rv .g-stars{color:#F4B400;letter-spacing:1px;font-size:.95rem}
+.rv q{quotes:"\201C" "\201D";font-size:.98rem;line-height:1.5;color:var(--ink)}
+.rv-by{font-size:.84rem;color:var(--ink-2)}
+.rv-by b{color:var(--ink)}
+/* booking before the trip */
+.pre{margin:.4rem 0 0;padding:26px;border-radius:var(--r-lg);background:var(--ink);color:#fff}
+.pre h2{color:#fff;margin:0 0 .4rem}
+.pre .intro{color:#BCD2DA}
+.pre-g{display:grid;gap:12px;margin-top:1.2rem}
+@media (min-width:760px){.pre-g{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.pre-i{display:grid;gap:4px;padding:16px;border-radius:var(--r-md);background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14)}
+.pre-i b{font-size:1.02rem}
+.pre-i span{color:#BCD2DA;font-size:.93rem;line-height:1.45}
+/* save this tour (lead) */
+.lead{display:grid;gap:12px;margin-top:1.4rem;padding:20px;border-radius:var(--r-md);background:#fff;color:var(--ink);border:1px solid var(--line)}
+.lead h3{margin:0;font-size:1.15rem;font-weight:700}
+.lead p{margin:0;color:var(--ink-2);font-size:.95rem}
+.lead-r{display:grid;gap:10px}
+@media (min-width:700px){.lead-r{grid-template-columns:1.2fr 1fr 1fr}}
+.lead-ok{padding:.8rem .9rem;border-radius:var(--r-sm);background:var(--lagoon);color:var(--sea-d)!important;font-weight:600}
+.lead-fine{font-size:.82rem;color:var(--ink-3)!important}
+.save{position:fixed;left:12px;right:12px;bottom:calc(84px + env(safe-area-inset-bottom,0px));z-index:35;max-width:520px;margin:0 auto;padding:16px 18px;border-radius:var(--r-md);background:#fff;color:var(--ink);box-shadow:0 18px 50px rgba(6,26,38,.3);border:1px solid var(--line);display:grid;gap:10px;animation:up .35s ease}
+@media (min-width:980px){.save{left:24px;right:auto;bottom:24px;width:400px;margin:0}}
+@keyframes up{from{transform:translateY(16px);opacity:0}to{transform:none;opacity:1}}
+.save .x{top:6px;right:6px}
+.save b{font-size:1.02rem;padding-right:40px;display:block}
+.save p{margin:0;font-size:.9rem;color:var(--ink-2)}
+.save-r{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px}
+.save input{min-height:46px;padding:.6rem .8rem;border:1.5px solid var(--line);border-radius:var(--r-sm);font:500 1rem var(--body);min-width:0;width:100%}
+.save input:focus{outline:none;border-color:var(--sea);box-shadow:0 0 0 3px rgba(10,127,123,.18)}
+.save form.lead{display:grid;gap:8px;margin:0;padding:0;border:0;background:none}
+.save .msg,.save .lead-ok{font-size:.9rem}
+/* availability confirmation (step 2) */
+.bk-sum.ok{display:grid;gap:4px;align-items:start}
+.bk-sum.ok .bk-ok{color:var(--sea-d);font-weight:700}
+.bk-sum.ok .bk-ok::before{content:"✓ ";}
+.bk-sum.ok span{font-weight:500;font-size:.92rem;color:var(--ink-2)}
+.bk-sum.ok .bk-edit{justify-self:start;padding:2px 0}
