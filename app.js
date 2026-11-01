@@ -279,7 +279,7 @@
     s1[0].parentNode.insertBefore(sum, s1[0]);
     payB.parentNode.insertBefore(nxt, payB);
     var amount = function () { var m = (payB.textContent || '').match(/\$[\d,.]+/); return m ? m[0] : ''; };
-    var label = function () { nxt.textContent = T.avail.replace('{t}', amount() || '$75'); };
+    var label = function () { nxt.textContent = T.avail.replace('{t}', amount() || ('$' + (fm.dataset.adult || '75'))); };
     var showStep = function (step) {
       s1.forEach(function (el) { el.hidden = step === 2; });
       s2.forEach(function (el) { el.hidden = step === 1; });
@@ -384,7 +384,7 @@
     var lb = document.createElement('div'); lb.className = 'lb'; lb.hidden = true;
     lb.setAttribute('role', 'dialog'); lb.setAttribute('aria-modal', 'true'); lb.setAttribute('aria-label', es2 ? 'Foto' : 'Photo');
     lb.innerHTML = '<button type="button" class="lb-x" aria-label="' + (es2 ? 'Cerrar' : 'Close') + '">×</button><button type="button" class="lb-p" aria-label="' + (es2 ? 'Anterior' : 'Previous') + '">‹</button><img alt=""><button type="button" class="lb-n" aria-label="' + (es2 ? 'Siguiente' : 'Next') + '">›</button>' +
-      (document.getElementById('bk-side') ? '<a class="btn btn-sea lb-cta" href="#bk-side">' + (es2 ? 'Reservar · $75 por adulto' : 'Book now · $75 per adult') + '</a>' : '');
+      (document.getElementById('bk-side') ? '<a class="btn btn-sea lb-cta" href="#bk-side">' + (es2 ? 'Reservar · $' : 'Book now · $') + (document.getElementById('bk-side').dataset.adult || '75') + (es2 ? ' por adulto' : ' per adult') + '</a>' : '');
     document.body.appendChild(lb);
     var lbImg = $('img', lb), cur = 0, sx = null;
     var srcOf = function (im) { var so = im.parentNode && im.parentNode.querySelector ? im.parentNode.querySelector('source[srcset]') : null; if (so) { var c = so.getAttribute('srcset').split(',').map(function (x) { return x.trim().split(' ')[0]; }); if (c.length) return c[c.length - 1]; } return im.currentSrc || im.src; };
