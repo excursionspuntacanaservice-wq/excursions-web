@@ -1,7 +1,7 @@
 /* Excursions Punta Cana — booking logic. No secrets here: prices are recomputed on the server (Make). */
 (function () {
   'use strict';
-  var HOOK = 'https://hook.us2.make.com/spazsnvez9twnync65aglpm35tbem80q', LEAD_HOOK = 'https://hook.us2.make.com/ckkn6bita5ehxtn5tykmfxfv6b6cnobb', WA = '18299621705', S = {"en": {"book": "Book now", "book_total": "Book & pay securely · {t}", "opening": "Opening secure payment…", "err_pay": "We couldn't open the payment page. Tap \"Chat on WhatsApp\" and we'll send you a secure payment link right away.", "err_fields": "Please fill in the highlighted fields.", "wa_msg": "Hi! I'd like to book {tour}", "wa_on": " on {d}", "wa_for": " for {a} adult(s)", "wa_kids": " and {c} child(ren)", "date_ph": "Choose a date", "pk_val_near": "Entrance of a hotel near: ", "pk_val_meet": "Meeting point: Petromovil Las Canas del Este", "avail": "Check availability · {t}", "avail_ok": "Available on {d}", "step1": "Step 1 of 2 · Date and people", "step2": "Step 2 of 2 · Pickup and contact", "pick_date": "Choose a date to check availability.", "change": "Change", "adult": " adult", "adults": " adults", "kids": " kids", "lead_ok": "Sent! Check your inbox (and the spam folder, just in case). We’ll also remind you before your trip.", "lead_err": "We couldn’t send it right now. Try again in a minute or message us on WhatsApp.", "lead_email": "Enter a valid email.", "save_t": "Not booking today? Save this tour", "save_p": "We email you your hotel’s pickup time, the price and the link to book. No payment.", "save_b": "Send", "close": "Close"}, "es": {"book": "Reservar", "book_total": "Reservar y pagar seguro · {t}", "opening": "Abriendo el pago seguro…", "err_pay": "No pudimos abrir la página de pago. Toca \"Escríbenos por WhatsApp\" y te enviamos el link de pago seguro al momento.", "err_fields": "Completa los campos marcados.", "wa_msg": "¡Hola! Quiero reservar {tour}", "wa_on": " para el {d}", "wa_for": " para {a} adulto(s)", "wa_kids": " y {c} niño(s)", "date_ph": "Elige una fecha", "pk_val_near": "Entrada de hotel cerca de: ", "pk_val_meet": "Punto de encuentro: Petromovil Las Canas del Este", "avail": "Ver disponibilidad · {t}", "avail_ok": "Disponible el {d}", "step1": "Paso 1 de 2 · Fecha y personas", "step2": "Paso 2 de 2 · Recogida y contacto", "pick_date": "Elige una fecha para ver disponibilidad.", "change": "Cambiar", "adult": " adulto", "adults": " adultos", "kids": " niños", "lead_ok": "¡Enviado! Revisa tu correo (y la carpeta de spam, por si acaso). También te recordamos antes de tu viaje.", "lead_err": "No pudimos enviarlo ahora. Inténtalo en un minuto o escríbenos por WhatsApp.", "lead_email": "Escribe un correo válido.", "save_t": "¿Hoy no reservas? Guarda este tour", "save_p": "Te mandamos por correo la hora de recogida de tu hotel, el precio y el link para reservar. Sin pago.", "save_b": "Enviar", "close": "Cerrar"}};
+  var HOOK = 'https://hook.us2.make.com/spazsnvez9twnync65aglpm35tbem80q', LEAD_HOOK = 'https://hook.us2.make.com/ckkn6bita5ehxtn5tykmfxfv6b6cnobb', WA = '18299621705', S = {"en": {"book": "Book now", "book_total": "Book & pay securely · {t}", "opening": "Opening secure payment…", "err_pay": "We couldn't open the payment page. Tap \"Chat on WhatsApp\" and we'll send you a secure payment link right away.", "err_fields": "Please fill in the highlighted fields.", "wa_msg": "Hi! I'd like to book {tour}", "wa_on": " on {d}", "wa_for": " for {a} adult(s)", "wa_kids": " and {c} child(ren)", "date_ph": "Choose a date", "pk_val_near": "Entrance of a hotel near: ", "pk_val_meet": "Meeting point: Petromovil Las Canas del Este", "avail": "Check availability · {t}", "avail_ok": "Available on {d}", "step1": "Step 1 of 2 · Date and people", "step2": "Step 2 of 2 · Pickup and contact", "pick_date": "Choose a date to check availability.", "change": "Change", "adult": " adult", "adults": " adults", "kids": " kids", "lead_ok": "Sent! Check your inbox (and the spam folder, just in case). We’ll also remind you before your trip.", "lead_err": "We couldn’t send it right now. Try again in a minute or message us on WhatsApp.", "lead_email": "Enter a valid email.", "save_t": "Not booking today? Save this tour", "save_p": "We email you your hotel’s pickup time, the price and the link to book. No payment.", "save_b": "Send", "close": "Close", "addon_t": "Add Snorkeling day · $140 per adult for both tours (save $10)", "addon_s": "Kids 2–12 $70 · We confirm your snorkeling day on WhatsApp", "wa_addon": " + Snorkeling day (2-tour package)"}, "es": {"book": "Reservar", "book_total": "Reservar y pagar seguro · {t}", "opening": "Abriendo el pago seguro…", "err_pay": "No pudimos abrir la página de pago. Toca \"Escríbenos por WhatsApp\" y te enviamos el link de pago seguro al momento.", "err_fields": "Completa los campos marcados.", "wa_msg": "¡Hola! Quiero reservar {tour}", "wa_on": " para el {d}", "wa_for": " para {a} adulto(s)", "wa_kids": " y {c} niño(s)", "date_ph": "Elige una fecha", "pk_val_near": "Entrada de hotel cerca de: ", "pk_val_meet": "Punto de encuentro: Petromovil Las Canas del Este", "avail": "Ver disponibilidad · {t}", "avail_ok": "Disponible el {d}", "step1": "Paso 1 de 2 · Fecha y personas", "step2": "Paso 2 de 2 · Recogida y contacto", "pick_date": "Elige una fecha para ver disponibilidad.", "change": "Cambiar", "adult": " adulto", "adults": " adultos", "kids": " niños", "lead_ok": "¡Enviado! Revisa tu correo (y la carpeta de spam, por si acaso). También te recordamos antes de tu viaje.", "lead_err": "No pudimos enviarlo ahora. Inténtalo en un minuto o escríbenos por WhatsApp.", "lead_email": "Escribe un correo válido.", "save_t": "¿Hoy no reservas? Guarda este tour", "save_p": "Te mandamos por correo la hora de recogida de tu hotel, el precio y el link para reservar. Sin pago.", "save_b": "Enviar", "close": "Cerrar", "addon_t": "Agregar día de Snorkel · $140 por adulto por los dos tours (ahorras $10)", "addon_s": "Niños 2–12 $70 · Te confirmamos el día del snorkel por WhatsApp", "wa_addon": " + día de Snorkel (paquete de 2 tours)"}};
   var $ = function (s, r) { return (r || document).querySelector(s); };
   var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
 
@@ -53,6 +53,8 @@
       ['lopesan','8:40','9:50','2:30','3:50'],['barcelo','8:45','9:55','2:35','3:55'],['dreams flora','8:15','9:25','2:05','3:25'],['be live','8:15','9:25','2:05','3:25'],['radisson','8:20','9:30','2:10','3:30'],['serenade','8:20','9:30','2:10','3:30'],['catalonia','8:25','9:35','2:15','3:35'],
       ['royalton chic',null],['chic punta cana',null],['hacienda dominicus',null],['dominicus',null],['la romana',null],['casa de campo',null]]
   };
+  // 2-tour package prices per person (server recomputes in Make; these only drive the button total)
+  var ADDON = { 'saona-island': { id: 'snorkel', adult: 140, child: 70 } };
   var PK_GROUP = { 'saona-island': 'isl', 'catalina-island': 'isl', 'santo-domingo': 'isl', 'party-boat': 'pb', 'snorkeling-punta-cana': 'pb', 'horseback-riding': 'hr' };
   var PK_SHIFTS = {
     pb: { en: ['12:00 PM boat', '3:00 PM boat'], es: ['Barco 12:00 PM', 'Barco 3:00 PM'], pm: [false, true] },
@@ -134,10 +136,25 @@
     var pay = $('.pay', form), chat = $('.chat', form), msg = $('.msg', form);
     var dpRoot = $('.dp', form), dp = dpRoot ? picker(dpRoot, L, function () { refresh(); }) : null, date = dp ? dp.input : null;
 
+    // optional 2-tour package (Saona + Snorkel): one checkbox under the people row, one extra field in the POST
+    var addon = null, row2 = $('.row2', form);
+    if (ADDON[form.dataset.slug] && mode === 'pay' && row2) {
+      var ad = ADDON[form.dataset.slug], lab = document.createElement('label');
+      lab.className = 'opt addon';
+      lab.innerHTML = '<input type="checkbox" name="addon" value="' + ad.id + '"><span><b></b><small></small></span>';
+      $('b', lab).textContent = T.addon_t; $('small', lab).textContent = T.addon_s;
+      row2.parentNode.insertBefore(lab, row2.nextSibling);
+      addon = $('input', lab);
+      addon.addEventListener('change', function () { if (addon.checked) ev('book_addon'); refresh(); });
+    }
+    function pkOn() { return !!(addon && addon.checked); }
     function clamp(inp) { var v = parseInt(inp.value, 10), mn = +inp.min, mx = +inp.max; if (isNaN(v)) v = mn; inp.value = Math.max(mn, Math.min(mx, v)); }
-    function total() { return (a ? +a.value : 0) * adult + (c ? +c.value : 0) * child; }
+    function total() {
+      var pa = pkOn() ? ADDON[form.dataset.slug].adult : adult, pc = pkOn() ? ADDON[form.dataset.slug].child : child;
+      return (a ? +a.value : 0) * pa + (c ? +c.value : 0) * pc;
+    }
     function waText() {
-      var t = T.wa_msg.replace('{tour}', form.dataset.tourL);
+      var t = T.wa_msg.replace('{tour}', form.dataset.tourL + (pkOn() ? T.wa_addon : ''));
       if (date && date.value) t += T.wa_on.replace('{d}', fmtDate(date.value, L));
       if (a) t += T.wa_for.replace('{a}', a.value);
       if (c && +c.value > 0) t += T.wa_kids.replace('{c}', c.value);
@@ -217,7 +234,7 @@
         tour: form.dataset.tour, slug: form.dataset.slug, date: date.value, adults: a.value, children: c ? c.value : '0',
         hotel: pickupValue(), name: $('[name=name]', form).value.trim(),
         whatsapp: (function (v) { var d = v.replace(/\D/g, ''); return (d.length === 10 && v.trim().charAt(0) !== '+') ? '1' + d : d; })($('[name=whatsapp]', form).value), email: $('[name=email]', form).value.trim(),
-        lang: L, website: hp ? hp.value : '', pickup_time: curTime()
+        lang: L, website: hp ? hp.value : '', pickup_time: curTime(), addon: pkOn() ? addon.value : ''
       });
       pay.disabled = true; pay.textContent = T.opening;
       var ctl = window.AbortController ? new AbortController() : null, timer = setTimeout(function () { if (ctl) ctl.abort(); }, 25000);
@@ -266,9 +283,9 @@
   function twoStep(fm) {
     var L = fm.dataset.lang === 'es' ? 'es' : 'en', T = S[L];
     var dIn = $('[name=date]', fm), payB = $('button.pay', fm);
-    var s1 = [$('.fld.dp', fm), $('.row2', fm)].filter(Boolean);
+    var s1 = [$('.fld.dp', fm), $('.row2', fm), $('.addon', fm)].filter(Boolean);
     var s2 = [$('.pk-shift', fm), $('.pk-sel', fm), $('[name=name]', fm) && $('[name=name]', fm).closest('.fld'), $('[name=whatsapp]', fm) && $('[name=whatsapp]', fm).closest('.row2'), $('.hint', fm), payB].filter(Boolean);
-    if (!(dIn && payB && s1.length === 2 && s2.length >= 4)) return;
+    if (!(dIn && payB && s1.length >= 2 && s2.length >= 4)) return;
     var nxt = document.createElement('button'); nxt.type = 'button'; nxt.className = 'btn btn-sea btn-block btn-lg bk-next';
     var sum = document.createElement('div'); sum.className = 'bk-sum ok'; sum.hidden = true;
     var sumT = document.createElement('b'), sumS = document.createElement('span'), sumE = document.createElement('button');
