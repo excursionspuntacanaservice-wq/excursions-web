@@ -11,6 +11,7 @@
   var CUTOFF_H = 18;
   function firstDay() { var rd = new Date(Date.now() - 4 * 3600 * 1000);
     return new Date(rd.getUTCFullYear(), rd.getUTCMonth(), rd.getUTCDate() + (rd.getUTCHours() >= CUTOFF_H ? 2 : 1)); }
+  function lateCut() { return new Date(Date.now() - 4 * 3600 * 1000).getUTCHours() >= CUTOFF_H; }
   function tomorrow() { var d = firstDay(); var m = d.getMonth() + 1, day = d.getDate();
     return d.getFullYear() + '-' + (m < 10 ? '0' : '') + m + '-' + (day < 10 ? '0' : '') + day; }
   function waLink(text) { return 'https://wa.me/' + WA + '?text=' + encodeURIComponent(text); }
@@ -104,7 +105,12 @@
         h += '<button type="button" class="dp-d' + (same(dt, sel) ? ' on' : '') + '" data-d="' + iso(dt) + '" tabindex="' + (same(dt, focusDay) ? '0' : '-1') + '"' +
           (off ? ' disabled' : '') + (same(dt, sel) ? ' aria-pressed="true"' : '') + ' aria-label="' + fFull.format(dt) + '">' + d + '</button>';
       }
-      pop.innerHTML = h + '</div>';
+      var late = '';
+      if (lateCut()) {
+        var lt = L === 'es' ? ['¿Lo necesitas para mañana?', 'Escríbenos y lo consultamos con el operador'] : ['Need it for tomorrow?', 'Message us and we\u2019ll check with the operator'];
+        late = '<p class="dp-late">' + lt[0] + ' <a href="' + waLink(L === 'es' ? 'Hola, quiero saber si hay cupo para mañana' : 'Hi, is there space for tomorrow?') + '" target="_blank" rel="noopener">' + lt[1] + '</a></p>';
+      }
+      pop.innerHTML = h + '</div>' + late;
     }
     function open() { if (!pop.hidden) return; if (sel) { view = new Date(sel.getFullYear(), sel.getMonth(), 1); focusDay = new Date(sel); } render(); pop.hidden = false; btn.setAttribute('aria-expanded', 'true');
       var f = $('.dp-d[tabindex="0"]:not([disabled])', pop) || $('.dp-d:not([disabled])', pop); if (f) f.focus(); }

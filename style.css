@@ -735,3 +735,5 @@ body.lock{overflow:hidden}
   .bk:has(.bk-sum.ok:not([hidden])) .bk-price b{font-size:2rem}
   .bk:has(.bk-sum.ok:not([hidden])) .bk-sum{padding:10px 12px}
 }
+.dp-late{margin:10px 2px 2px;font-size:13px;line-height:1.4;color:inherit;opacity:.85}
+.dp-late a{font-weight:600;text-decoration:underline}
