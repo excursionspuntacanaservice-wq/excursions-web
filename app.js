@@ -6,7 +6,13 @@
   var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
 
   function money(n) { return '$' + (n % 1 ? n.toFixed(2) : String(n)).replace(/\B(?=(\d{3})+(?!\d))/g, ','); }
-  function tomorrow() { var d = new Date(); d.setDate(d.getDate() + 1); var m = d.getMonth() + 1, day = d.getDate();
+  // Earliest bookable day, in Punta Cana time (UTC-4, no DST): tomorrow, or the day after once it's past CUTOFF_H.
+  // The operator needs the booking the evening before, so late-night bookings for the next morning are blocked.
+  var CUTOFF_H = 18;
+  function firstDay() { var rd = new Date(Date.now() - 4 * 3600 * 1000);
+    return new Date(rd.getUTCFullYear(), rd.getUTCMonth(), rd.getUTCDate() + (rd.getUTCHours() >= CUTOFF_H ? 2 : 1)); }
+  function lateCut() { return new Date(Date.now() - 4 * 3600 * 1000).getUTCHours() >= CUTOFF_H; }
+  function tomorrow() { var d = firstDay(); var m = d.getMonth() + 1, day = d.getDate();
     return d.getFullYear() + '-' + (m < 10 ? '0' : '') + m + '-' + (day < 10 ? '0' : '') + day; }
   function waLink(text) { return 'https://wa.me/' + WA + '?text=' + encodeURIComponent(text); }
   // Google Ads secondary counters (observation only, not used for bidding)
@@ -77,7 +83,7 @@
   function picker(root, L, onPick) {
     var btn = $('.dp-btn', root), val = $('.dp-v', root), input = $('input[name=date]', root), pop = $('.dp-pop', root);
     var loc = L === 'es' ? 'es-DO' : 'en-US', weekStart = L === 'es' ? 1 : 0;
-    var min = new Date(); min.setHours(0, 0, 0, 0); min.setDate(min.getDate() + 1);
+    var min = firstDay();
     var max = new Date(min); max.setFullYear(max.getFullYear() + 1);
     var view = new Date(min.getFullYear(), min.getMonth(), 1), sel = null, focusDay = new Date(min);
     var fMonth = new Intl.DateTimeFormat(loc, { month: 'long', year: 'numeric' });
@@ -99,7 +105,12 @@
         h += '<button type="button" class="dp-d' + (same(dt, sel) ? ' on' : '') + '" data-d="' + iso(dt) + '" tabindex="' + (same(dt, focusDay) ? '0' : '-1') + '"' +
           (off ? ' disabled' : '') + (same(dt, sel) ? ' aria-pressed="true"' : '') + ' aria-label="' + fFull.format(dt) + '">' + d + '</button>';
       }
-      pop.innerHTML = h + '</div>';
+      var late = '';
+      if (lateCut()) {
+        var lt = L === 'es' ? ['¿Lo necesitas para mañana?', 'Escríbenos y lo consultamos con el operador'] : ['Need it for tomorrow?', 'Message us and we\u2019ll check with the operator'];
+        late = '<p class="dp-late">' + lt[0] + ' <a href="' + waLink(L === 'es' ? 'Hola, quiero saber si hay cupo para mañana' : 'Hi, is there space for tomorrow?') + '" target="_blank" rel="noopener">' + lt[1] + '</a></p>';
+      }
+      pop.innerHTML = h + '</div>' + late;
     }
     function open() { if (!pop.hidden) return; if (sel) { view = new Date(sel.getFullYear(), sel.getMonth(), 1); focusDay = new Date(sel); } render(); pop.hidden = false; btn.setAttribute('aria-expanded', 'true');
       var f = $('.dp-d[tabindex="0"]:not([disabled])', pop) || $('.dp-d:not([disabled])', pop); if (f) f.focus(); }
