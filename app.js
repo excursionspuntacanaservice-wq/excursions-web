@@ -8,7 +8,7 @@
   function money(n) { return '$' + (n % 1 ? n.toFixed(2) : String(n)).replace(/\B(?=(\d{3})+(?!\d))/g, ','); }
   // Earliest bookable day, in Punta Cana time (UTC-4, no DST): tomorrow, or the day after once it's past CUTOFF_H.
   // The operator needs the booking the evening before, so late-night bookings for the next morning are blocked.
-  var CUTOFF_H = 18;
+  var CUTOFF_H = 22;
   function firstDay() { var rd = new Date(Date.now() - 4 * 3600 * 1000);
     return new Date(rd.getUTCFullYear(), rd.getUTCMonth(), rd.getUTCDate() + (rd.getUTCHours() >= CUTOFF_H ? 2 : 1)); }
   function lateCut() { return new Date(Date.now() - 4 * 3600 * 1000).getUTCHours() >= CUTOFF_H; }
