@@ -16,6 +16,25 @@
     return d.getFullYear() + '-' + (m < 10 ? '0' : '') + m + '-' + (day < 10 ? '0' : '') + day; }
   function waLink(text) { return 'https://wa.me/' + WA + '?text=' + encodeURIComponent(text); }
   // Google Ads secondary counters (observation only, not used for bidding)
+  // Origen de la visita (primer toque, 30 días): anuncio, ChatGPT, Google, Instagram o directo.
+  var SRC = (function () {
+    var cur = '';
+    try {
+      var u = new URLSearchParams(window.location.search), r = document.referrer, h = '';
+      try { h = r ? new URL(r).hostname.replace(/^www\./, '') : ''; } catch (e) {}
+      if (u.get('gclid') || u.get('gbraid') || u.get('wbraid') || u.get('gad_source')) cur = 'google-ads' + (u.get('gad_campaignid') ? ' ' + u.get('gad_campaignid') : '');
+      else if (u.get('fbclid')) cur = 'meta';
+      else if (u.get('utm_source')) cur = u.get('utm_source') + (u.get('utm_medium') ? '/' + u.get('utm_medium') : '') + (u.get('utm_campaign') ? '/' + u.get('utm_campaign') : '');
+      else if (h && h.indexOf('excursionspuntacana.net') < 0 && h.indexOf('stripe.com') < 0) cur = 'ref ' + h;
+      if (cur) cur += ' > ' + window.location.pathname;
+      var old = null; try { old = JSON.parse(localStorage.getItem('epc_src') || 'null'); } catch (e) {}
+      var fresh = old && (Date.now() - old.t) < 30 * 864e5;
+      if (cur && !fresh) { old = { s: cur, t: Date.now() }; fresh = true; }
+      if (!fresh) { old = { s: 'directo > ' + window.location.pathname, t: Date.now() }; }
+      localStorage.setItem('epc_src', JSON.stringify(old));
+      return (old.s + (cur && cur !== old.s ? ' | ultimo: ' + cur : '')).slice(0, 200);
+    } catch (e) { return (cur || 'directo').slice(0, 200); }
+  })();
   function ev(name) { try { if (typeof window.clarity === 'function') window.clarity('event', name); } catch (e) {} }
   function conv(label) { try { if (typeof window.gtag === 'function') window.gtag('event', 'conversion', { send_to: 'AW-18525941849/' + label }); } catch (e) {} }
   var CV_BOOK = 'JUcZCPfonaUdENng7YFF', CV_WA = 'Qk6_CPronaUdENng7YFF';
@@ -228,7 +247,7 @@
         tour: form.dataset.tour, slug: form.dataset.slug, date: date.value, adults: a.value, children: c ? c.value : '0',
         hotel: pickupValue(), name: $('[name=name]', form).value.trim(),
         whatsapp: (function (v) { var d = v.replace(/\D/g, ''); return (d.length === 10 && v.trim().charAt(0) !== '+') ? '1' + d : d; })($('[name=whatsapp]', form).value), email: $('[name=email]', form).value.trim(),
-        lang: L, website: hp ? hp.value : '', pickup_time: curTime()
+        lang: L, website: hp ? hp.value : '', pickup_time: curTime(), fuente: SRC
       });
       pay.disabled = true; pay.textContent = T.opening;
       var ctl = window.AbortController ? new AbortController() : null, timer = setTimeout(function () { if (ctl) ctl.abort(); }, 25000);
