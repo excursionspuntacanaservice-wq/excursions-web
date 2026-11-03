@@ -582,7 +582,12 @@ body.lock{overflow:hidden}
   .th-tour .lede{font-size:1rem;margin-top:.5rem;max-width:34ch}
   .th-tour .th-rate{margin-top:.8rem}
 }
-@media (max-width:639px){.th-tour .lede{display:none}}
+@media (max-width:639px){.th-tour .lede{display:none}
+  /* the hero grows with its title so the header never covers the breadcrumb or the eyebrow */
+  .th-tour{height:auto;min-height:min(390px,48svh)}
+  .th-tour .th-in{padding-top:104px;padding-bottom:52px}
+  .th-tour h1{font-size:clamp(2.2rem,10.4vw,2.7rem);line-height:1.02}
+}
 .th-tour .hero-media{background:none}
 .th-tour .hero-media,.th-tour .th-img{z-index:-2}
 .th-tour .th-img{z-index:-3}
