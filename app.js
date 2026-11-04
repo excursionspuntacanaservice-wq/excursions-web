@@ -48,14 +48,22 @@
   // isl: Saona / Catalina / Santo Domingo (one morning pickup). pb: Party Boat / Snorkel [12 PM boat, 3 PM boat].
   // hr: Horseback [early morning, morning, afternoon, late afternoon]. null = no fixed time, we confirm on WhatsApp.
   var PK = {
-    isl: [['zoetry','6:20'],['sivory','6:35'],['excellence punta cana','6:40'],['excellence pc','6:40'],['sirenis','6:40'],['breathless','6:40'],['excellence el carmen','6:45'],['excellence del carmen','6:45'],['finest','6:45'],
-      ['dreams onyx','6:35'],['now onyx','6:35'],['live aqua','6:40'],['dreams punta cana','6:45'],['nickelodeon','6:45'],['royalton chic','6:45'],['chic punta cana','6:45'],['el faro','6:45'],
-      ['hard rock','6:45'],['dreams macao','6:50'],
-      ['riu republica','7:00'],['occidental caribe','7:05'],['royalton','7:05'],['majestic','7:05'],['bahia principe','7:10'],['riu','7:15'],['iberostar','7:30'],
-      ['ocean blue','7:20'],['punta cana princess','7:25'],['princess punta cana','7:25'],['vik arena','7:30'],['caribe deluxe','7:40'],
-      ['occidental punta cana','7:00'],['palladium','7:35'],['vista sol','7:40'],['impressive','7:45'],['whala','7:50'],['whalas','7:50'],['dreams royal beach','7:55'],
-      ['melia','8:00'],['lopesan','8:00'],['barcelo','8:10'],
-      ['natura park','7:50'],['dreams palm beach','7:50'],['be live','7:50'],['serenade','7:50'],['catalonia','8:00'],['radisson','8:10'],
+    isl: [
+      // Uvero Alto · Macao (new provider: Zoetry→Nickelodeon; the rest keep the previous provider's times)
+      ['zoetry','7:00','L'],['sivory','7:05'],['excellence punta cana','7:10','L'],['excellence pc','7:10','L'],['sirenis','7:15','L'],['breathless','7:20','L'],
+      ['excellence el carmen','6:45'],['excellence del carmen','6:45'],['finest','6:45'],
+      ['dreams onyx','7:25','L'],['now onyx','7:25','L'],['nickelodeon','7:25'],['el faro','7:25'],
+      ['live aqua','6:40'],['dreams punta cana','6:45'],['royalton chic','6:45'],['chic punta cana','6:45'],['hard rock','6:45'],['dreams macao','6:50'],
+      // Bávaro (new provider)
+      ['punta cana princess','7:10','L'],['princess punta cana','7:10','L'],['occidental caribe','7:15','L'],['royalton splash','7:15','B'],['splash punta cana','7:15','B'],
+      ['riu republica','7:20','L'],['ocean blue','7:20','L'],['bahia principe','7:20','B'],['riu','7:25','L'],['bavaro princess','7:30','L'],['vista sol','7:30','B'],
+      ['iberostar','7:35','L'],['palladium','7:40','L'],['occidental punta cana','7:40','L'],['impressive','7:50','B'],['melia','7:55','B'],['lopesan','7:55','M'],['barcelo','8:00','L'],
+      // Bávaro (previous provider)
+      ['royalton','7:05'],['majestic','7:05'],['vik arena','7:30'],['caribe deluxe','7:40'],['whala','7:50'],['whalas','7:50'],['dreams royal beach','7:55'],
+      // Cabeza de Toro (new provider: Catalonia, Serenade, Sunscape Coco)
+      ['catalonia','7:30','B'],['serenade','7:35','B'],['sunscape coco','7:40','B'],
+      ['natura park','7:50'],['dreams palm beach','7:50'],['be live','7:50'],['radisson','8:10'],
+      // Punta Cana · Cap Cana · Bayahibe · La Romana (previous provider)
       ['club med','7:45'],['four points','7:45'],['westin','8:00'],['tortuga bay','8:00'],
       ['sanctuary','7:30'],['margaritaville','7:30'],['hyatt','7:30'],['secrets cap cana','7:30'],['eden roc','7:30'],['trs cap cana','7:30'],['ancora','7:30'],
       ['cadaques','9:10'],['sunscape dominicus','9:10'],['iberostar hacienda','9:10'],['hacienda dominicus','9:10'],['dreams dominicus','9:10'],['viva dominicus','9:10'],['hilton la romana','9:10'],
@@ -93,7 +101,15 @@
     var i = g === 'isl' ? 0 : (shift | 0), t = best[1 + i];
     if (!t) return '';
     var pm = g === 'isl' ? false : PK_SHIFTS[g].pm[i];
-    return t + (pm ? ' PM' : ' AM');
+    var out = t + (pm ? ' PM' : ' AM');
+    // isl rows may carry the pickup spot: L = lobby, B = barrier/gate, M = hotel's excursion meeting point
+    if (g === 'isl' && best[2]) {
+      var es = (document.documentElement.lang || '').indexOf('es') === 0;
+      var SPOT = es ? { L: 'lobby del hotel', B: 'barrera (entrada) del hotel', M: 'meeting point de excursiones del hotel' }
+                    : { L: 'hotel lobby', B: 'hotel barrier gate (entrance)', M: "hotel's excursion meeting point" };
+      if (SPOT[best[2]]) out += ' · ' + SPOT[best[2]];
+    }
+    return out;
   }
 
 
@@ -282,7 +298,7 @@
   }
 
   // hotel suggestions: faster typing on phones
-  var HOTELS = ['Riu Palace Bávaro','Riu Palace Punta Cana','Riu Republica','Riu Naiboa','Occidental Caribe','Occidental Punta Cana','Royalton Bávaro','Royalton Punta Cana','Royalton Chic','Majestic Elegance','Majestic Colonial','Majestic Mirage','Bahía Príncipe','Iberostar Selection Bávaro','Iberostar Dominicana','Iberostar Punta Cana','Ocean Blue & Sand','Princess Punta Cana','Vik Arena Blanca','Grand Palladium','Impressive Punta Cana','Dreams Royal Beach','Dreams Onyx','Dreams Macao','Dreams Palm Beach','Live Aqua','Nickelodeon Punta Cana','Hard Rock Punta Cana','Zoetry Agua','Sivory','Excellence Punta Cana','Excellence El Carmen','Sirenis','Breathless Punta Cana','Meliá Caribe Beach','Paradisus Palma Real','Lopesan Costa Bávaro','Lopesan Caoba Lagoon','Lopesan Serenity Bay','Lopesan Splash Cove','Barceló Bávaro Palace','Be Live Collection','Serenade Punta Cana','Catalonia Bávaro','Catalonia Royal Bávaro','Radisson Blu Punta Cana','Club Med Punta Cana','Four Points Punta Cana','The Westin Puntacana','Tortuga Bay','Sanctuary Cap Cana','Hyatt Ziva Cap Cana','Hyatt Zilara Cap Cana','Secrets Cap Cana','Secrets Royal Beach','Eden Roc Cap Cana','TRS Cap Cana','TRS Turquesa','Ancora Punta Cana','Viva Dominicus','Iberostar Hacienda Dominicus','Hilton La Romana','Sunscape Dominicus','Casa de Campo','Bahía La Romana','La Estancia'];
+  var HOTELS = ['Riu Palace Bávaro','Riu Palace Punta Cana','Riu Republica','Riu Naiboa','Occidental Caribe','Occidental Punta Cana','Royalton Bávaro','Royalton Punta Cana','Royalton Chic','Royalton Splash Punta Cana','Majestic Elegance','Majestic Colonial','Majestic Mirage','Bahía Príncipe','Iberostar Selection Bávaro','Iberostar Dominicana','Iberostar Punta Cana','Ocean Blue & Sand','Punta Cana Princess','Bávaro Princess','Caribe Deluxe Princess','Vik Arena Blanca','Grand Palladium','Impressive Punta Cana','Vista Sol Punta Cana','Whala Bávaro','Dreams Royal Beach','Dreams Onyx','Dreams Macao','Dreams Palm Beach','Live Aqua','Nickelodeon Punta Cana','Ocean El Faro','Hard Rock Punta Cana','Zoetry Agua','Sivory','Excellence Punta Cana','Excellence El Carmen','Sirenis','Breathless Punta Cana','Meliá Caribe Beach','Paradisus Palma Real','Lopesan Costa Bávaro','Lopesan Caoba Lagoon','Lopesan Serenity Bay','Lopesan Splash Cove','Barceló Bávaro Palace','Be Live Collection','Serenade Punta Cana','Catalonia Bávaro','Catalonia Royal Bávaro','Sunscape Coco Punta Cana','Radisson Blu Punta Cana','Club Med Punta Cana','Four Points Punta Cana','The Westin Puntacana','Tortuga Bay','Sanctuary Cap Cana','Hyatt Ziva Cap Cana','Hyatt Zilara Cap Cana','Secrets Cap Cana','Secrets Royal Beach','Eden Roc Cap Cana','TRS Cap Cana','TRS Turquesa','Ancora Punta Cana','Viva Dominicus','Iberostar Hacienda Dominicus','Hilton La Romana','Sunscape Dominicus','Casa de Campo','Bahía La Romana','La Estancia'];
   var hl = $('#hotel-list');
   if (!hl && $('input[name=hotel]')) {
     hl = document.createElement('datalist'); hl.id = 'hotel-list';
