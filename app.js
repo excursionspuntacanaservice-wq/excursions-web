@@ -49,10 +49,10 @@
   // hr: Horseback [early morning, morning, afternoon, late afternoon]. null = no fixed time, we confirm on WhatsApp.
   var PK = {
     isl: [
-      // Uvero Alto · Macao (new provider: Zoetry→Nickelodeon; the rest keep the previous provider's times)
-      ['zoetry','7:00','L'],['sivory','7:05'],['excellence punta cana','7:10','L'],['excellence pc','7:10','L'],['sirenis','7:15','L'],['breathless','7:20','L'],
+      // Uvero Alto · Macao · Cap Cana: previous provider (new one asks min 4 pax at $55 there)
+      ['zoetry','6:20'],['sivory','6:35'],['excellence punta cana','6:40'],['excellence pc','6:40'],['sirenis','6:40'],['breathless','6:40'],
       ['excellence el carmen','6:45'],['excellence del carmen','6:45'],['finest','6:45'],
-      ['dreams onyx','7:25','L'],['now onyx','7:25','L'],['nickelodeon','7:25'],['el faro','7:25'],
+      ['dreams onyx','6:35'],['now onyx','6:35'],['nickelodeon','6:45'],['el faro','6:45'],
       ['live aqua','6:40'],['dreams punta cana','6:45'],['royalton chic','6:45'],['chic punta cana','6:45'],['hard rock','6:45'],['dreams macao','6:50'],
       // Bávaro (new provider)
       ['punta cana princess','7:10','L'],['princess punta cana','7:10','L'],['occidental caribe','7:15','L'],['royalton splash','7:15','B'],['splash punta cana','7:15','B'],
