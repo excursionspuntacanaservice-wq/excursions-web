@@ -737,3 +737,11 @@ body.lock{overflow:hidden}
 }
 .dp-late{margin:10px 2px 2px;font-size:13px;line-height:1.4;color:inherit;opacity:.85}
 .dp-late a{font-weight:600;text-decoration:underline}
+
+/* hotel autocomplete */
+.ac-w{position:relative}
+.ac{position:absolute;left:0;right:0;top:100%;z-index:60;margin:4px 0 0;padding:4px;list-style:none;background:#fff;border:1.5px solid var(--line-2);border-radius:var(--r-sm);box-shadow:0 12px 30px rgba(11,34,51,.18);max-height:280px;overflow:auto}
+.ac li{display:grid;gap:1px;padding:10px 12px;border-radius:8px;cursor:pointer;line-height:1.25}
+.ac li b{font-weight:600;color:var(--ink);font-size:.98rem}
+.ac li span{font-size:.8rem;color:var(--ink-2)}
+.ac li:hover,.ac li[aria-selected="true"]{background:var(--sand)}
