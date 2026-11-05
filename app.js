@@ -400,6 +400,7 @@
       s1.forEach(function (el) { el.hidden = step === 2; });
       s2.forEach(function (el) { el.hidden = step === 1; });
       nxt.hidden = step === 2; sum.hidden = step === 1;
+      fm.classList.toggle('st2', step === 2);
       note.textContent = step === 1 ? T.step1 : T.step2;
       if (step === 1) label();
     };
