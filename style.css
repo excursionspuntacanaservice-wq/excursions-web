@@ -752,3 +752,7 @@ body.lock{overflow:hidden}
 .ac li b{font-weight:600;color:var(--ink);font-size:.98rem}
 .ac li span{font-size:.8rem;color:var(--ink-2)}
 .ac li:hover,.ac li[aria-selected="true"]{background:var(--sand)}
+
+/* booking sheet, step 2 on phones: drop the repeated header lines so hotel, name and phone fit on screen (the $85 zone line stays) */
+.modal .bk.st2 .bk-top > .bk-price,.modal .bk.st2 .bk-top > .bk-kids:not(.bk-zone),.modal .bk.st2 .bk-top > .bk-rate,.modal .bk.st2 .bk-top > .bk-op{display:none}
+.modal .bk.st2 .bk-top > .bk-zone{padding-right:52px}
