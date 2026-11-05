@@ -192,6 +192,8 @@
       if (date && date.value) t += T.wa_on.replace('{d}', fmtDate(date.value, L));
       if (a) t += T.wa_for.replace('{a}', a.value);
       if (c && +c.value > 0) t += T.wa_kids.replace('{c}', c.value);
+      var hv = mode !== 'pay' && $('[name=hotel]', form) ? $('[name=hotel]', form).value.trim() : '';
+      if (hv) t += '. Hotel: ' + hv;
       return t + '.';
     }
     function refresh() {
@@ -307,15 +309,73 @@
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !modal.hidden) closeM(); });
   }
 
-  // hotel suggestions: faster typing on phones
-  var HOTELS = ['Riu Palace Bávaro','Riu Palace Punta Cana','Riu Republica','Riu Naiboa','Occidental Caribe','Occidental Punta Cana','Royalton Bávaro','Royalton Punta Cana','Royalton Chic','Royalton Splash Punta Cana','Majestic Elegance','Majestic Colonial','Majestic Mirage','Bahía Príncipe','Iberostar Selection Bávaro','Iberostar Dominicana','Iberostar Punta Cana','Ocean Blue & Sand','Punta Cana Princess','Bávaro Princess','Caribe Deluxe Princess','Vik Arena Blanca','Grand Palladium','Impressive Punta Cana','Vista Sol Punta Cana','Whala Bávaro','Dreams Royal Beach','Dreams Onyx','Dreams Macao','Dreams Palm Beach','Live Aqua','Nickelodeon Punta Cana','Ocean El Faro','Hard Rock Punta Cana','Zoetry Agua','Sivory','Excellence Punta Cana','Excellence El Carmen','Sirenis','Breathless Punta Cana','Meliá Caribe Beach','Paradisus Palma Real','Lopesan Costa Bávaro','Lopesan Caoba Lagoon','Lopesan Serenity Bay','Lopesan Splash Cove','Barceló Bávaro Palace','Be Live Collection','Serenade Punta Cana','Catalonia Bávaro','Catalonia Royal Bávaro','Sunscape Coco Punta Cana','Radisson Blu Punta Cana','Club Med Punta Cana','Four Points Punta Cana','The Westin Puntacana','Tortuga Bay','Sanctuary Cap Cana','Hyatt Ziva Cap Cana','Hyatt Zilara Cap Cana','Secrets Cap Cana','Secrets Royal Beach','Eden Roc Cap Cana','TRS Cap Cana','TRS Turquesa','Ancora Punta Cana','Viva Dominicus','Iberostar Hacienda Dominicus','Hilton La Romana','Sunscape Dominicus','Casa de Campo','Bahía La Romana','La Estancia'];
-  var hl = $('#hotel-list');
-  if (!hl && $('input[name=hotel]')) {
-    hl = document.createElement('datalist'); hl.id = 'hotel-list';
-    HOTELS.forEach(function (h) { var o = document.createElement('option'); o.value = h; hl.appendChild(o); });
-    document.body.appendChild(hl);
-    $$('input[name=hotel], input[name=near]').forEach(function (i) { i.setAttribute('list', 'hotel-list'); });
+  // hotel autocomplete: suggestions appear under the field while the customer types (same on iPhone and Android)
+  // [name, area]. Uvero Alto and Cap Cana names must match ZONE85 (the $85 zone); the label is checked against ZONE85 when shown.
+  var HOTELS = [
+    ['Zoetry Agua','Uvero Alto'],['Sivory Punta Cana','Uvero Alto'],['Excellence Punta Cana','Uvero Alto'],['Excellence El Carmen','Uvero Alto'],['Finest Punta Cana','Uvero Alto'],
+    ['Sirenis Punta Cana','Uvero Alto'],['Breathless Punta Cana','Uvero Alto'],['Secrets Tides Punta Cana','Uvero Alto'],['Dreams Onyx','Uvero Alto'],['Live Aqua Punta Cana','Uvero Alto'],
+    ['Wyndham Alltra Punta Cana','Uvero Alto'],['Nickelodeon Punta Cana','Uvero Alto'],['Royalton Chic Punta Cana','Uvero Alto'],['Ocean El Faro','Uvero Alto'],['Dreams Punta Cana','Uvero Alto'],
+    ['Hard Rock Punta Cana','Macao'],['Dreams Macao','Macao'],
+    ['Riu Palace Bávaro','Bávaro'],['Riu Palace Punta Cana','Bávaro'],['Riu Palace Macao','Bávaro'],['Riu Republica','Bávaro'],['Riu Naiboa','Bávaro'],['Riu Bambu','Bávaro'],
+    ['Occidental Caribe','Bávaro'],['Occidental Punta Cana','Bávaro'],['Royalton Bávaro','Bávaro'],['Royalton Punta Cana','Bávaro'],['Royalton Splash Punta Cana','Bávaro'],
+    ['Majestic Elegance','Bávaro'],['Majestic Colonial','Bávaro'],['Majestic Mirage','Bávaro'],['Bahía Príncipe','Bávaro'],['Iberostar Selection Bávaro','Bávaro'],['Iberostar Dominicana','Bávaro'],
+    ['Iberostar Punta Cana','Bávaro'],['Ocean Blue & Sand','Bávaro'],['Punta Cana Princess','Bávaro'],['Bávaro Princess','Bávaro'],['Caribe Deluxe Princess','Bávaro'],['Vik Arena Blanca','Bávaro'],
+    ['Grand Palladium','Bávaro'],['Impressive Punta Cana','Bávaro'],['Vista Sol Punta Cana','Bávaro'],['Whala Bávaro','Bávaro'],['Dreams Royal Beach','Bávaro'],['Secrets Royal Beach','Bávaro'],
+    ['Meliá Caribe Beach','Bávaro'],['Paradisus Palma Real','Bávaro'],['Lopesan Costa Bávaro','Bávaro'],['Lopesan Caoba Lagoon','Bávaro'],['Lopesan Serenity Bay','Bávaro'],
+    ['Lopesan Splash Cove','Bávaro'],['Barceló Bávaro Palace','Bávaro'],['Barceló Bávaro Beach','Bávaro'],
+    ['Dreams Palm Beach','Cabeza de Toro'],['Dreams Flora','Cabeza de Toro'],['Jewel Palm Beach','Cabeza de Toro'],['Be Live Collection','Cabeza de Toro'],['Natura Park','Cabeza de Toro'],
+    ['Serenade Punta Cana','Cabeza de Toro'],['Catalonia Bávaro','Cabeza de Toro'],['Catalonia Royal Bávaro','Cabeza de Toro'],['Sunscape Coco Punta Cana','Cabeza de Toro'],['Radisson Blu Punta Cana','Cabeza de Toro'],
+    ['Club Med Punta Cana','Punta Cana'],['Four Points Punta Cana','Punta Cana'],['The Westin Puntacana','Punta Cana'],['Tortuga Bay','Punta Cana'],['TRS Turquesa','Punta Cana'],
+    ['Sanctuary Cap Cana','Cap Cana'],['Hyatt Ziva Cap Cana','Cap Cana'],['Hyatt Zilara Cap Cana','Cap Cana'],['Secrets Cap Cana','Cap Cana'],['Eden Roc Cap Cana','Cap Cana'],
+    ['TRS Cap Cana','Cap Cana'],['Ancora Punta Cana','Cap Cana'],['Margaritaville Island Reserve Cap Cana','Cap Cana'],
+    ['Viva Dominicus','Bayahibe'],['Iberostar Hacienda Dominicus','Bayahibe'],['Dreams Dominicus','Bayahibe'],['Sunscape Dominicus','Bayahibe'],['Cadaqués Caribe','Bayahibe'],['Hilton La Romana','Bayahibe'],
+    ['Casa de Campo','La Romana'],['Bahía La Romana','La Romana'],['La Estancia','La Romana']
+  ];
+  function hotelAC(inp) {
+    var form = inp.form, L = (form && form.dataset.lang ? form.dataset.lang : document.documentElement.lang) === 'es' ? 'es' : 'en';
+    var isl = !!form && PK_GROUP[form.dataset.slug] === 'isl', box = inp.parentNode, cur = -1, items = [];
+    inp.setAttribute('autocomplete', 'off'); inp.setAttribute('autocorrect', 'off'); inp.setAttribute('spellcheck', 'false'); inp.removeAttribute('list');
+    inp.setAttribute('role', 'combobox'); inp.setAttribute('aria-autocomplete', 'list'); inp.setAttribute('aria-expanded', 'false');
+    var ul = document.createElement('ul'); ul.className = 'ac'; ul.id = (inp.id || ('ac' + Math.random().toString(36).slice(2))) + '-ac'; ul.setAttribute('role', 'listbox'); ul.hidden = true;
+    inp.setAttribute('aria-controls', ul.id); box.classList.add('ac-w'); box.appendChild(ul);
+    function close() { ul.hidden = true; cur = -1; inp.setAttribute('aria-expanded', 'false'); inp.removeAttribute('aria-activedescendant'); }
+    function choose(h) { inp.value = h[0]; close(); ['input', 'change'].forEach(function (k) { inp.dispatchEvent(new Event(k, { bubbles: true })); }); ev('hotel_pick'); }
+    function mark(i) { $$('li', ul).forEach(function (li, k) { li.setAttribute('aria-selected', k === i ? 'true' : 'false'); }); cur = i;
+      if (i >= 0) { inp.setAttribute('aria-activedescendant', ul.id + '-' + i); ul.children[i].scrollIntoView({ block: 'nearest' }); } }
+    function show() {
+      var q = normH(inp.value).trim();
+      if (q.length < 2) { close(); return; }
+      var words = q.split(' ');
+      items = HOTELS.filter(function (h) { var n = normH(h[0] + ' ' + h[1]); return words.every(function (w) { return n.indexOf(' ' + w) >= 0; }); }).slice(0, 7);
+      if (!items.length || (items.length === 1 && normH(items[0][0]) === normH(inp.value))) { close(); return; }
+      ul.innerHTML = '';
+      items.forEach(function (h, i) {
+        var li = document.createElement('li'), b = document.createElement('b'), s = document.createElement('span');
+        li.id = ul.id + '-' + i; li.setAttribute('role', 'option'); li.setAttribute('aria-selected', 'false');
+        b.textContent = h[0];
+        s.textContent = h[1] + (isl && ZONE85.test(normH(h[0])) ? (L === 'es' ? ' · $85 por adulto, mín. 4 personas' : ' · $85 per adult, min. 4 people') : '');
+        li.appendChild(b); li.appendChild(s);
+        // pointerdown + preventDefault: the tap is not lost when the field loses focus
+        li.addEventListener('pointerdown', function (e) { e.preventDefault(); choose(h); });
+        li.addEventListener('click', function (e) { e.preventDefault(); if (!ul.hidden) choose(h); });
+        ul.appendChild(li);
+      });
+      var was = ul.hidden; ul.style.top = (inp.offsetTop + inp.offsetHeight) + 'px';
+      ul.hidden = false; cur = -1; inp.setAttribute('aria-expanded', 'true');
+      if (was) try { ul.scrollIntoView({ block: 'nearest' }); } catch (e) {}
+    }
+    inp.addEventListener('input', function (e) { if (e.isTrusted) show(); });
+    inp.addEventListener('focus', show);
+    inp.addEventListener('blur', function () { setTimeout(close, 150); });
+    inp.addEventListener('keydown', function (e) {
+      if (ul.hidden) return;
+      if (e.key === 'ArrowDown') { e.preventDefault(); mark(Math.min(items.length - 1, cur + 1)); }
+      else if (e.key === 'ArrowUp') { e.preventDefault(); mark(Math.max(0, cur - 1)); }
+      else if (e.key === 'Enter' && cur >= 0) { e.preventDefault(); choose(items[cur]); }
+      else if (e.key === 'Escape') { e.stopPropagation(); close(); }
+    });
   }
+  $$('input[name=hotel], input[name=near]').forEach(hotelAC);
   $$('input[name=email]').forEach(function (i) { i.setAttribute('inputmode', 'email'); i.setAttribute('autocapitalize', 'off'); i.setAttribute('spellcheck', 'false'); });
 
   // booking in two steps (sidebar and phone sheet): 1) date + people → "Check availability"  2) availability confirmed, pickup + contact + pay
