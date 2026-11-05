@@ -88,7 +88,9 @@ ul,ol{margin:0;padding:0;list-style:none}
 .hdr .nl,.hdr .lang{color:#fff;text-decoration:none;font-weight:600;font-size:.96rem;letter-spacing:.01em}
 .hdr .nl:hover,.hdr .lang:hover{text-decoration:underline}
 .hdr .lang{padding:.35rem .7rem;border:1px solid rgba(255,255,255,.45);border-radius:999px;font-size:.88rem}
-.hdr .btn-wa{box-shadow:0 6px 18px rgba(0,0,0,.18)}
+/* WhatsApp stays available but quiet: the only solid color above the fold is Book now */
+.hdr .btn-wa{background:rgba(255,255,255,.12);color:#fff;border:1.5px solid rgba(255,255,255,.55);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.hdr .btn-wa:hover{background:rgba(255,255,255,.22)}
 .hdr-light .nl,.hdr-light .lang{color:var(--ink)}
 .hdr-light .lang{border-color:var(--line-2)}
 .hdr-light{position:relative;background:var(--navy);padding-bottom:12px}
@@ -135,7 +137,7 @@ ul,ol{margin:0;padding:0;list-style:none}
 .bk{background:#fff;color:var(--ink);border-radius:var(--r-xl);padding:24px;box-shadow:var(--shadow-3);display:grid;gap:13px}
 .bk-top{display:grid;gap:4px;padding-bottom:14px;border-bottom:1px solid var(--line)}
 .bk-price{display:flex;align-items:baseline;gap:.45rem;flex-wrap:wrap}
-.bk-from{color:var(--ink-3);font-size:.9rem;font-weight:600}
+.bk-from{color:var(--ink-2);font-size:.9rem;font-weight:600}
 .bk-price b{font:800 2.5rem/1 var(--body);letter-spacing:-.035em}
 .bk-price span:last-child{color:var(--ink-2);font-weight:500}
 .bk-kids{margin:0;color:var(--ink-2);font-size:.92rem}
@@ -225,7 +227,7 @@ ul,ol{margin:0;padding:0;list-style:none}
 .offer-p{display:flex;align-items:baseline;gap:.35rem;flex-wrap:wrap;line-height:1}
 .offer-p b{font:800 2.3rem/1 var(--body);letter-spacing:-.035em}
 .offer-p span{color:var(--ink-2);font-size:.9rem;font-weight:500}
-.offer-kids{margin:0;color:var(--ink-3);font-size:.8rem;text-align:right;line-height:1.3}
+.offer-kids{margin:0;color:var(--ink-2);font-size:.8rem;text-align:right;line-height:1.3}
 .offer-inc{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px 12px;padding:12px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
 .offer-inc li{display:flex;gap:.5rem;align-items:flex-start;font-size:.86rem;font-weight:600;line-height:1.25;color:var(--ink)}
 .offer-inc .ic{width:20px;height:20px;color:var(--accent);margin-top:-1px}
@@ -366,7 +368,7 @@ tbody td{color:var(--ink-2)}
 .th::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(6,20,31,.35),rgba(6,20,31,0) 32%,rgba(6,20,31,.15) 55%,rgba(6,20,31,.86))}
 .th-in{width:100%;padding-top:140px;padding-bottom:44px}
 .th h1{color:#fff;max-width:16ch}
-.th .eyebrow,.hero .eyebrow{color:#F6C7AE;text-shadow:0 1px 12px rgba(0,0,0,.35)}
+.th .eyebrow,.hero .eyebrow{color:rgba(255,255,255,.92);text-shadow:0 1px 12px rgba(0,0,0,.35)}
 .crumb{display:flex;gap:.5rem;align-items:center;margin:0 0 .9rem;font-size:.88rem;font-weight:600;color:rgba(255,255,255,.8)}
 .crumb a{color:#fff;opacity:.9;text-decoration:none}
 .crumb a:hover{text-decoration:underline}
@@ -424,11 +426,13 @@ tbody td{color:var(--ink-2)}
 @media (min-width:980px){.mbar{display:none}}
 body.mbar-off .mbar{transform:translateY(110%)}
 .mbar-p{display:grid;grid-template-columns:auto;line-height:1.15}
-.mbar-from{font-size:.74rem!important;color:var(--ink-3)!important;font-weight:600}
+.mbar-from{font-size:.74rem!important;color:var(--ink-2)!important;font-weight:600}
 .mbar-act{display:flex;gap:8px;align-items:center}
 .mbar .mbar-act .btn{min-width:0}
 .mbar .mbar-act .btn-sea{min-width:136px}
 .mbar-wa{padding-left:13px;padding-right:13px}
+.mbar .mbar-wa{background:#fff;color:var(--wa-d);border:1.5px solid #BFE3CD}
+.mbar .mbar-wa:hover{background:#F0FAF4}
 .mbar-wa span{color:inherit;font-size:inherit}
 .wa-fab{position:fixed;right:calc(16px + env(safe-area-inset-right,0px));bottom:calc(88px + env(safe-area-inset-bottom,0px));z-index:30;width:58px;height:58px;border-radius:50%;background:var(--wa);display:grid;place-items:center;box-shadow:0 10px 28px rgba(0,0,0,.25)}
 .wa-fab .wa-i{width:30px;height:30px;fill:#fff}
@@ -582,7 +586,9 @@ body.lock{overflow:hidden}
   .th-tour .lede{font-size:1rem;margin-top:.5rem;max-width:34ch}
   .th-tour .th-rate{margin-top:.8rem}
 }
-@media (max-width:639px){.th-tour .lede{display:none}}
+@media (max-width:639px){.th-tour .lede{display:none}
+  /* short mobile hero: breadcrumb and eyebrow were overflowing under the logo */
+  .th-tour .crumb,.th-tour .eyebrow{display:none}}
 .th-tour .hero-media{background:none}
 .th-tour .hero-media,.th-tour .th-img{z-index:-2}
 .th-tour .th-img{z-index:-3}
