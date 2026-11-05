@@ -485,7 +485,8 @@
       document.body.appendChild(bar); setupLead(lf); ev('save_bar_shown');
       $('.x', bar).addEventListener('click', function () { bar.remove(); dismissed = true; try { sessionStorage.setItem('epc_save', '1'); } catch (err) {} ev('save_bar_closed'); });
     };
-    setTimeout(showSave, 45000);
+    // phones: no timer, only after real scroll (on a small screen the bar covered the page while people were still reading)
+    if (window.innerWidth >= 760) setTimeout(showSave, 45000);
     var onScroll = function () {
       var h = document.documentElement, pct = (h.scrollTop + window.innerHeight) / Math.max(1, h.scrollHeight);
       if (pct > 0.55) { window.removeEventListener('scroll', onScroll); setTimeout(showSave, 1500); }
