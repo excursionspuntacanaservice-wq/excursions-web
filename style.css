@@ -756,3 +756,48 @@ body.lock{overflow:hidden}
 /* booking sheet, step 2 on phones: drop the repeated header lines so hotel, name and phone fit on screen (the $85 zone line stays) */
 .modal .bk.st2 .bk-top > .bk-price,.modal .bk.st2 .bk-top > .bk-kids:not(.bk-zone),.modal .bk.st2 .bk-top > .bk-rate,.modal .bk.st2 .bk-top > .bk-op{display:none}
 .modal .bk.st2 .bk-top > .bk-zone{padding-right:52px}
+
+/* product options in the booking box */
+.bk-opts .opt-l{display:grid;gap:6px}
+.bk-opts label{position:relative;cursor:pointer;display:block}
+.bk-opts input{position:absolute;opacity:0;inset:0;margin:0;cursor:pointer}
+.opt-c{display:grid;grid-template-columns:1fr auto;gap:2px 10px;align-items:baseline;padding:.6rem .8rem;border:1.5px solid #d9e2e7;border-radius:12px;background:#fff}
+.opt-n{font-weight:700;color:var(--ink)}
+.opt-p{font-weight:800;color:var(--ink)}
+.opt-d{grid-column:1/-1;font-size:.86rem;color:var(--ink-2);line-height:1.35}
+.bk-opts input:checked+.opt-c{border-color:var(--ink);box-shadow:0 2px 8px rgba(11,34,51,.12)}
+.bk-opts input:focus-visible+.opt-c{outline:3px solid var(--sun);outline-offset:2px}
+/* option cards in the page body */
+.opt-cards{display:grid;gap:12px;margin:24px 0 0}
+@media (min-width:640px){.opt-cards{grid-template-columns:repeat(auto-fit,minmax(180px,1fr))}}
+.opt-card{border:1.5px solid #d9e2e7;border-radius:14px;padding:14px 16px;background:#fff}
+.opt-card h3{margin:0 0 .25rem;font-size:1.08rem}
+.opt-card .opt-pr{font-weight:800;font-size:1.5rem;line-height:1.1;margin:0 0 .4rem;color:var(--ink)}
+.opt-card .opt-pr small{font-weight:500;font-size:.85rem;color:var(--ink-2)}
+.opt-card ul{margin:0;padding:0;list-style:none;color:var(--ink-2);font-size:.92rem}
+.opt-card li{padding:.12rem 0}
+
+/* day plan */
+.itin{list-style:none;margin:.5rem 0 1rem;padding:0;border-left:2px solid var(--sea,#0a7d8c)}
+.itin li{display:grid;grid-template-columns:7.5rem 1fr;gap:.25rem 1rem;padding:.45rem 0 .45rem 1rem;position:relative}
+.itin li::before{content:"";position:absolute;left:-6px;top:.85rem;width:10px;height:10px;border-radius:50%;background:var(--sea,#0a7d8c)}
+.itin b{font-variant-numeric:tabular-nums}
+@media (max-width:520px){.itin li{grid-template-columns:1fr}}
+/* pickup table by hotel */
+.pkt{margin-top:.75rem;border:1px solid var(--line);border-radius:12px;padding:.25rem .9rem}
+.pkt>summary{cursor:pointer;font-weight:600;padding:.65rem 0;min-height:44px;display:flex;align-items:center}
+.pkt .tbl{max-height:70vh;overflow:auto;margin-bottom:.75rem}
+.pkt th[scope=row]{text-align:left;font-weight:500}
+.pkt td.tm{white-space:nowrap;font-variant-numeric:tabular-nums}
+/* vehicle planner (buggy / ATV) */
+.bk-veh .veh-l{display:grid;gap:.5rem}
+.veh-r{display:flex;align-items:center;justify-content:space-between;gap:.75rem;padding:.5rem .7rem;border:1px solid var(--line);border-radius:10px}
+.veh-n{display:flex;flex-direction:column;line-height:1.25}
+.veh-n small{opacity:.75}
+.veh-r .step{display:flex;align-items:center;gap:.35rem}
+.veh-r .vb{width:40px;height:40px;border-radius:50%;border:1px solid var(--line);background:var(--white,#fff);font-size:1.2rem;line-height:1;cursor:pointer}
+.veh-r .vb:focus-visible{outline:2px solid var(--sea,#0a7d8c);outline-offset:2px}
+.veh-r output{min-width:1.5rem;text-align:center;font-weight:700;font-variant-numeric:tabular-nums}
+.veh-st{margin:.4rem 0 .6rem;font-size:.92rem;color:#1b6e3a}
+.veh-st.bad{color:var(--err)}
+.seg.seg3{grid-template-columns:repeat(3,1fr)}
