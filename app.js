@@ -84,13 +84,18 @@
       ['punta cana princess','8:20','9:30','2:10','3:30'],['princess punta cana','8:20','9:30','2:10','3:30'],['caribe deluxe','8:25','9:35','2:15','3:35'],['bavaro princess','8:25','9:35','2:15','3:35'],['occidental punta cana','8:25','9:35','2:15','3:35'],['palladium','8:25','9:35','2:15','3:35'],
       ['vista sol','8:30','9:40','2:20','3:40'],['impressive','8:30','9:40','2:20','3:40'],['whala','8:30','9:40','2:20','3:40'],['secrets royal','8:35','9:45','2:25','3:45'],['dreams royal beach','8:35','9:45','2:25','3:45'],['palma real','8:35','9:45','2:25','3:45'],['melia','8:35','9:45','2:25','3:45'],
       ['lopesan','8:40','9:50','2:30','3:50'],['barcelo','8:45','9:55','2:35','3:55'],['dreams flora','8:15','9:25','2:05','3:25'],['be live','8:15','9:25','2:05','3:25'],['radisson','8:20','9:30','2:10','3:30'],['serenade','8:20','9:30','2:10','3:30'],['catalonia','8:25','9:35','2:15','3:35'],
-      ['royalton chic',null],['chic punta cana',null],['hacienda dominicus',null],['dominicus',null],['la romana',null],['casa de campo',null]]
+      ['royalton chic',null],['chic punta cana',null],['hacienda dominicus',null],['dominicus',null],['la romana',null],['casa de campo',null]],
+    // Buggy / ATV (Adventure Boogies, Macao): 1st tour 9:00 AM, 2nd 12:00 PM (+3 h), 3rd 3:00 PM (+6 h). Cap Cana: confirm on WhatsApp
+    bg: [['dreams flora','6:20','9:20','12:20'],['jewel palm','7:10','10:10','1:10'],['sunscape coco','7:15','10:15','1:15'],['be live','7:15','10:15','1:15'],['serenade','7:20','10:20','1:20'],['radisson','7:25','10:25','1:25'],['catalonia','7:30','10:30','1:30'],['plaza san juan','7:30','10:30','1:30'],['marriott','7:35','10:35','1:35'],['barcelo bavaro beach','7:30','10:30','1:30'],['barcelo palace','7:35','10:35','1:35'],['barcelo','7:35','10:35','1:35'],['lopesan','7:40','10:40','1:40'],['palma real','7:40','10:40','1:40'],['melia caribe','7:50','10:50','1:50'],['melia punta cana','7:55','10:55','1:55'],['melia','7:50','10:50','1:50'],['paradisus palma real','8:00','11:00','2:00'],['paradisus','8:00','11:00','2:00'],['garden suites','8:05','11:05','2:05'],['the reserve','8:05','11:05','2:05'],['falcon','8:05','11:05','2:05'],['dreams royal beach','8:10','11:10','2:10'],['secrets royal','8:10','11:10','2:10'],['whala','8:10','11:10','2:10'],['impressive','8:10','11:10','2:10'],['vista sol','8:15','11:15','2:15'],['palladium','8:15','11:15','2:15'],['grand palladium bavaro','8:20','11:20','2:20'],['occidental punta cana','8:25','11:25','2:25'],['bavaro princess','7:30','10:30','1:30'],['caribe deluxe','7:40','10:40','1:40'],['karibo','7:40','10:40','1:40'],['punta cana princess','7:50','10:50','1:50'],['princess punta cana','7:50','10:50','1:50'],['vik arena','7:55','10:55','1:55'],['ocean blue','8:00','11:00','2:00'],['iberostar punta cana','8:10','11:10','2:10'],['iberostar dominicana','8:10','11:10','2:10'],['iberostar grand','8:15','11:15','2:15'],['iberostar bavaro','8:15','11:15','2:15'],['iberostar','8:10','11:10','2:10'],['riu palace punta cana','7:35','10:35','1:35'],['riu bambu','7:40','10:40','1:40'],['riu palace macao','7:45','10:45','1:45'],['riu naiboa','7:50','10:50','1:50'],['riu palace bavaro','7:50','10:50','1:50'],['riu','7:50','10:50','1:50'],['bahia principe punta cana','8:00','11:00','2:00'],['bahia principe','8:05','11:05','2:05'],['royalton punta cana','8:00','11:00','2:00'],['royalton splash','8:05','11:05','2:05'],['royalton bavaro','8:10','11:10','2:10'],['royalton','8:05','11:05','2:05'],['majestic colonial','8:15','11:15','2:15'],['majestic mirage','8:20','11:20','2:20'],['majestic elegance','8:20','11:20','2:20'],['majestic','8:15','11:15','2:15'],['riu republica','8:25','11:25','2:25'],['occidental caribe','8:30','11:30','2:30'],['hard rock','8:30','11:30','2:30'],['zoetry','7:30','10:30','1:30'],['sivory','7:30','10:30','1:30'],['excellence punta cana','7:35','10:35','1:35'],['excellence pc','7:35','10:35','1:35'],['sirenis','7:50','10:50','1:50'],['excellence el carmen','7:55','10:55','1:55'],['excellence del carmen','7:55','10:55','1:55'],['finest','7:55','10:55','1:55'],['secrets tides','8:00','11:00','2:00'],['breathless','8:00','11:00','2:00'],['dreams onyx','8:05','11:05','2:05'],['now onyx','8:05','11:05','2:05'],['live aqua','8:10','11:10','2:10'],['alltra','8:15','11:15','2:15'],['funique','8:15','11:15','2:15'],['nickelodeon','8:20','11:20','2:20'],['royalton chic','8:25','11:25','2:25'],['chic punta cana','8:25','11:25','2:25'],['el faro','8:30','11:30','2:30'],['dreams macao','8:35','11:35','2:35'],['eden roc',null],['sanctuary',null],['dreams cap cana',null],['hyatt',null],['secrets cap cana',null],['trs cap cana',null],['ancora',null],['cap cana',null]]
   };
   var ZONE85 = / (uvero|cap ?cana|zoetry|sivory|excellence|finest|sirenis|breathless|secrets tides|onyx|live aqua|alltra|funique|nickelodeon|chic|el faro|dreams punta cana|eden roc|sanctuary|hyatt|ancora|margaritaville) /;
-  var PK_GROUP = { 'saona-island': 'isl', 'catalina-island': 'isl', 'santo-domingo': 'isl', 'party-boat': 'pb', 'snorkeling-punta-cana': 'pb', 'horseback-riding': 'hr' };
+  var PK_GROUP = { 'saona-island': 'isl', 'catalina-island': 'isl', 'santo-domingo': 'isl', 'party-boat': 'pb', 'snorkeling-punta-cana': 'snk', 'horseback-riding': 'hr', 'buggy': 'bg', 'atv': 'bg' };
+  PK.snk = PK.pb;
   var PK_SHIFTS = {
     pb: { en: ['12:00 PM boat', '3:00 PM boat'], es: ['Barco 12:00 PM', 'Barco 3:00 PM'], pm: [false, true] },
-    hr: { en: ['Early morning', 'Morning', 'Afternoon', 'Late afternoon'], es: ['Temprano', 'Mañana', 'Tarde', 'Tarde (2do)'], pm: [false, false, true, true] }
+    hr: { en: ['Early morning', 'Morning', 'Afternoon', 'Late afternoon'], es: ['Temprano', 'Mañana', 'Tarde', 'Tarde (2do)'], pm: [false, false, true, true] },
+    bg: { en: ['9:00 AM', '12:00 PM', '3:00 PM'], es: ['9:00 AM', '12:00 PM', '3:00 PM'], pm: [false, false, true] },
+    snk: { en: ['12:00 PM · family', '3:00 PM · adults only'], es: ['12:00 PM · familiar', '3:00 PM · solo adultos'], pm: [false, true] }
   };
   function normH(s) { return ' ' + String(s || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]+/g, ' ').trim() + ' '; }
   // returns "6:45 AM", or '' when the hotel is not in the table (we confirm the time on WhatsApp)
@@ -187,13 +192,92 @@
       return PK_GROUP[form.dataset.slug] === 'isl' && !!hi && !(r && r.checked) && ZONE85.test(normH(hi.value)); }
     function pax() { return (a ? +a.value : 0) + (c ? +c.value : 0); }
     function total() { var z = zone85(); return (a ? +a.value : 0) * (z ? 85 : adult) + (c ? +c.value : 0) * (z ? 42.5 : child); }
+    // product options (dolphin programs, buggy vehicles, private boat sizes): pick one, price and WhatsApp text follow it
+    var opts = null, optI = 0;
+    try { opts = form.dataset.opts ? JSON.parse(form.dataset.opts) : null; } catch (e) { opts = null; }
+    if (opts && opts.length) {
+      var top = $('.bk-top', form), ob = document.createElement('div');
+      ob.className = 'fld bk-opts';
+      ob.innerHTML = '<span class="lbl">' + (form.dataset.optsLbl || (L === 'es' ? 'Elige una opción' : 'Choose an option')) + '</span><div class="opt-l" role="radiogroup"></div>';
+      opts.forEach(function (o, i) {
+        var lb = document.createElement('label');
+        lb.innerHTML = '<input type="radio" name="' + form.id + '-opt" value="' + i + '"' + (i === 0 ? ' checked' : '') + '><span class="opt-c"><b class="opt-n"></b><b class="opt-p"></b><span class="opt-d"></span></span>';
+        $('.opt-n', lb).textContent = o.n; $('.opt-d', lb).textContent = o.d || ''; $('.opt-p', lb).textContent = money(o.p);
+        $('.opt-l', ob).appendChild(lb);
+      });
+      top.parentNode.insertBefore(ob, top.nextSibling);
+      var kids = $('.bk-kids', form); if (kids && form.dataset.optsNote) kids.textContent = form.dataset.optsNote; else if (kids) kids.hidden = true;
+      var showOpt = function () {
+        var o = opts[optI], pb = $('.bk-price', form); if (!pb) return;
+        var fr = $('.bk-from', pb); if (fr) fr.hidden = true;
+        $('b', pb).textContent = money(o.p); $('span:last-child', pb).textContent = o.u || o.n;
+      };
+      $$('input', ob).forEach(function (r) { r.addEventListener('change', function () { optI = +r.value; showOpt(); refresh(); syncSun(); ev('option_pick'); }); });
+      showOpt();
+    }
+
+    // vehicle planner (buggy / ATV): how the group splits into vehicles; price = sum of vehicles
+    var veh = null, vt = 0, vc = [], vAuto = true;
+    try { veh = form.dataset.veh ? JSON.parse(form.dataset.veh) : null; } catch (e) { veh = null; }
+    var VT = L === 'es' ? { type: 'Vehículo', how: '¿Cómo se reparten?', seat: ' asiento', seats: ' asientos', ok: 'Listo: {p} personas en {s} asientos.', short: 'Faltan {n} asiento(s) para {p} personas. Agrega un vehículo.', extra: 'Sobra(n) {n} asiento(s): pagas el vehículo completo.', none: 'Elige al menos un vehículo.', ppl: ' para {a} persona(s)', dep: '. Salida ', pk: ' (recogida {t})' }
+                       : { type: 'Vehicle', how: 'How do you split up?', seat: ' seat', seats: ' seats', ok: 'All set: {p} people in {s} seats.', short: '{n} seat(s) missing for {p} people. Add a vehicle.', extra: '{n} empty seat(s): you pay for the whole vehicle.', none: 'Choose at least one vehicle.', ppl: ' for {a} people', dep: '. Departure ', pk: ' (pickup {t})' };
+    function vSeats() { return veh[vt].v.reduce(function (s, o, i) { return s + o.s * (vc[i] || 0); }, 0); }
+    function vTotal() { return veh[vt].v.reduce(function (s, o, i) { return s + o.p * (vc[i] || 0); }, 0); }
+    function vText() { return veh[vt].v.map(function (o, i) { return vc[i] ? vc[i] + ' × ' + o.n : ''; }).filter(Boolean).join(' + '); }
+    // cheapest split that seats everyone exactly; ties go to fewer vehicles
+    function vSuggest(p) {
+      var v = veh[vt].v, best = [{ c: 0, n: 0, k: [] }];
+      for (var x = 1; x <= p; x++) { best[x] = null;
+        v.forEach(function (o, i) { var b = best[x - o.s]; if (x - o.s < 0 || !b) return;
+          var c = b.c + o.p, n = b.n + 1; if (!best[x] || c < best[x].c || (c === best[x].c && n < best[x].n)) { var k = b.k.slice(); k[i] = (k[i] || 0) + 1; best[x] = { c: c, n: n, k: k }; } }); }
+      vc = v.map(function (o, i) { return (best[p] && best[p].k[i]) || 0; });
+    }
+    if (veh && veh.length) {
+      var vtop = $('.bk-top', form), vb = document.createElement('div');
+      vb.className = 'bk-veh';
+      vb.innerHTML = (veh.length > 1 ? '<div class="fld"><span class="lbl">' + VT.type + '</span><div class="seg" role="radiogroup"></div></div>' : '') +
+        '<div class="fld"><span class="lbl">' + VT.how + '</span><div class="veh-l"></div></div><p class="veh-st" aria-live="polite"></p>';
+      if (veh.length > 1) veh.forEach(function (t, i) { var lb = document.createElement('label');
+        lb.innerHTML = '<input type="radio" name="' + form.id + '-vt" value="' + i + '"' + (i === 0 ? ' checked' : '') + '><span></span>';
+        $('span', lb).textContent = t.n; $('.seg', vb).appendChild(lb); });
+      // after date + people, so people are chosen first
+      var r2 = $('.row2', form); (r2 || vtop).parentNode.insertBefore(vb, (r2 || vtop).nextSibling);
+      var kidsV = $('.bk-kids', form); if (kidsV) { if (form.dataset.vehNote) kidsV.textContent = form.dataset.vehNote; else kidsV.hidden = true; }
+      var drawV = function () {
+        var l = $('.veh-l', vb); l.innerHTML = '';
+        veh[vt].v.forEach(function (o, i) {
+          var row = document.createElement('div'); row.className = 'veh-r';
+          row.innerHTML = '<span class="veh-n"><b></b><small></small></span><div class="step" role="group"><button type="button" class="vb" data-d="-1">−</button><output></output><button type="button" class="vb" data-d="1">+</button></div>';
+          $('b', row).textContent = o.n; $('small', row).textContent = o.s + (o.s > 1 ? VT.seats : VT.seat) + ' · ' + money(o.p);
+          $('.step', row).setAttribute('aria-label', o.n);
+          $$('.vb', row)[0].setAttribute('aria-label', (L === 'es' ? 'Quitar ' : 'Remove ') + o.n);
+          $$('.vb', row)[1].setAttribute('aria-label', (L === 'es' ? 'Agregar ' : 'Add ') + o.n);
+          $('output', row).textContent = vc[i] || 0;
+          $$('.vb', row).forEach(function (b) { b.addEventListener('click', function () { vAuto = false; vc[i] = Math.max(0, Math.min(15, (vc[i] || 0) + (+b.dataset.d))); $('output', row).textContent = vc[i]; showV(); refresh(); ev('vehicle_edit'); }); });
+          l.appendChild(row);
+        });
+      };
+      var showV = function () {
+        var p = a ? +a.value : 1, s = vSeats(), st = $('.veh-st', vb), pb = $('.bk-price', form);
+        st.className = 'veh-st' + (s < p || !s ? ' bad' : '');
+        st.textContent = !s ? VT.none : s < p ? VT.short.replace('{n}', p - s).replace('{p}', p) : s > p ? VT.extra.replace('{n}', s - p) : VT.ok.replace('{p}', p).replace('{s}', s);
+        if (pb) { var fr = $('.bk-from', pb); if (fr) fr.hidden = true; $('b', pb).textContent = money(vTotal()); $('span:last-child', pb).textContent = veh[vt].n + (vText() ? ' · ' + vText() : ''); }
+      };
+      $$('input[name="' + form.id + '-vt"]', vb).forEach(function (r) { r.addEventListener('change', function () { vt = +r.value; vSuggest(a ? +a.value : 1); vAuto = true; drawV(); showV(); refresh(); ev('vehicle_type'); }); });
+      var resync = function () { vSuggest(a ? +a.value : 1); vAuto = true; drawV(); showV(); };
+      if (a) a.addEventListener('change', resync);
+      $$('.sb', form).forEach(function (b) { b.addEventListener('click', function () { setTimeout(function () { resync(); refresh(); }, 0); }); });
+      resync();
+    }
     function waText() {
-      var t = T.wa_msg.replace('{tour}', form.dataset.tourL);
+      var vs = veh && veh.length ? veh[vt].n + (vText() ? ': ' + vText() + ' = ' + money(vTotal()) : '') : '';
+      var t = T.wa_msg.replace('{tour}', form.dataset.tourL + (opts && opts.length ? ' (' + opts[optI].n + ')' : vs ? ' (' + vs + ')' : ''));
       if (date && date.value) t += T.wa_on.replace('{d}', fmtDate(date.value, L));
-      if (a) t += T.wa_for.replace('{a}', a.value);
+      if (a) t += vs ? VT.ppl.replace('{a}', a.value) : T.wa_for.replace('{a}', a.value);
       if (c && +c.value > 0) t += T.wa_kids.replace('{c}', c.value);
+      if (mode !== 'pay' && PK_SHIFTS[PK_GROUP[form.dataset.slug]]) t += (L === 'es' ? '. Salida ' : '. Departure ') + PK_SHIFTS[PK_GROUP[form.dataset.slug]][L === 'es' ? 'es' : 'en'][shiftIdx | 0];
       var hv = mode !== 'pay' && $('[name=hotel]', form) ? $('[name=hotel]', form).value.trim() : '';
-      if (hv) t += '. Hotel: ' + hv;
+      if (hv) { var ct = curTime(); t += '. Hotel: ' + hv + (ct ? (L === 'es' ? ' (recogida ' : ' (pickup ') + ct.split(' · ')[0] + ')' : ''); }
       return t + '.';
     }
     function refresh() {
@@ -214,38 +298,42 @@
     $$('input[type=radio]', form).forEach(function (r) { r.addEventListener('change', function () { syncPk(); refresh(); }); });
     syncPk();
     function pickupValue() {
-      if (pkMode() === 'hotel') return hotelIn.value.trim();
-      return nhMode() === 'meet' ? T.pk_val_meet : T.pk_val_near + nearIn.value.trim();
+      if (pkMode() === 'hotel') return hotelIn.value.trim() + (sunset() ? ' · SUNSET 4-6 PM' : '');
+      return (nhMode() === 'meet' ? T.pk_val_meet : T.pk_val_near + nearIn.value.trim()) + (sunset() ? ' · SUNSET 4-6 PM' : '');
     }
     // departure choice (Party Boat / Snorkel / Horseback) + pickup time shown before paying
     var slug = form.dataset.slug, grp = PK_GROUP[slug], shiftIdx = 0, pkTime = null;
-    if (grp && hotelIn && mode === 'pay') {
-      var pkSel = $('.pk-sel', form);
+    if (grp && hotelIn) {
+      var pkSel = $('.pk-sel', form) || hotelIn.closest('.fld');
       if (PK_SHIFTS[grp] && pkSel) {
         var labs = PK_SHIFTS[grp][L === 'es' ? 'es' : 'en'], sh = document.createElement('div');
         sh.className = 'fld pk-shift';
-        sh.innerHTML = '<span class="lbl">' + (L === 'es' ? 'Salida' : 'Departure') + '</span><div class="seg' + (labs.length > 2 ? ' seg4' : '') + '" role="radiogroup"></div>';
+        sh.innerHTML = '<span class="lbl">' + (L === 'es' ? 'Salida' : 'Departure') + '</span><div class="seg' + (labs.length === 3 ? ' seg3' : labs.length > 2 ? ' seg4' : '') + '" role="radiogroup"></div>';
         labs.forEach(function (t, i) {
           var lb = document.createElement('label');
           lb.innerHTML = '<input type="radio" name="' + form.id + '-shift" value="' + i + '"' + (i === 0 ? ' checked' : '') + '><span></span>';
           $('span', lb).textContent = t; $('.seg', sh).appendChild(lb);
         });
         pkSel.parentNode.insertBefore(sh, pkSel);
-        $$('input', sh).forEach(function (r) { r.addEventListener('change', function () { shiftIdx = +r.value; showTime(); }); });
+        $$('input', sh).forEach(function (r) { r.addEventListener('change', function () { shiftIdx = +r.value; showTime(); refresh(); }); });
       }
       pkTime = document.createElement('p'); pkTime.className = 'pk-time'; pkTime.setAttribute('aria-live', 'polite'); pkTime.hidden = true;
       hotelIn.parentNode.appendChild(pkTime);
     }
-    function curTime() { return grp && pkMode() === 'hotel' ? pickupTime(slug, hotelIn.value, shiftIdx) : ''; }
+    function sunset() { return !!(opts && opts.length && opts[optI].k === 'sunset'); }
+    function curTime() { return grp && pkMode() === 'hotel' && !sunset() ? pickupTime(slug, hotelIn.value, shiftIdx) : ''; }
+    function syncSun() { var s = $('.pk-shift', form), st1 = !!$('.bk-next', form) && !form.classList.contains('st2'); if (s) s.hidden = sunset() || st1; if (typeof showTime === 'function') showTime(); }
+    form._syncSun = syncSun;
     function showTime() {
       if (!pkTime) return;
       var t = curTime(), v = hotelIn.value.trim();
       if (t) { pkTime.textContent = (L === 'es' ? 'Hora de recogida en tu hotel: ' : 'Pickup time at your hotel: ') + t; pkTime.hidden = false; }
-      else if (v.length >= 3) { pkTime.textContent = L === 'es' ? 'Te confirmamos la hora de recogida por WhatsApp.' : 'We confirm your pickup time on WhatsApp.'; pkTime.hidden = false; }
+      else if (v.length >= 3 || sunset()) { pkTime.textContent = sunset() ? (L === 'es' ? 'Paseo al atardecer de 4:00 a 6:00 PM. Te confirmamos la hora de recogida en tu hotel por WhatsApp.' : 'Sunset ride from 4:00 to 6:00 PM. We confirm your hotel pickup time on WhatsApp.') : (L === 'es' ? 'Te confirmamos la hora de recogida por WhatsApp.' : 'We confirm your pickup time on WhatsApp.'); pkTime.hidden = false; }
       else pkTime.hidden = true;
     }
     if (hotelIn) ['input', 'change'].forEach(function (k) { hotelIn.addEventListener(k, refresh); });
     if (pkTime) { ['input', 'change'].forEach(function (k) { hotelIn.addEventListener(k, showTime); }); $$('input[type=radio]', form).forEach(function (r) { r.addEventListener('change', showTime); }); showTime(); }
+    syncSun();
     $$('.sb', form).forEach(function (b) {
       b.addEventListener('click', function () { var inp = $('input', b.parentNode); inp.value = (+inp.value || 0) + (+b.dataset.step); clamp(inp); refresh(); });
     });
@@ -267,6 +355,7 @@
       if (bad.length) {
         var lbE = bad[0].id ? $('label[for="' + bad[0].id + '"]', form) : null, fl = bad[0].closest('.fld'), nm = lbE ? lbE.textContent : (fl && $('.lbl', fl) ? $('.lbl', fl).textContent : '');
         msg.textContent = T.err_fields + (nm ? ' (' + nm.trim() + ')' : ''); msg.hidden = false; ev('book_missing_fields'); bad[0].focus(); return; }
+      if (grp === 'snk' && shiftIdx === 1 && c && +c.value > 0) { msg.textContent = L === 'es' ? 'El barco de las 3:00 PM es solo para adultos (18+). Con niños, elige el barco familiar de las 12:00 PM.' : 'The 3:00 PM boat is adults only (18+). With children, choose the 12:00 PM family boat.'; msg.hidden = false; ev('book_snk_kids_pm'); return; }
       if (zone85() && pax() < 4) { msg.textContent = L === 'es' ? 'En hoteles de Uvero Alto y Cap Cana este tour sale desde 4 personas. Escríbenos por WhatsApp y te ayudamos.' : 'From Uvero Alto and Cap Cana hotels this tour runs with 4 people or more. Message us on WhatsApp and we will help you.'; msg.hidden = false; ev('book_zone_min4'); return; }
       msg.hidden = true;
       conv(CV_BOOK); ev('book_submit');
@@ -401,6 +490,7 @@
       s2.forEach(function (el) { el.hidden = step === 1; });
       nxt.hidden = step === 2; sum.hidden = step === 1;
       fm.classList.toggle('st2', step === 2);
+      if (fm._syncSun) fm._syncSun();
       note.textContent = step === 1 ? T.step1 : T.step2;
       if (step === 1) label();
     };
