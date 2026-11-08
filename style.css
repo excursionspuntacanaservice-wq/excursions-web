@@ -809,3 +809,6 @@ body.lock{overflow:hidden}
 .v2-tom{margin:.6rem 0 0;text-align:center;font-weight:600;color:#0B3B4F;font-size:.95rem}
 .v2-safe{list-style:none;margin:.8rem 0 0;padding:.75rem .9rem;border:1px solid #CDEBDB;background:#F3FBF6;border-radius:14px;font-size:.92rem;color:#1d3b2c}
 .v2-safe li{padding:.18rem 0 .18rem 1.4rem;position:relative}.v2-safe li:before{content:"\2713";position:absolute;left:0;color:#0B8A4A;font-weight:800}
+
+.bk-brk{margin:6px 0 0;text-align:center;font-size:.86rem;color:var(--muted,#5b6470)}
+.v2-trust{margin:8px 0 0;font-size:.88rem;font-weight:600;color:#0B6B3A}
