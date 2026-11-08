@@ -5,13 +5,13 @@
    Deep ocean navy + warm sand + one sunset accent (all CTAs). Newsreader display, Figtree UI.
    Photography leads; elevation only where something can be tapped or booked. */
 :root{
-  --ink:#0B2233; --ink-2:#3E5664; --ink-3:#6A7D88;
+  --ink:#0B2233; --ink-2:#3E5664; --ink-3:#566974;
   --navy:#0B2233; --navy-2:#123047; --navy-3:#1B4160;
   --sand:#F6F1E9; --sand-2:#EDE4D5; --paper:#FBF9F5;
   --line:#E7E1D7; --line-2:#D5CCBD;
   --accent:#CF4A24; --accent-d:#B23D1B; --accent-soft:#FBEDE6;
   --sea:var(--accent); --sea-d:var(--accent-d); --lagoon:#F3EEE6;
-  --star:#F4B400; --wa:#159A50; --wa-d:#117F42; --white:#FFFFFF; --err:#B3261E; --sun:#F4B740;
+  --star:#F4B400; --wa:#117F42; --wa-d:#0E6B37; --white:#FFFFFF; --err:#B3261E; --sun:#F4B740;
   --display:Newsreader, "Iowan Old Style", Georgia, "Times New Roman", serif;
   --body:Figtree, "Segoe UI", system-ui, -apple-system, sans-serif;
   --r-xl:24px; --r-lg:18px; --r-md:14px; --r-sm:10px; --max:1240px;
@@ -55,6 +55,7 @@ ul,ol{margin:0;padding:0;list-style:none}
 
 /* eyebrow labels on section headers */
 .eyebrow,.kick{display:flex;align-items:center;gap:.6rem;margin:0 0 .9rem;font:700 .76rem/1.2 var(--body);letter-spacing:.16em;text-transform:uppercase;color:var(--accent)}
+.kick{color:var(--accent-d)}
 .kick::before{content:"";width:22px;height:1.5px;background:currentColor;flex:none}
 .sec-h{margin-bottom:var(--s6)}
 .sec-h h2{margin-bottom:.3em}
@@ -67,7 +68,7 @@ ul,ol{margin:0;padding:0;list-style:none}
 .btn-lg{min-height:56px;font-size:1.06rem;padding:1rem 1.6rem}
 .btn-sm{min-height:40px;padding:.55rem .95rem;font-size:.95rem;border-radius:10px}
 .btn-block{width:100%}
-.btn-sea{background:var(--accent);color:#fff;box-shadow:0 1px 0 rgba(255,255,255,.18) inset,0 8px 20px rgba(207,74,36,.28)}
+.btn-sea{background:var(--accent);color:#fff;box-shadow:0 1px 0 rgba(255,255,255,.18) inset,0 6px 16px rgba(11,34,51,.18)}
 .btn-sea:hover{background:var(--accent-d)}
 .btn-sea[disabled]{opacity:.7;cursor:progress}
 .btn-wa{background:var(--wa);color:#fff}
@@ -689,7 +690,7 @@ body.lock{overflow:hidden}
 .inc>div{padding:var(--s5);border-radius:var(--r-lg);border:1px solid var(--line)}
 .inc-y{background:#fff;box-shadow:var(--shadow-1)}
 .inc-n{background:var(--paper)}
-.inc h3,.lists-2 h3{margin:0 0 var(--s4);font:700 .76rem/1.2 var(--body);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3)}
+.inc h3,.lists-2 h3,.inc h2,.lists-2 h2{margin:0 0 var(--s4);font:700 .76rem/1.2 var(--body);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3)}
 .inc li{position:relative;padding:.45rem 0 .45rem 1.7rem;color:var(--ink)}
 .inc .ici{display:grid;gap:4px}
 .inc .ici li{display:flex;gap:.8rem;align-items:center;padding:.45rem 0;font-weight:600}
@@ -812,3 +813,8 @@ body.lock{overflow:hidden}
 
 .bk-brk{margin:6px 0 0;text-align:center;font-size:.86rem;color:var(--muted,#5b6470)}
 .v2-trust{margin:8px 0 0;font-size:.88rem;font-weight:600;color:#0B6B3A}
+
+.tb-main .intro{margin-bottom:var(--s5)}
+.tb-main .inc+.lists-2{margin-top:var(--s3)}
+.lists-2 .dt li::before{background:var(--ink-3)}
+.tb-main .lists-2+h2{margin-top:var(--s7)}
