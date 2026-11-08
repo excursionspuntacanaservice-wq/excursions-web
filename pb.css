@@ -1,0 +1,8 @@
+/* Prueba Impeccable: solo Barco Privado (EN y ES). No afecta otras páginas. */
+:root{--ink-3:#566974;--wa:#117F42;--wa-d:#0E6B37}
+.btn-sea{box-shadow:0 1px 2px rgba(11,34,51,.12),0 6px 16px rgba(11,34,51,.18)}
+.inc h2,.lists-2 h2{margin:0 0 var(--s4);font:700 .76rem/1.2 var(--body);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3)}
+.inc li{padding-top:.5rem;padding-bottom:.5rem}
+.lists-2 .dt li::before{background:var(--ink-3)}
+.tb-main .intro{margin-bottom:var(--s5)}
+.tb-main .lists-2{margin-top:var(--s3)}
