@@ -191,7 +191,7 @@
     function zone85() { var hi = $('[name=hotel]', form), r = $('input[value=nohotel]', form);
       return PK_GROUP[form.dataset.slug] === 'isl' && !!hi && !(r && r.checked) && ZONE85.test(normH(hi.value)); }
     function pax() { return (a ? +a.value : 0) + (c ? +c.value : 0); }
-    function total() { var z = zone85(); return (a ? +a.value : 0) * (z ? 85 : adult) + (c ? +c.value : 0) * (z ? 42.5 : child); }
+    function total() { if (veh && veh.length) return vTotal(); var z = zone85(); return (a ? +a.value : 0) * (z ? 85 : adult) + (c ? +c.value : 0) * (z ? 42.5 : child); }
     // product options (dolphin programs, buggy vehicles, private boat sizes): pick one, price and WhatsApp text follow it
     var opts = null, optI = 0;
     try { opts = form.dataset.opts ? JSON.parse(form.dataset.opts) : null; } catch (e) { opts = null; }
@@ -268,6 +268,7 @@
       if (a) a.addEventListener('change', resync);
       $$('.sb', form).forEach(function (b) { b.addEventListener('click', function () { setTimeout(function () { resync(); refresh(); }, 0); }); });
       resync();
+      form._vehBad = function () { var p = a ? +a.value : 1, s = vSeats(); return !s || s < p ? $('.veh-st', vb).textContent : ''; };
     }
     function waText() {
       var vs = veh && veh.length ? veh[vt].n + (vText() ? ': ' + vText() + ' = ' + money(vTotal()) : '') : '';
@@ -298,6 +299,7 @@
     $$('input[type=radio]', form).forEach(function (r) { r.addEventListener('change', function () { syncPk(); refresh(); }); });
     syncPk();
     function pickupValue() {
+      if (grp === 'bg') return (pkMode() === 'hotel' ? hotelIn.value.trim() : (nhMode() === 'meet' ? T.pk_val_meet : T.pk_val_near + nearIn.value.trim())) + ' · Tour ' + PK_SHIFTS.bg.en[shiftIdx | 0];
       if (pkMode() === 'hotel') return hotelIn.value.trim() + (sunset() ? ' · SUNSET 4-6 PM' : '');
       return (nhMode() === 'meet' ? T.pk_val_meet : T.pk_val_near + nearIn.value.trim()) + (sunset() ? ' · SUNSET 4-6 PM' : '');
     }
@@ -355,6 +357,7 @@
       if (bad.length) {
         var lbE = bad[0].id ? $('label[for="' + bad[0].id + '"]', form) : null, fl = bad[0].closest('.fld'), nm = lbE ? lbE.textContent : (fl && $('.lbl', fl) ? $('.lbl', fl).textContent : '');
         msg.textContent = T.err_fields + (nm ? ' (' + nm.trim() + ')' : ''); msg.hidden = false; ev('book_missing_fields'); bad[0].focus(); return; }
+      if (form._vehBad && form._vehBad()) { msg.textContent = form._vehBad(); msg.hidden = false; ev('book_veh_seats'); return; }
       if (grp === 'snk' && shiftIdx === 1 && c && +c.value > 0) { msg.textContent = L === 'es' ? 'El barco de las 3:00 PM es solo para adultos (18+). Con niños, elige el barco familiar de las 12:00 PM.' : 'The 3:00 PM boat is adults only (18+). With children, choose the 12:00 PM family boat.'; msg.hidden = false; ev('book_snk_kids_pm'); return; }
       if (zone85() && pax() < 4) { msg.textContent = L === 'es' ? 'En hoteles de Uvero Alto y Cap Cana este tour sale desde 4 personas. Escríbenos por WhatsApp y te ayudamos.' : 'From Uvero Alto and Cap Cana hotels this tour runs with 4 people or more. Message us on WhatsApp and we will help you.'; msg.hidden = false; ev('book_zone_min4'); return; }
       msg.hidden = true;
@@ -364,7 +367,7 @@
         tour: form.dataset.tour, slug: form.dataset.slug, date: date.value, adults: a.value, children: c ? c.value : '0',
         hotel: pickupValue(), name: $('[name=name]', form).value.trim(),
         whatsapp: (function (v) { var d = v.replace(/\D/g, ''); return (d.length === 10 && v.trim().charAt(0) !== '+') ? '1' + d : d; })($('[name=whatsapp]', form).value), email: $('[name=email]', form).value.trim(),
-        lang: L, website: hp ? hp.value : '', pickup_time: curTime(), fuente: SRC
+        lang: L, website: hp ? hp.value : '', pickup_time: curTime(), fuente: SRC, veh: veh && veh.length ? vc.map(function (n) { return n || 0; }).join(',') : ''
       });
       pay.disabled = true; pay.textContent = T.opening;
       var ctl = window.AbortController ? new AbortController() : null, timer = setTimeout(function () { if (ctl) ctl.abort(); }, 25000);
@@ -471,17 +474,18 @@
   function twoStep(fm) {
     var L = fm.dataset.lang === 'es' ? 'es' : 'en', T = S[L];
     var dIn = $('[name=date]', fm), payB = $('button.pay', fm);
-    var s1 = [$('.fld.dp', fm), $('.row2', fm)].filter(Boolean);
+    var s1 = [$('.fld.dp', fm), $('.row2', fm), $('.bk-veh', fm)].filter(Boolean);
     var s2 = [$('.pk-shift', fm), $('.pk-sel', fm), $('[name=name]', fm) && $('[name=name]', fm).closest('.fld'), $('[name=whatsapp]', fm) && $('[name=whatsapp]', fm).closest('.row2'), $('.hint', fm), payB].filter(Boolean);
-    if (!(dIn && payB && s1.length === 2 && s2.length >= 4)) return;
+    if (!(dIn && payB && s1.length >= 2 && s2.length >= 4)) return;
     var nxt = document.createElement('button'); nxt.type = 'button'; nxt.className = 'btn btn-sea btn-block btn-lg bk-next';
     var sum = document.createElement('div'); sum.className = 'bk-sum ok'; sum.hidden = true;
     var sumT = document.createElement('b'), sumS = document.createElement('span'), sumE = document.createElement('button');
     sumT.className = 'bk-ok'; sumE.type = 'button'; sumE.className = 'bk-edit'; sumE.textContent = T.change;
     sum.appendChild(sumT); sum.appendChild(sumS); sum.appendChild(sumE);
     var note = document.createElement('p'); note.className = 'bk-step'; note.textContent = T.step1;
-    s1[0].parentNode.insertBefore(note, s1[0]);
-    s1[0].parentNode.insertBefore(sum, s1[0]);
+    var anc = s1[0].parentNode.classList.contains('row2') ? s1[0].parentNode : s1[0];
+    anc.parentNode.insertBefore(note, anc);
+    anc.parentNode.insertBefore(sum, anc);
     payB.parentNode.insertBefore(nxt, payB);
     var amount = function () { var m = (payB.textContent || '').match(/\$[\d,.]+/); return m ? m[0] : ''; };
     var label = function () { nxt.textContent = T.avail.replace('{t}', amount() || ('$' + (fm.dataset.adult || '75'))); };
@@ -501,9 +505,10 @@
         if (msgE) { msgE.textContent = T.pick_date; msgE.hidden = false; }
         return;
       }
+      var vb2 = fm._vehBad && fm._vehBad(); if (vb2) { if (msgE) { msgE.textContent = vb2; msgE.hidden = false; } return; }
       if (msgE) msgE.hidden = true;
       var dv = $('.dp-v', fm), a = $('[name=adults]', fm), c = $('[name=children]', fm);
-      var ppl = a.value + (a.value === '1' ? T.adult : T.adults) + (c && +c.value > 0 ? ', ' + c.value + T.kids : '');
+      var ppl = $('.bk-veh', fm) ? a.value + (L === 'es' ? (a.value === '1' ? ' persona' : ' personas') : (a.value === '1' ? ' person' : ' people')) : a.value + (a.value === '1' ? T.adult : T.adults) + (c && +c.value > 0 ? ', ' + c.value + T.kids : '');
       sumT.textContent = T.avail_ok.replace('{d}', dv ? dv.textContent : dIn.value);
       sumS.textContent = ppl + ' · ' + amount();
       showStep(2); ev('book_step2');
