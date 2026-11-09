@@ -375,7 +375,7 @@
         .then(function (r) { return r.json(); })
         .then(function (j) {
           clearTimeout(timer);
-          if (j && j.ok && typeof j.url === 'string' && j.url.indexOf('https://checkout.stripe.com/') === 0) { window.location.assign(j.url); return; }
+          if (j && j.ok && typeof j.url === 'string' && j.url.indexOf('https://checkout.stripe.com/') === 0) { ev('stripe_checkout'); window.location.assign(j.url); return; }
           throw new Error('no url');
         })
         .catch(function () {
@@ -414,10 +414,12 @@
     var qa = $('[name=adults]', q), qc = $('[name=children]', q), qt = $('.qk-t', q), go = $('.qk-go', q);
     function clampQ(inp) { var v = parseInt(inp.value, 10), mn = +inp.min, mx = +inp.max; if (isNaN(v)) v = mn; inp.value = Math.max(mn, Math.min(mx, v)); }
     function upd() { qt.textContent = money((+qa.value || 0) * ad + (+qc.value || 0) * ch); }
-    var qdp = picker($('.dp', q), L, function () { upd(); ev('quick_date'); });
-    $$('.sb', q).forEach(function (b) { b.addEventListener('click', function () { var inp = $('input', b.parentNode); inp.value = (+inp.value || 0) + (+b.dataset.step); clampQ(inp); upd(); ev('quick_people'); }); });
+    var qdp = picker($('.dp', q), L, function () { upd(); ev('date_selected'); });
+    $$('.sb', q).forEach(function (b) { b.addEventListener('click', function () { var inp = $('input', b.parentNode); inp.value = (+inp.value || 0) + (+b.dataset.step); clampQ(inp); upd(); ev('passengers_changed'); }); });
     [qa, qc].forEach(function (inp) { inp.addEventListener('change', function () { clampQ(inp); upd(); }); });
     upd();
+    // while the date card is on screen, hide the fixed bottom bar so the two buttons don't compete
+    if ('IntersectionObserver' in window) new IntersectionObserver(function (en) { document.body.classList.toggle('qk-on', en[0].isIntersecting); }, { threshold: 0.15 }).observe(q);
     go.addEventListener('click', function () {
       var f = document.getElementById(q.dataset.target); if (!f) return;
       var fa = $('[name=adults]', f), fc = $('[name=children]', f);
@@ -428,7 +430,7 @@
       if (fa) fa.dispatchEvent(new Event('change'));
       // date already chosen: skip straight to pickup + contact
       var nx = $('.bk-next', f); if (qdp.input.value && nx) setTimeout(function () { nx.click(); }, 0);
-      ev('quick_go');
+      ev('continue_clicked');
     });
   });
 
