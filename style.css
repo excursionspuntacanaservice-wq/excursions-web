@@ -832,3 +832,6 @@ body.lock{overflow:hidden}
   .qk-n{margin:-2px 0 0;font-size:.85rem;color:var(--ink-2);text-align:center}
   body.qk-on .mbar{transform:translateY(110%)}
 }
+/* Saona: price, pickup, cancellation and Continue on the first mobile screen */
+.offer-key{display:flex;flex-wrap:wrap;gap:.2rem .9rem;margin:.55rem 0 .2rem;font-size:.92rem;font-weight:600;color:var(--ink)}
+@media (max-width:639px){.th-tour.th-v2{height:min(300px,38svh)}.th-tour.th-v2 h1{font-size:2.35rem;line-height:1.05}.th-tour.th-v2 .th-in{padding-bottom:50px}.offer-w .offer-key{margin-top:.3rem}.offer-w .qk-h{display:none}.offer-key{font-size:.86rem;gap:.2rem .7rem}.offer-w .v2-strip img{height:64px}.offer-w .v2-strip{margin-bottom:10px}}
