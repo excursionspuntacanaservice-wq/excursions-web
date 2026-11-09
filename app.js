@@ -390,7 +390,7 @@
   var cvBookSent = false;
   function cvBookOnce() { if (!cvBookSent) { cvBookSent = true; conv(CV_BOOK); } }
   document.addEventListener('click', function (e) {
-    var t = e.target && e.target.closest ? e.target.closest('a[href="#bk-side"],[data-open="bk-modal"],.hero-cta,.lb-cta,form.bk') : null;
+    var t = e.target && e.target.closest ? e.target.closest('a[href="#bk-side"],[data-open="bk-modal"],.hero-cta,.lb-cta,form.bk,.qk') : null;
     if (t) cvBookOnce();
   }, true);
   $$('form.bk').forEach(function (f) { var once = false; f.addEventListener('focusin', function () { if (!once) { once = true; ev('book_start'); } }); f.addEventListener('click', function () { if (!once) { once = true; ev('book_start'); } }); });
@@ -407,6 +407,30 @@
     modal.addEventListener('click', function (e) { if (e.target === modal || e.target.hasAttribute('data-close')) closeM(); });
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !modal.hidden) closeM(); });
   }
+
+  // quick booking on the mobile offer card: date + people + live total on the first screen, then the full form opens prefilled
+  $$('.qk').forEach(function (q) {
+    var L = q.dataset.lang || 'en', ad = parseFloat(q.dataset.adult) || 0, ch = parseFloat(q.dataset.child) || 0;
+    var qa = $('[name=adults]', q), qc = $('[name=children]', q), qt = $('.qk-t', q), go = $('.qk-go', q);
+    function clampQ(inp) { var v = parseInt(inp.value, 10), mn = +inp.min, mx = +inp.max; if (isNaN(v)) v = mn; inp.value = Math.max(mn, Math.min(mx, v)); }
+    function upd() { qt.textContent = money((+qa.value || 0) * ad + (+qc.value || 0) * ch); }
+    var qdp = picker($('.dp', q), L, function () { upd(); ev('quick_date'); });
+    $$('.sb', q).forEach(function (b) { b.addEventListener('click', function () { var inp = $('input', b.parentNode); inp.value = (+inp.value || 0) + (+b.dataset.step); clampQ(inp); upd(); ev('quick_people'); }); });
+    [qa, qc].forEach(function (inp) { inp.addEventListener('change', function () { clampQ(inp); upd(); }); });
+    upd();
+    go.addEventListener('click', function () {
+      var f = document.getElementById(q.dataset.target); if (!f) return;
+      var fa = $('[name=adults]', f), fc = $('[name=children]', f);
+      if (fa) fa.value = qa.value; if (fc) fc.value = qc.value;
+      if (qdp.input.value) { var fdp = $('.dp', f), fin = $('input[name=date]', f);
+        if (fin) fin.value = qdp.input.value;
+        if (fdp) { $('.dp-v', fdp).textContent = $('.dp-v', q).textContent; fdp.classList.add('has'); var fb = $('.dp-btn', fdp); if (fb) fb.setAttribute('aria-invalid', 'false'); } }
+      if (fa) fa.dispatchEvent(new Event('change'));
+      // date already chosen: skip straight to pickup + contact
+      var nx = $('.bk-next', f); if (qdp.input.value && nx) setTimeout(function () { nx.click(); }, 0);
+      ev('quick_go');
+    });
+  });
 
   // hotel autocomplete: suggestions appear under the field while the customer types (same on iPhone and Android)
   // [name, area]. Uvero Alto and Cap Cana names must match ZONE85 (the $85 zone); the label is checked against ZONE85 when shown.
