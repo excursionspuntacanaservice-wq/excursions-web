@@ -818,3 +818,13 @@ body.lock{overflow:hidden}
 .tb-main .inc+.lists-2{margin-top:var(--s3)}
 .lists-2 .dt li::before{background:var(--ink-3)}
 .tb-main .lists-2+h2{margin-top:var(--s7)}
+
+/* quick booking on the mobile offer card */
+.qk{display:none}
+@media (max-width:979px){
+  .qk{display:grid;gap:10px;margin:4px 0 2px;padding:14px;border:1px solid var(--line);border-radius:14px;background:var(--bg,#fff)}
+  .qk-h{margin:0;font-weight:700;font-size:1rem}
+  .qk .row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .qk .dp{position:relative}
+  .offer .qk-desk{display:none}
+}
