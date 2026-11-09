@@ -649,6 +649,11 @@
     var open = function (i) { show(i); lb.hidden = false; document.body.classList.add('lock'); ev('photo_open'); };
     var close = function () { lb.hidden = true; document.body.classList.remove('lock'); };
     gimgs.forEach(function (im, i) { im.style.cursor = 'zoom-in'; im.addEventListener('click', function () { open(i); }); });
+    var base = function (u) { return (u || '').split('/').pop().replace(/-\d+\.(webp|jpg)$/, ''); };
+    $$('.v2-strip img').forEach(function (im) { var k = base(im.getAttribute('src')), j = 0;
+      gimgs.forEach(function (g, i) { if (base(g.getAttribute('src')) === k) j = i; });
+      im.style.cursor = 'zoom-in'; im.addEventListener('click', function () { open(j); }); });
+    lbImg.addEventListener('click', function (e) { e.stopPropagation(); show(cur + 1); });
     $('.lb-x', lb).addEventListener('click', close);
     var lbCta = $('.lb-cta', lb);
     if (lbCta) lbCta.addEventListener('click', function (e) { e.stopPropagation(); close(); ev('photo_book_cta'); });
