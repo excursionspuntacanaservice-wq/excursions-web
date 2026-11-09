@@ -847,3 +847,7 @@ body.lock{overflow:hidden}
 .gtk{margin:22px 0 0;padding:18px 20px;border-radius:var(--r-lg);background:var(--sand)}.gtk .kick{margin-bottom:.6rem}.gtk ul{list-style:none;margin:0;padding:0;display:grid;gap:.55rem}.gtk li{font-size:.98rem;line-height:1.45;color:var(--ink);padding-left:1.25rem;position:relative}.gtk li::before{content:"✓";position:absolute;left:0;top:0;color:#0B6B3A;font-weight:700}.gtk li b{color:var(--ink)}@media (max-width:639px){.gtk{margin-top:16px;padding:16px 16px}.gtk li{font-size:.93rem}}
 
 .lb-cap{margin:0;max-width:560px;text-align:center;color:#fff;font-size:.98rem;line-height:1.35;text-shadow:0 1px 6px rgba(0,0,0,.6)}.lb-cap .lb-num{display:block;font-size:.78rem;letter-spacing:.08em;opacity:.7;margin-bottom:2px}
+
+/* narrow phones (<=380px): rating pill on one line; <=340px: title clear of the header buttons */
+@media (max-width:380px){.th-rate{font-size:.8rem;gap:.3rem;white-space:nowrap;padding:.38rem .6rem}.th-rate .g-stars{letter-spacing:0}}
+@media (max-width:340px){.hero-in{height:auto;min-height:min(470px,58svh);padding-top:calc(96px + env(safe-area-inset-top,0px))}.th-rate{font-size:.72rem}}
