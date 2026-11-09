@@ -2,3 +2,5 @@ window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);
 (function(){try{if(!/\/thanks(\.html)?$/.test(location.pathname))return;var q=new URLSearchParams(location.search),ref=q.get('ref'),v=parseFloat(q.get('v'));if(!ref||!/^EPC-[0-9]{12}-[0-9]{1,3}$/.test(ref))return;var k='epc_conv_'+ref;try{if(localStorage.getItem(k))return;localStorage.setItem(k,'1');}catch(e){}gtag('event','conversion',{send_to:'AW-18525941849/hbZ0CO3VxKMdENng7YFF',value:(v>0&&v<10000)?v:75,currency:'USD',transaction_id:ref});}catch(e){}})();
 
 (function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window,document,"clarity","script","z1i5o5rqat");
+
+(function(){try{var n=navigator,l=((n.languages&&n.languages[0])||n.language||'na').toLowerCase(),q=location.search;clarity('set','lang',l);clarity('set','ads',/[?&](gclid|gbraid|wbraid)=/.test(q)?'si':'no');}catch(e){}})();
