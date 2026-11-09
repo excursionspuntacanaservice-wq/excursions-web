@@ -828,3 +828,7 @@ body.lock{overflow:hidden}
   .qk .dp{position:relative}
   .offer .qk-desk{display:none}
 }
+@media (max-width:979px){
+  .qk-n{margin:-2px 0 0;font-size:.85rem;color:var(--ink-2);text-align:center}
+  body.qk-on .mbar{transform:translateY(110%)}
+}
