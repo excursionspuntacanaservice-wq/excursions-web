@@ -365,8 +365,8 @@
       var hp = $('[name=website]', form);
       var body = new URLSearchParams({
         tour: form.dataset.tour, slug: form.dataset.slug, date: date.value, adults: a.value, children: c ? c.value : '0',
-        hotel: pickupValue(), name: $('[name=name]', form).value.trim(),
-        whatsapp: (function (v) { var d = v.replace(/\D/g, ''); return (d.length === 10 && v.trim().charAt(0) !== '+') ? '1' + d : d; })($('[name=whatsapp]', form).value), email: $('[name=email]', form).value.trim(),
+        hotel: pickupValue(), name: $('[name=name]', form) ? $('[name=name]', form).value.trim() : '',
+        whatsapp: (function (v) { var d = v.replace(/\D/g, ''); return (d.length === 10 && v.trim().charAt(0) !== '+') ? '1' + d : d; })($('[name=whatsapp]', form) ? $('[name=whatsapp]', form).value : ''), email: $('[name=email]', form).value.trim(),
         lang: L, website: hp ? hp.value : '', pickup_time: curTime(), fuente: SRC, veh: veh && veh.length ? vc.map(function (n) { return n || 0; }).join(',') : ''
       });
       pay.disabled = true; pay.textContent = T.opening;
@@ -508,7 +508,7 @@
     var L = fm.dataset.lang === 'es' ? 'es' : 'en', T = S[L];
     var dIn = $('[name=date]', fm), payB = $('button.pay', fm);
     var s1 = [$('.fld.dp', fm), $('.row2', fm), $('.bk-veh', fm)].filter(Boolean);
-    var s2 = [$('.pk-shift', fm), $('.pk-sel', fm), $('[name=name]', fm) && $('[name=name]', fm).closest('.fld'), $('[name=whatsapp]', fm) && $('[name=whatsapp]', fm).closest('.row2'), $('.hint', fm), payB].filter(Boolean);
+    var s2 = [$('.pk-shift', fm), $('.pk-sel', fm), $('[name=name]', fm) && $('[name=name]', fm).closest('.fld'), $('[name=whatsapp]', fm) && $('[name=whatsapp]', fm).closest('.row2'), $('[name=email]', fm) && $('[name=email]', fm).closest('.row2, .fld'), $('.hint', fm), payB].filter(Boolean);
     if (!(dIn && payB && s1.length >= 2 && s2.length >= 4)) return;
     var nxt = document.createElement('button'); nxt.type = 'button'; nxt.className = 'btn btn-sea btn-block btn-lg bk-next';
     var sum = document.createElement('div'); sum.className = 'bk-sum ok'; sum.hidden = true;
