@@ -639,12 +639,13 @@
     var es2 = (document.documentElement.lang || 'en').indexOf('es') === 0;
     var lb = document.createElement('div'); lb.className = 'lb'; lb.hidden = true;
     lb.setAttribute('role', 'dialog'); lb.setAttribute('aria-modal', 'true'); lb.setAttribute('aria-label', es2 ? 'Foto' : 'Photo');
-    lb.innerHTML = '<button type="button" class="lb-x" aria-label="' + (es2 ? 'Cerrar' : 'Close') + '">×</button><button type="button" class="lb-p" aria-label="' + (es2 ? 'Anterior' : 'Previous') + '">‹</button><img alt=""><button type="button" class="lb-n" aria-label="' + (es2 ? 'Siguiente' : 'Next') + '">›</button>' +
-      (document.getElementById('bk-side') ? '<a class="btn btn-sea lb-cta" href="#bk-side">' + (es2 ? 'Reservar · $' : 'Book now · $') + (document.getElementById('bk-side').dataset.adult || '75') + (es2 ? ' por adulto' : ' per adult') + '</a>' : '');
+    lb.innerHTML = '<button type="button" class="lb-x" aria-label="' + (es2 ? 'Cerrar' : 'Close') + '">×</button><button type="button" class="lb-p" aria-label="' + (es2 ? 'Anterior' : 'Previous') + '">‹</button><img alt=""><button type="button" class="lb-n" aria-label="' + (es2 ? 'Siguiente' : 'Next') + '">›</button><p class="lb-cap"><span class="lb-num"></span><span class="lb-txt"></span></p>' +
+      (document.getElementById('bk-side') ? '<a class="btn btn-sea lb-cta" href="#bk-side">' + (es2 ? 'Elige tu fecha · $' : 'Pick a date · $') + (document.getElementById('bk-side').dataset.adult || '75') + (es2 ? ' por adulto' : ' per adult') + '</a>' : '');
     document.body.appendChild(lb);
     var lbImg = $('img', lb), cur = 0, sx = null;
     var srcOf = function (im) { var so = im.parentNode && im.parentNode.querySelector ? im.parentNode.querySelector('source[srcset]') : null; if (so) { var c = so.getAttribute('srcset').split(',').map(function (x) { return x.trim().split(' ')[0]; }); if (c.length) return c[c.length - 1]; } return im.currentSrc || im.src; };
-    var show = function (i) { cur = (i + gimgs.length) % gimgs.length; lbImg.src = srcOf(gimgs[cur]); lbImg.alt = gimgs[cur].alt || ''; };
+    var lbNum = $('.lb-num', lb), lbTxt = $('.lb-txt', lb);
+    var show = function (i) { cur = (i + gimgs.length) % gimgs.length; lbImg.src = srcOf(gimgs[cur]); lbImg.alt = gimgs[cur].alt || ''; if (lbNum) lbNum.textContent = (cur + 1) + ' / ' + gimgs.length; if (lbTxt) lbTxt.textContent = gimgs[cur].alt || ''; };
     var open = function (i) { show(i); lb.hidden = false; document.body.classList.add('lock'); ev('photo_open'); };
     var close = function () { lb.hidden = true; document.body.classList.remove('lock'); };
     gimgs.forEach(function (im, i) { im.style.cursor = 'zoom-in'; im.addEventListener('click', function () { open(i); }); });

@@ -546,14 +546,14 @@ body.lock{overflow:hidden}
 .pre-i span{color:#BCD2DA;font-size:.93rem;line-height:1.45}
 
 /* photo viewer */
-.lb{position:fixed;inset:0;z-index:60;background:rgba(6,20,31,.94);display:flex;align-items:center;justify-content:center;padding:16px}
+.lb{position:fixed;inset:0;z-index:60;background:rgba(6,20,31,.94);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:64px 16px max(16px,env(safe-area-inset-bottom))}
 .lb[hidden]{display:none!important}
-.lb img{max-width:100%;max-height:76svh;border-radius:12px;object-fit:contain}
+.lb img{max-width:100%;max-height:58svh;border-radius:12px;object-fit:contain}
 .lb button{position:absolute;border:0;background:rgba(255,255,255,.14);color:#fff;border-radius:999px;width:46px;height:46px;font-size:28px;line-height:1;cursor:pointer}
 .lb-x{top:14px;right:14px}
 .lb-p{left:10px;top:50%;transform:translateY(-50%)}
 .lb-n{right:10px;top:50%;transform:translateY(-50%)}
-.lb .lb-cta{position:absolute;left:50%;bottom:max(18px,env(safe-area-inset-bottom));transform:translateX(-50%);width:auto;height:auto;border-radius:12px;padding:14px 22px;font-size:17px;font-weight:700;white-space:nowrap;box-shadow:0 6px 24px rgba(0,0,0,.35)}
+.lb .lb-cta{position:static;width:auto;max-width:100%;height:auto;border-radius:12px;padding:15px 26px;font-size:17px;font-weight:700;white-space:nowrap;box-shadow:0 6px 24px rgba(0,0,0,.35)}
 
 /* save this tour (lead) */
 .lead{display:grid;gap:12px;margin-top:1.4rem;padding:22px;border-radius:var(--r-lg);background:#fff;color:var(--ink);border:1px solid var(--line)}
@@ -845,3 +845,5 @@ body.lock{overflow:hidden}
 .bk-later .save-r input{flex:1;min-width:0}
 
 .gtk{margin:22px 0 0;padding:18px 20px;border-radius:var(--r-lg);background:var(--sand)}.gtk .kick{margin-bottom:.6rem}.gtk ul{list-style:none;margin:0;padding:0;display:grid;gap:.55rem}.gtk li{font-size:.98rem;line-height:1.45;color:var(--ink);padding-left:1.25rem;position:relative}.gtk li::before{content:"✓";position:absolute;left:0;top:0;color:#0B6B3A;font-weight:700}.gtk li b{color:var(--ink)}@media (max-width:639px){.gtk{margin-top:16px;padding:16px 16px}.gtk li{font-size:.93rem}}
+
+.lb-cap{margin:0;max-width:560px;text-align:center;color:#fff;font-size:.98rem;line-height:1.35;text-shadow:0 1px 6px rgba(0,0,0,.6)}.lb-cap .lb-num{display:block;font-size:.78rem;letter-spacing:.08em;opacity:.7;margin-bottom:2px}
