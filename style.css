@@ -835,3 +835,11 @@ body.lock{overflow:hidden}
 /* Saona: price, pickup, cancellation and Continue on the first mobile screen */
 .offer-key{display:flex;flex-wrap:wrap;gap:.2rem .9rem;margin:.55rem 0 .2rem;font-size:.92rem;font-weight:600;color:var(--ink)}
 @media (max-width:639px){.th-tour.th-v2{height:min(300px,38svh)}.th-tour.th-v2 h1{font-size:2.35rem;line-height:1.05}.th-tour.th-v2 .th-in{padding-bottom:50px}.offer-w .offer-key{margin-top:.3rem}.offer-w .qk-h{display:none}.offer-key{font-size:.86rem;gap:.2rem .7rem}.offer-w .v2-strip img{height:64px}.offer-w .v2-strip{margin-bottom:10px}}
+.pay+.bk-notes{margin-top:10px;margin-bottom:10px}
+.bk-later{margin:8px 0 10px;font-size:.9rem}
+.bk-later summary{cursor:pointer;color:var(--sea,#0b6e8f);text-decoration:underline;text-underline-offset:3px;list-style:none;text-align:center;padding:6px 0}
+.bk-later summary::-webkit-details-marker{display:none}
+.bk-later[open] summary{text-decoration:none;color:var(--ink)}
+.bk-later p{margin:4px 0 8px;color:var(--ink-2);font-size:.86rem}
+.bk-later .save-r{display:flex;gap:8px}
+.bk-later .save-r input{flex:1;min-width:0}
