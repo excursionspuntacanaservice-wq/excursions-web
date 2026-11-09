@@ -843,3 +843,5 @@ body.lock{overflow:hidden}
 .bk-later p{margin:4px 0 8px;color:var(--ink-2);font-size:.86rem}
 .bk-later .save-r{display:flex;gap:8px}
 .bk-later .save-r input{flex:1;min-width:0}
+
+.gtk{margin:22px 0 0;padding:18px 20px;border-radius:var(--r-lg);background:var(--sand)}.gtk .kick{margin-bottom:.6rem}.gtk ul{list-style:none;margin:0;padding:0;display:grid;gap:.55rem}.gtk li{font-size:.98rem;line-height:1.45;color:var(--ink);padding-left:1.25rem;position:relative}.gtk li::before{content:"✓";position:absolute;left:0;top:0;color:#0B6B3A;font-weight:700}.gtk li b{color:var(--ink)}@media (max-width:639px){.gtk{margin-top:16px;padding:16px 16px}.gtk li{font-size:.93rem}}
