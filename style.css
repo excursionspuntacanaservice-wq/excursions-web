@@ -459,7 +459,6 @@ body.lock{overflow:hidden}
 .bk-rate{display:flex;align-items:center;gap:.4rem;margin:4px 0 0;font-size:.86rem;color:var(--ink-2);text-decoration:none}
 .bk-rate .g-stars{font-size:.95rem}
 .bk-rate b{color:var(--ink)}
-.bk-rate:hover{text-decoration:underline}
 
 /* review section */
 .revs{margin-top:0}
@@ -469,7 +468,6 @@ body.lock{overflow:hidden}
 .rev-top{display:grid;grid-template-columns:auto auto;align-items:center;gap:2px 14px;margin:0;padding:16px 20px;border-radius:var(--r-lg);background:#fff;border:1px solid var(--line);box-shadow:var(--shadow-1);color:var(--ink-2);font-size:.88rem;justify-self:start}
 .rev-top b{grid-row:span 2;font:500 3rem/1 var(--display);color:var(--ink);letter-spacing:-.02em}
 .rev-top .g-stars{letter-spacing:2px;font-size:1.15rem}
-.rev-top a{color:var(--ink);font-weight:600}
 .rev-g{display:grid;gap:14px}
 @media (min-width:760px){.rev-g{grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}}
 .rv{display:flex;flex-direction:column;gap:14px;padding:24px;border-radius:var(--r-lg);background:#fff;border:1px solid var(--line);box-shadow:var(--shadow-1)}
