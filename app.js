@@ -634,7 +634,7 @@
   }
 
   // photo viewer: tapping a gallery photo opens it large (was a dead click)
-  var gimgs = $$('.gal img, picture.m1 img, picture.m2 img, picture.m3 img');
+  var gimgs = $$('.gal img, picture.m1 img, picture.m2 img, picture.m3 img, .hlc img');
   if (gimgs.length) {
     var es2 = (document.documentElement.lang || 'en').indexOf('es') === 0;
     var lb = document.createElement('div'); lb.className = 'lb'; lb.hidden = true;
@@ -653,6 +653,8 @@
     $$('.v2-strip img').forEach(function (im) { var k = base(im.getAttribute('src')), j = 0;
       gimgs.forEach(function (g, i) { if (base(g.getAttribute('src')) === k) j = i; });
       im.style.cursor = 'zoom-in'; im.addEventListener('click', function () { open(j); }); });
+    $$('.hlc li').forEach(function (li) { var im = li.querySelector('img'), j = Array.prototype.indexOf.call(gimgs, im); if (j < 0) return;
+      li.style.cursor = 'zoom-in'; li.addEventListener('click', function (e) { if (e.target !== im) open(j); }); });
     lbImg.addEventListener('click', function (e) { e.stopPropagation(); show(cur + 1); });
     $('.lb-x', lb).addEventListener('click', close);
     var lbCta = $('.lb-cta', lb);
