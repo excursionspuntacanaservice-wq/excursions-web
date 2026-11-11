@@ -849,3 +849,37 @@ body.lock{overflow:hidden}
 /* narrow phones (<=380px): rating pill on one line; <=340px: title clear of the header buttons */
 @media (max-width:380px){.th-rate{font-size:.8rem;gap:.3rem;white-space:nowrap;padding:.38rem .6rem}.th-rate .g-stars{letter-spacing:0}}
 @media (max-width:340px){.hero-in{height:auto;min-height:min(470px,58svh);padding-top:calc(96px + env(safe-area-inset-top,0px))}.th-rate{font-size:.72rem}}
+
+/* Páginas de información (artículos) */
+.art-pg .hdr{position:relative;background:var(--navy);padding-bottom:12px}
+.art{padding:clamp(28px,5vw,56px) 0 clamp(56px,8vw,96px)}
+.art-crumb{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;margin:0 0 1.4rem;font-size:.88rem;font-weight:600;color:var(--ink-2)}
+.art-crumb a{color:var(--accent-d);text-decoration:none}
+.art-crumb a:hover{text-decoration:underline}
+.art h1{font-size:clamp(2rem,5vw,3.2rem);line-height:1.06;max-width:22ch;color:var(--ink);text-shadow:none;margin:0 0 1rem}
+.art h2{font-size:clamp(1.45rem,3vw,1.9rem);line-height:1.15;margin:2.4rem 0 .8rem}
+.art .intro.big{color:var(--ink);max-width:68ch;margin:0}
+.art p,.art li{color:var(--ink-2);max-width:68ch}
+.art p{margin:0 0 1rem}
+.art ol,.art ul{margin:0 0 1rem;padding-left:1.3rem}
+.art li{margin:0 0 .45rem}
+.art b{color:var(--ink)}
+.art a{color:var(--accent-d)}
+.art-tbl{overflow-x:auto;margin:0 0 1.2rem;border:1px solid var(--line);border-radius:var(--r-lg);background:#fff}
+.art-tbl table{width:100%;border-collapse:collapse;font-size:.96rem;min-width:420px}
+.art-tbl th,.art-tbl td{padding:.75rem 1rem;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+.art-tbl thead th{background:var(--sand);color:var(--ink);font-size:.82rem;letter-spacing:.04em;text-transform:uppercase}
+.art-tbl tbody th{color:var(--ink);font-weight:700}
+.art-tbl td{color:var(--ink-2);font-variant-numeric:tabular-nums}
+.art-tbl tr:last-child th,.art-tbl tr:last-child td{border-bottom:0}
+.art .faq p{max-width:68ch}
+.art-links{list-style:none;padding:0!important}
+.art-links li{margin:0 0 .5rem}
+.art-links a{font-weight:700}
+.art-upd{margin:2rem 0 0!important;font-size:.88rem;color:var(--ink-2)}
+.art ol{list-style:decimal}
+.art ul{list-style:disc}
+.art ul.art-links{list-style:none}
+@media (max-width:640px){.art-tbl table{font-size:.88rem;min-width:0}.art-tbl th,.art-tbl td{padding:.6rem .55rem}.art-tbl thead th{font-size:.7rem;letter-spacing:.02em}}
+.faq .faq-more{margin:1rem 0;font-size:.95rem}
+.faq .faq-more a{color:var(--accent-d);font-weight:700}
