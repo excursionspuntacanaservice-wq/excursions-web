@@ -710,10 +710,17 @@
       var mob = window.matchMedia('(max-width:760px)').matches;
       var v = $(mob ? '.hv-m' : '.hv-d', media);
       if (reduce || slow || !v || !v.getAttribute('data-src')) { media.classList.add('novid'); return; }
-      var fail = function () { media.classList.add('novid'); };
+      // autoplay can be refused (iPhone Low Power Mode, some in-app browsers): keep the photo and retry on the first touch or scroll
+      var retried = false, evs = ['touchstart', 'pointerdown', 'scroll', 'keydown'];
+      var retry = function () {
+        if (retried) return; retried = true;
+        evs.forEach(function (e) { window.removeEventListener(e, retry, true); });
+        try { var q = v.play(); if (q && q.catch) q.catch(function () { media.classList.add('novid'); }); } catch (err) { media.classList.add('novid'); }
+      };
+      var fail = function () { if (retried || v.error) { media.classList.add('novid'); return; } evs.forEach(function (e) { window.addEventListener(e, retry, { capture: true, passive: true }); }); };
       v.muted = true; v.defaultMuted = true; v.setAttribute('muted', ''); v.playsInline = true;
-      v.addEventListener('playing', function () { media.classList.add('vplay'); });
-      v.addEventListener('error', fail);
+      v.addEventListener('playing', function () { media.classList.remove('novid'); media.classList.add('vplay'); });
+      v.addEventListener('error', function () { media.classList.add('novid'); });
       v.preload = 'auto'; v.src = v.getAttribute('data-src');
       try { var p = v.play(); if (p && p.catch) p.catch(fail); } catch (err) { fail(); }
       document.addEventListener('visibilitychange', function () { if (!document.hidden && !media.classList.contains('novid')) { var q = v.play(); if (q && q.catch) q.catch(function () {}); } });
