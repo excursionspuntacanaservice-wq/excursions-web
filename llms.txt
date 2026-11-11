@@ -10,6 +10,14 @@
 - Recogida entre 6:20 y 8:10 AM según la zona; regreso hacia las 6:00 PM.
 - Sin hotel (Airbnb, villa, apartamento): punto de encuentro o recogida en un hotel cercano.
 
+## Isla Catalina (día completo)
+- Precio: 75 USD por adulto, 37.50 USD por niño de 5 a 8 años, gratis de 0 a 4 años. Cap Cana y Uvero Alto: 85 / 42.50 USD, mínimo 4 personas.
+- Incluye: recogida y regreso al hotel, barco a la isla, almuerzo en la playa y open bar a bordo. No incluye propinas ni bebidas premium o importadas.
+
+## Tour de Santo Domingo (día completo)
+- Precio: 75 USD por adulto, 37.50 USD por niño de 5 a 8 años, gratis de 0 a 4 años. Cap Cana y Uvero Alto: 85 / 42.50 USD, mínimo 4 personas.
+- Incluye: recogida y regreso al hotel, transporte, guía y almuerzo. Zona Colonial a pie, Catedral Primada de América y Alcázar de Colón.
+
 ## Reserva y pago
 - Pago completo al reservar, solo con tarjeta, en dólares estadounidenses (USD), procesado por Stripe. No se cobra en efectivo.
 - Cancelación gratis hasta 24 horas antes con reembolso completo. Un cambio de fecha gratis hasta 24 horas antes.
@@ -22,5 +30,10 @@
 - [Precio de Isla Saona por zona](https://excursionspuntacana.net/es/isla-saona-precio.html)
 - [Isla Saona desde un Airbnb](https://excursionspuntacana.net/es/saona-desde-airbnb.html)
 - [Cómo reservar y pagar desde tu país](https://excursionspuntacana.net/es/como-reservar-y-pagar.html)
+- [Saona Island price by area (English)](https://excursionspuntacana.net/saona-island-price.html)
+- [Saona Island from an Airbnb (English)](https://excursionspuntacana.net/saona-from-airbnb.html)
+- [How to book and pay (English)](https://excursionspuntacana.net/how-to-book-and-pay.html)
+- [Precio de Isla Catalina](https://excursionspuntacana.net/es/isla-catalina-precio.html)
+- [Precio del tour a Santo Domingo](https://excursionspuntacana.net/es/tour-santo-domingo-precio.html)
 - [Todas las excursiones](https://excursionspuntacana.net/es/)
 - [Política de cancelación](https://excursionspuntacana.net/cancelacion/)
