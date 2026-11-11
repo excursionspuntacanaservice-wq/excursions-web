@@ -56,8 +56,9 @@
         boton: label ? label : /chat/.test(c) ? 'formulario' : /wa-fab/.test(c) ? 'flotante' : /mbar-wa/.test(c) ? 'barra movil' : 'pagina',
         dispositivo: window.matchMedia && window.matchMedia('(max-width: 760px)').matches ? 'movil' : 'pc'
       });
-      if (navigator.sendBeacon) navigator.sendBeacon(WA_HOOK, body);
-      else fetch(WA_HOOK, { method: 'POST', body: body, keepalive: true, credentials: 'omit' }).catch(function () {});
+      // fetch con keepalive: los bloqueadores de anuncios descartan sendBeacon; queda solo como respaldo.
+      if (window.fetch) fetch(WA_HOOK, { method: 'POST', body: body, keepalive: true, credentials: 'omit', referrerPolicy: 'strict-origin' }).catch(function () {});
+      else if (navigator.sendBeacon) navigator.sendBeacon(WA_HOOK, body);
     } catch (e) {}
   }
   function fmtDate(v, lang) { if (!v) return ''; var p = v.split('-'); return lang === 'es' ? p[2] + '/' + p[1] + '/' + p[0] : p[1] + '/' + p[2] + '/' + p[0]; }
