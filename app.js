@@ -435,13 +435,52 @@
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !modal.hidden) closeM(); });
   }
 
+  // hotel finder: the customer types the hotel and sees the pickup time (and the $85 zone rule) before booking
+  function hotelFinder(inp, out, L, slug, cb) {
+    var sent = false;
+    function show() {
+      var v = inp.value.trim(), t = pickupTime(slug, v, 0), z = PK_GROUP[slug] === 'isl' && ZONE85.test(normH(v)), m = '';
+      if (t) m = X(L, 'Tu recogida: ', 'Your pickup: ') + t + X(L, '. Te la confirmamos por WhatsApp el día antes.', '. We confirm it on WhatsApp the day before.');
+      else if (v.length >= 3) m = X(L, 'Te confirmamos la hora de recogida por WhatsApp.', 'We confirm your pickup time on WhatsApp.');
+      if (m && z) m += X(L, ' Desde hoteles de Uvero Alto y Cap Cana: $85 por adulto, $42.50 niños 5–8, mínimo 4 personas.', ' From Uvero Alto and Cap Cana hotels: $85 per adult, $42.50 children 5–8, minimum 4 people.');
+      if (out) { out.textContent = m; out.hidden = !m; out.classList.toggle('ok', !!t); }
+      if (t && !sent) { sent = true; ev('hotel_time_seen'); }
+      if (cb) cb(v, t);
+    }
+    inp.addEventListener('input', show); inp.addEventListener('change', show);
+    if (inp.form) inp.form.addEventListener('submit', function (e) { e.preventDefault(); inp.blur(); });
+    show();
+  }
+  $$('form.hf-pk').forEach(function (f) {
+    var inp = $('[name=hotel]', f), L = lg(f.dataset.lang), slug = f.dataset.slug, box = $(f.dataset.wa || '#wa-pk'), wa = box ? $('a[href*="wa.me/"]', box) : null, base = wa ? wa.href : '', own = $('.hf-wa', f);
+    if (!inp) return;
+    hotelFinder(inp, $('.hf-r', f), L, slug, function (v, t) {
+      var link = v ? waLink((S[L] || S.en).wa_msg.replace('{tour}', f.dataset.tourL || '') + '. Hotel: ' + v + (t ? X(L, ' (recogida ', ' (pickup ') + t.split(' · ')[0] + ')' : '') + X(L, '. Mi fecha: ', '. My date: ')) : base;
+      if (wa) wa.href = link;
+      if (own) { own.href = link || own.href; own.hidden = v.length < 3; }
+      // the desktop booking form gets the same hotel, so step 2 arrives filled in
+      var side = document.getElementById('bk-side'), sh = side ? $('[name=hotel]', side) : null;
+      if (sh && v && sh.value !== v) { sh.value = v; sh.dispatchEvent(new Event('input', { bubbles: true })); }
+    });
+  });
+
   // quick booking on the mobile offer card: date + people + live total on the first screen, then the full form opens prefilled
   $$('.qk').forEach(function (q) {
     var L = lg(q.dataset.lang), ad = parseFloat(q.dataset.adult) || 0, ch = parseFloat(q.dataset.child) || 0;
     var qa = $('[name=adults]', q), qc = $('[name=children]', q), qt = $('.qk-t', q), go = $('.qk-go', q);
     function clampQ(inp) { var v = parseInt(inp.value, 10), mn = +inp.min, mx = +inp.max; if (isNaN(v)) v = mn; inp.value = Math.max(mn, Math.min(mx, v)); }
-    function upd() { qt.textContent = money((+qa.value || 0) * ad + (+qc.value || 0) * ch); }
+    var qh = $('[name=hotel]', q), qwa = $('.qk-wa', q), TQ = S[L] || S.en, qtl = q.dataset.tourL || '', qsl = q.dataset.slug || '';
+    function qz() { return !!qh && PK_GROUP[qsl] === 'isl' && ZONE85.test(normH(qh.value)); }
+    function upd() {
+      var z = qz(); qt.textContent = money((+qa.value || 0) * (z ? 85 : ad) + (+qc.value || 0) * (z ? 42.5 : ch));
+      if (qwa) { var d = $('input[name=date]', q), t = TQ.wa_msg.replace('{tour}', qtl);
+        if (d && d.value) t += TQ.wa_on.replace('{d}', fmtDate(d.value, L));
+        t += TQ.wa_for.replace('{a}', qa.value); if (+qc.value > 0) t += TQ.wa_kids.replace('{c}', qc.value);
+        var hv = qh ? qh.value.trim() : ''; if (hv) { var pt = pickupTime(qsl, hv, 0); t += '. Hotel: ' + hv + (pt ? X(L, ' (recogida ', ' (pickup ') + pt.split(' · ')[0] + ')' : ''); }
+        qwa.href = waLink(t + '.'); }
+    }
     var qdp = picker($('.dp', q), L, function () { upd(); ev('date_selected'); });
+    if (qh) hotelFinder(qh, $('.hf-r', q), L, qsl, upd);
     $$('.sb', q).forEach(function (b) { b.addEventListener('click', function () { var inp = $('input', b.parentNode); inp.value = (+inp.value || 0) + (+b.dataset.step); clampQ(inp); upd(); ev('passengers_changed'); }); });
     [qa, qc].forEach(function (inp) { inp.addEventListener('change', function () { clampQ(inp); upd(); }); });
     upd();
@@ -454,6 +493,7 @@
       if (qdp.input.value) { var fdp = $('.dp', f), fin = $('input[name=date]', f);
         if (fin) fin.value = qdp.input.value;
         if (fdp) { $('.dp-v', fdp).textContent = $('.dp-v', q).textContent; fdp.classList.add('has'); var fb = $('.dp-btn', fdp); if (fb) fb.setAttribute('aria-invalid', 'false'); } }
+      var fh = $('[name=hotel]', f); if (qh && fh && qh.value.trim()) { fh.value = qh.value.trim(); fh.dispatchEvent(new Event('input', { bubbles: true })); }
       if (fa) fa.dispatchEvent(new Event('change'));
       // date already chosen: skip straight to pickup + contact
       var nx = $('.bk-next', f); if (qdp.input.value && nx) setTimeout(function () { nx.click(); }, 0);

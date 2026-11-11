@@ -883,3 +883,30 @@ body.lock{overflow:hidden}
 @media (max-width:640px){.art-tbl table{font-size:.88rem;min-width:0}.art-tbl th,.art-tbl td{padding:.6rem .55rem}.art-tbl thead th{font-size:.7rem;letter-spacing:.02em}}
 .faq .faq-more{margin:1rem 0;font-size:.95rem}
 .faq .faq-more a{color:var(--accent-d);font-weight:700}
+
+/* Saona ES (11-nov): hotel finder, WhatsApp as a booking button, title never under the header */
+.hf{display:grid;gap:6px;margin:0}
+.hf .fld label{font-size:.92rem;color:var(--ink);letter-spacing:0}
+.hf-r{margin:0;padding:10px 12px;border-radius:var(--r-sm);background:var(--paper);border:1px solid var(--line);font-size:.92rem;line-height:1.4;color:var(--ink)}
+.hf-r.ok{background:#F3FBF6;border-color:#CDEBDB;color:#0B4A2A;font-weight:600}
+.hf-pk{max-width:560px;margin:0 0 var(--s5)}
+.hf-pk .fld label{font-size:1rem;font-weight:700}
+.hf-wa{justify-self:start;margin-top:4px}
+.hf-wa[hidden]{display:none}
+.offer-sum{margin:0;font-size:.92rem;line-height:1.4;color:var(--ink-2)}
+.offer-op-es b{color:var(--ink)}
+.qk-wa,.bk.wa-up .chat{font-size:1.08rem}
+.qk .qk-wa{padding-top:1rem;padding-bottom:1rem;box-shadow:0 8px 20px rgba(17,127,66,.28)}
+.qk .qk-go.v2-cta{font-size:1.05rem;padding:.85rem 1rem;box-shadow:none}
+.bk.wa-up>.chat{order:1}
+.bk.wa-up>.bk-notes{order:2}
+.how3{list-style:none;counter-reset:h3;display:grid;gap:8px;margin:4px 0 0;padding:0;font-size:.92rem;color:var(--ink-2)}
+.how3 li{counter-increment:h3;position:relative;padding-left:34px;line-height:1.4}
+.how3 li::before{content:counter(h3);position:absolute;left:0;top:-1px;width:24px;height:24px;border-radius:50%;background:var(--navy);color:#fff;font-weight:700;font-size:.8rem;display:grid;place-items:center}
+.how3 b{color:var(--ink)}
+@media (min-width:760px){.how3{grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}}
+@media (max-width:639px){
+  .th-tour.th-v2{height:auto;min-height:min(300px,38svh)}
+  .th-tour.th-v2 .th-in{padding-top:calc(84px + env(safe-area-inset-top,0px))}
+  .th-tour.th-v2.th-long h1{font-size:1.95rem;max-width:none}
+}
