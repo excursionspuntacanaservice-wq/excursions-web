@@ -40,8 +40,26 @@
   var CV_BOOK = 'JUcZCPfonaUdENng7YFF', CV_WA = 'Qk6_CPronaUdENng7YFF';
   document.addEventListener('click', function (e) {
     var l = e.target && e.target.closest ? e.target.closest('a[href*="wa.me/"]') : null;
-    if (l) { conv(CV_WA); ev('whatsapp_click'); }
+    if (l) { conv(CV_WA); ev('whatsapp_click'); waLog(l); }
   }, true);
+  // Registro interno del origen de cada clic a WhatsApp (sin datos personales). Si falla, el clic sigue igual.
+  var WA_HOOK = 'https://hook.us2.make.com/a4pf96xny4cxg2m2m6v6s9omc4b42fu6', waLast = 0;
+  function waLog(el, label) {
+    try {
+      if (Date.now() - waLast < 3000) return; waLast = Date.now();
+      var f = (el && el.closest ? el.closest('form.bk') : null), pf = f || document.querySelector('form.bk');
+      var g = function (n) { var x = f ? f.querySelector('[name=' + n + ']') : null; return x && x.value ? String(x.value) : ''; };
+      var c = el && el.className ? String(el.className) : '';
+      var body = new URLSearchParams({
+        fuente: SRC, pagina: window.location.pathname, idioma: document.documentElement.lang || '',
+        tour: pf && pf.dataset.tour ? pf.dataset.tour : '', fecha: g('date'), adultos: g('adults'), ninos: g('children'),
+        boton: label ? label : /chat/.test(c) ? 'formulario' : /wa-fab/.test(c) ? 'flotante' : /mbar-wa/.test(c) ? 'barra movil' : 'pagina',
+        dispositivo: window.matchMedia && window.matchMedia('(max-width: 760px)').matches ? 'movil' : 'pc'
+      });
+      if (navigator.sendBeacon) navigator.sendBeacon(WA_HOOK, body);
+      else fetch(WA_HOOK, { method: 'POST', body: body, keepalive: true, credentials: 'omit' }).catch(function () {});
+    } catch (e) {}
+  }
   function fmtDate(v, lang) { if (!v) return ''; var p = v.split('-'); return lang === 'es' ? p[2] + '/' + p[1] + '/' + p[0] : p[1] + '/' + p[2] + '/' + p[0]; }
 
   // ---------- pickup time by hotel (same tables Sofia uses on WhatsApp) ----------
@@ -344,7 +362,7 @@
 
     form.addEventListener('submit', function (e) {
       e.preventDefault();
-      if (mode !== 'pay') { conv(CV_WA); window.open(waLink(waText()), '_blank', 'noopener'); return; }
+      if (mode !== 'pay') { conv(CV_WA); waLog(form, 'formulario (enviar)'); window.open(waLink(waText()), '_blank', 'noopener'); return; }
       var bad = [];
       $$('input[required]', form).forEach(function (i) {
         if (i.closest('[hidden]')) return;
