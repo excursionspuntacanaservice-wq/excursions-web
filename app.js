@@ -122,6 +122,8 @@
     bg: { en: ['9:00 AM', '12:00 PM', '3:00 PM'], es: ['9:00 AM', '12:00 PM', '3:00 PM'], pm: [false, false, true] },
     snk: { en: ['12:00 PM · family', '3:00 PM · adults only'], es: ['12:00 PM · familiar', '3:00 PM · solo adultos'], pm: [false, true] }
   };
+  (function (x) { for (var g in x) for (var l in x[g]) PK_SHIFTS[g][l] = x[g][l]; })({"pb": {"fr": ["Bateau de 12 h", "Bateau de 15 h"], "pt": ["Barco das 12h", "Barco das 15h"], "de": ["Boot um 12 Uhr", "Boot um 15 Uhr"], "it": ["Barca delle 12:00", "Barca delle 15:00"], "pl": ["Łódź o 12:00", "Łódź o 15:00"]}, "hr": {"fr": ["Tôt le matin", "Matin", "Après-midi", "Fin d’après-midi"], "pt": ["Bem cedo", "Manhã", "Tarde", "Fim de tarde"], "de": ["Früher Morgen", "Vormittag", "Nachmittag", "Später Nachmittag"], "it": ["Mattina presto", "Mattina", "Pomeriggio", "Tardo pomeriggio"], "pl": ["Wczesny ranek", "Rano", "Po południu", "Późne popołudnie"]}, "bg": {"fr": ["9:00 AM", "12:00 PM", "3:00 PM"], "pt": ["9:00 AM", "12:00 PM", "3:00 PM"], "de": ["9:00 AM", "12:00 PM", "3:00 PM"], "it": ["9:00 AM", "12:00 PM", "3:00 PM"], "pl": ["9:00 AM", "12:00 PM", "3:00 PM"]}, "snk": {"fr": ["12 h · familial", "15 h · adultes uniquement"], "pt": ["12h · familiar", "15h · só adultos"], "de": ["12 Uhr · Familie", "15 Uhr · nur Erwachsene"], "it": ["12:00 · famiglie", "15:00 · solo adulti"], "pl": ["12:00 · rodzinna", "15:00 · tylko dorośli"]}});
+  function shLabs(g, l) { return PK_SHIFTS[g][lg(l)] || PK_SHIFTS[g].en; }
   function normH(s) { return ' ' + String(s || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]+/g, ' ').trim() + ' '; }
   // returns "6:45 AM", or '' when the hotel is not in the table (we confirm the time on WhatsApp)
   function pickupTime(slug, hotel, shift) {
@@ -245,6 +247,7 @@
     try { veh = form.dataset.veh ? JSON.parse(form.dataset.veh) : null; } catch (e) { veh = null; }
     var VT = L === 'es' ? { type: 'Vehículo', how: '¿Cómo se reparten?', seat: ' asiento', seats: ' asientos', ok: 'Listo: {p} personas en {s} asientos.', short: 'Faltan {n} asiento(s) para {p} personas. Agrega un vehículo.', extra: 'Sobra(n) {n} asiento(s): pagas el vehículo completo.', none: 'Elige al menos un vehículo.', ppl: ' para {a} persona(s)', dep: '. Salida ', pk: ' (recogida {t})' }
                        : { type: 'Vehicle', how: 'How do you split up?', seat: ' seat', seats: ' seats', ok: 'All set: {p} people in {s} seats.', short: '{n} seat(s) missing for {p} people. Add a vehicle.', extra: '{n} empty seat(s): you pay for the whole vehicle.', none: 'Choose at least one vehicle.', ppl: ' for {a} people', dep: '. Departure ', pk: ' (pickup {t})' };
+    VT = {"fr": {"type": "Véhicule", "how": "Comment vous répartissez-vous ?", "seat": " place", "seats": " places", "ok": "C’est bon : {p} personnes sur {s} places.", "short": "Il manque {n} place(s) pour {p} personnes. Ajoutez un véhicule.", "extra": "{n} place(s) vide(s) : vous payez le véhicule entier.", "none": "Choisissez au moins un véhicule.", "ppl": " pour {a} personne(s)", "dep": ". Départ ", "pk": " (prise en charge {t})"}, "pt": {"type": "Veículo", "how": "Como o grupo se divide?", "seat": " lugar", "seats": " lugares", "ok": "Pronto: {p} pessoas em {s} lugares.", "short": "Faltam {n} lugar(es) para {p} pessoas. Adicione um veículo.", "extra": "Sobra(m) {n} lugar(es): você paga o veículo inteiro.", "none": "Escolha pelo menos um veículo.", "ppl": " para {a} pessoa(s)", "dep": ". Saída ", "pk": " (busca {t})"}, "de": {"type": "Fahrzeug", "how": "Wie teilen Sie sich auf?", "seat": " Sitz", "seats": " Sitze", "ok": "Passt: {p} Personen auf {s} Sitzen.", "short": "Es fehlen {n} Sitz(e) für {p} Personen. Fügen Sie ein Fahrzeug hinzu.", "extra": "{n} Sitz(e) frei: Sie zahlen das ganze Fahrzeug.", "none": "Wählen Sie mindestens ein Fahrzeug.", "ppl": " für {a} Person(en)", "dep": ". Abfahrt ", "pk": " (Abholung {t})"}, "it": {"type": "Veicolo", "how": "Come vi dividete?", "seat": " posto", "seats": " posti", "ok": "Perfetto: {p} persone su {s} posti.", "short": "Mancano {n} posto/i per {p} persone. Aggiungi un veicolo.", "extra": "{n} posto/i vuoto/i: paghi il veicolo intero.", "none": "Scegli almeno un veicolo.", "ppl": " per {a} persona/e", "dep": ". Partenza ", "pk": " (prelievo {t})"}, "pl": {"type": "Pojazd", "how": "Jak się dzielicie?", "seat": " miejsce", "seats": " miejsca", "ok": "Gotowe: {p} osób na {s} miejscach.", "short": "Brakuje {n} miejsc dla {p} osób. Dodaj pojazd.", "extra": "Wolne miejsca: {n}. Płacisz za cały pojazd.", "none": "Wybierz co najmniej jeden pojazd.", "ppl": " dla {a} os.", "dep": ". Wyjazd ", "pk": " (odbiór {t})"}}[lg(L)] || VT;
     function vSeats() { return veh[vt].v.reduce(function (s, o, i) { return s + o.s * (vc[i] || 0); }, 0); }
     function vTotal() { return veh[vt].v.reduce(function (s, o, i) { return s + o.p * (vc[i] || 0); }, 0); }
     function vText() { return veh[vt].v.map(function (o, i) { return vc[i] ? vc[i] + ' × ' + o.n : ''; }).filter(Boolean).join(' + '); }
@@ -300,7 +303,7 @@
       if (date && date.value) t += T.wa_on.replace('{d}', fmtDate(date.value, L));
       if (a) t += vs ? VT.ppl.replace('{a}', a.value) : T.wa_for.replace('{a}', a.value);
       if (c && +c.value > 0) t += T.wa_kids.replace('{c}', c.value);
-      if (mode !== 'pay' && PK_SHIFTS[PK_GROUP[form.dataset.slug]]) t += (X(L, '. Salida ', '. Departure ')) + PK_SHIFTS[PK_GROUP[form.dataset.slug]][X(L, 'es', 'en')][shiftIdx | 0];
+      if (mode !== 'pay' && PK_SHIFTS[PK_GROUP[form.dataset.slug]]) t += (X(L, '. Salida ', '. Departure ')) + shLabs(PK_GROUP[form.dataset.slug], L)[shiftIdx | 0];
       var hv = mode !== 'pay' && $('[name=hotel]', form) ? $('[name=hotel]', form).value.trim() : '';
       if (hv) { var ct = curTime(); t += '. Hotel: ' + hv + (ct ? (X(L, ' (recogida ', ' (pickup ')) + ct.split(' · ')[0] + ')' : ''); }
       return t + '.';
@@ -332,7 +335,7 @@
     if (grp && hotelIn) {
       var pkSel = $('.pk-sel', form) || hotelIn.closest('.fld');
       if (PK_SHIFTS[grp] && pkSel) {
-        var labs = PK_SHIFTS[grp][X(L, 'es', 'en')], sh = document.createElement('div');
+        var labs = shLabs(grp, L), sh = document.createElement('div');
         sh.className = 'fld pk-shift';
         sh.innerHTML = '<span class="lbl">' + (X(L, 'Salida', 'Departure')) + '</span><div class="seg' + (labs.length === 3 ? ' seg3' : labs.length > 2 ? ' seg4' : '') + '" role="radiogroup"></div>';
         labs.forEach(function (t, i) {
@@ -575,7 +578,7 @@
       var vb2 = fm._vehBad && fm._vehBad(); if (vb2) { if (msgE) { msgE.textContent = vb2; msgE.hidden = false; } return; }
       if (msgE) msgE.hidden = true;
       var dv = $('.dp-v', fm), a = $('[name=adults]', fm), c = $('[name=children]', fm);
-      var ppl = $('.bk-veh', fm) ? a.value + (L === 'es' ? (a.value === '1' ? ' persona' : ' personas') : (a.value === '1' ? ' person' : ' people')) : a.value + (a.value === '1' ? T.adult : T.adults) + (c && +c.value > 0 ? ', ' + c.value + T.kids : '');
+      var ppl = $('.bk-veh', fm) ? a.value + ({ es: [' persona', ' personas'], fr: [' personne', ' personnes'], pt: [' pessoa', ' pessoas'], de: [' Person', ' Personen'], it: [' persona', ' persone'], pl: [' osoba', ' os.'] }[lg(L)] || [' person', ' people'])[a.value === '1' ? 0 : 1] : a.value + (a.value === '1' ? T.adult : T.adults) + (c && +c.value > 0 ? ', ' + c.value + T.kids : '');
       sumT.textContent = T.avail_ok.replace('{d}', dv ? dv.textContent : dIn.value);
       sumS.textContent = ppl + ' · ' + amount();
       showStep(2); ev('book_step2');
