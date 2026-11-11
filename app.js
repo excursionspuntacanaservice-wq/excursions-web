@@ -2,6 +2,12 @@
 (function () {
   'use strict';
   var HOOK = 'https://hook.us2.make.com/spazsnvez9twnync65aglpm35tbem80q', LEAD_HOOK = 'https://hook.us2.make.com/ckkn6bita5ehxtn5tykmfxfv6b6cnobb', WA = '18299621705', S = {"en": {"book": "Book now", "book_total": "Book & pay securely · {t}", "opening": "Opening secure payment…", "err_pay": "We couldn't open the payment page. Tap \"Chat on WhatsApp\" and we'll send you a secure payment link right away.", "err_fields": "Please fill in the highlighted fields.", "wa_msg": "Hi! I'd like to book {tour}", "wa_on": " on {d}", "wa_for": " for {a} adult(s)", "wa_kids": " and {c} child(ren)", "date_ph": "Choose a date", "pk_val_near": "Entrance of a hotel near: ", "pk_val_meet": "Meeting point: Petromovil Las Canas del Este", "avail": "Check availability", "brk": "{p} = {t} · no extra fees", "brk_veh": "Total {t} · no extra fees", "child": " child", "children": " children", "avail_ok": "Available on {d}", "step1": "Step 1 of 2 · Date and people", "step2": "Step 2 of 2 · Pickup and contact", "pick_date": "Choose a date to check availability.", "change": "Change", "adult": " adult", "adults": " adults", "kids": " kids", "lead_ok": "Sent! Check your inbox (and the spam folder, just in case). We’ll also remind you before your trip.", "lead_err": "We couldn’t send it right now. Try again in a minute or message us on WhatsApp.", "lead_email": "Enter a valid email.", "save_t": "Not booking today? Save this tour", "save_p": "We email you your hotel’s pickup time, the price and the link to book. No payment.", "save_b": "Send", "close": "Close"}, "es": {"book": "Reservar", "book_total": "Reservar y pagar seguro · {t}", "opening": "Abriendo el pago seguro…", "err_pay": "No pudimos abrir la página de pago. Toca \"Escríbenos por WhatsApp\" y te enviamos el link de pago seguro al momento.", "err_fields": "Completa los campos marcados.", "wa_msg": "¡Hola! Quiero reservar {tour}", "wa_on": " para el {d}", "wa_for": " para {a} adulto(s)", "wa_kids": " y {c} niño(s)", "date_ph": "Elige una fecha", "pk_val_near": "Entrada de hotel cerca de: ", "pk_val_meet": "Punto de encuentro: Petromovil Las Canas del Este", "avail": "Ver disponibilidad", "brk": "{p} = {t} · sin cargos extra", "brk_veh": "Total {t} · sin cargos extra", "child": " niño", "children": " niños", "avail_ok": "Disponible el {d}", "step1": "Paso 1 de 2 · Fecha y personas", "step2": "Paso 2 de 2 · Recogida y contacto", "pick_date": "Elige una fecha para ver disponibilidad.", "change": "Cambiar", "adult": " adulto", "adults": " adultos", "kids": " niños", "lead_ok": "¡Enviado! Revisa tu correo (y la carpeta de spam, por si acaso). También te recordamos antes de tu viaje.", "lead_err": "No pudimos enviarlo ahora. Inténtalo en un minuto o escríbenos por WhatsApp.", "lead_email": "Escribe un correo válido.", "save_t": "¿Hoy no reservas? Guarda este tour", "save_p": "Te mandamos por correo la hora de recogida de tu hotel, el precio y el link para reservar. Sin pago.", "save_b": "Enviar", "close": "Cerrar"}};
+  S.fr = {"book": "Réserver", "book_total": "Réserver et payer en sécurité · {t}", "opening": "Ouverture du paiement sécurisé…", "err_pay": "Nous n’avons pas pu ouvrir la page de paiement. Touchez « Écrire sur WhatsApp » et nous vous envoyons tout de suite un lien de paiement sécurisé.", "err_fields": "Remplissez les champs signalés.", "wa_msg": "Bonjour ! Je voudrais réserver {tour}", "wa_on": " le {d}", "wa_for": " pour {a} adulte(s)", "wa_kids": " et {c} enfant(s)", "date_ph": "Choisir une date", "pk_val_near": "Entrée d’un hôtel près de : ", "pk_val_meet": "Point de rendez-vous : Petromovil Las Canas del Este", "avail": "Voir les disponibilités", "brk": "{p} = {t} · sans frais supplémentaires", "brk_veh": "Total {t} · sans frais supplémentaires", "child": " enfant", "children": " enfants", "avail_ok": "Disponible le {d}", "step1": "Étape 1 sur 2 · Date et personnes", "step2": "Étape 2 sur 2 · Prise en charge et contact", "pick_date": "Choisissez une date pour voir les disponibilités.", "change": "Modifier", "adult": " adulte", "adults": " adultes", "kids": " enfants", "lead_ok": "Envoyé ! Vérifiez votre boîte mail (et les spams, au cas où). Nous vous ferons aussi un rappel avant votre voyage.", "lead_err": "Envoi impossible pour le moment. Réessayez dans une minute ou écrivez-nous sur WhatsApp.", "lead_email": "Saisissez un e-mail valide.", "save_t": "Vous ne réservez pas aujourd’hui ? Gardez cette excursion", "save_p": "Nous vous envoyons par e-mail l’heure de prise en charge à votre hôtel, le prix et le lien pour réserver. Sans paiement.", "save_b": "Envoyer", "close": "Fermer"}; S.pt = {"book": "Reservar", "book_total": "Reservar e pagar com segurança · {t}", "opening": "Abrindo o pagamento seguro…", "err_pay": "Não conseguimos abrir a página de pagamento. Toque em \"Fale no WhatsApp\" e enviamos na hora um link de pagamento seguro.", "err_fields": "Preencha os campos destacados.", "wa_msg": "Olá! Quero reservar {tour}", "wa_on": " para o dia {d}", "wa_for": " para {a} adulto(s)", "wa_kids": " e {c} criança(s)", "date_ph": "Escolha uma data", "pk_val_near": "Entrada de um hotel perto de: ", "pk_val_meet": "Ponto de encontro: Petromovil Las Canas del Este", "avail": "Ver disponibilidade", "brk": "{p} = {t} · sem taxas extras", "brk_veh": "Total {t} · sem taxas extras", "child": " criança", "children": " crianças", "avail_ok": "Disponível em {d}", "step1": "Passo 1 de 2 · Data e pessoas", "step2": "Passo 2 de 2 · Busca no hotel e contato", "pick_date": "Escolha uma data para ver a disponibilidade.", "change": "Alterar", "adult": " adulto", "adults": " adultos", "kids": " crianças", "lead_ok": "Enviado! Confira seu e-mail (e a pasta de spam, por via das dúvidas). Também lembramos você antes da viagem.", "lead_err": "Não conseguimos enviar agora. Tente de novo em um minuto ou fale conosco no WhatsApp.", "lead_email": "Digite um e-mail válido.", "save_t": "Não vai reservar hoje? Salve este passeio", "save_p": "Enviamos por e-mail o horário de busca no seu hotel, o preço e o link para reservar. Sem pagamento.", "save_b": "Enviar", "close": "Fechar"};
+  var XT = {"Hi, is there space for tomorrow?": {"fr": "Bonjour, y a-t-il de la place pour demain ?", "pt": "Olá, tem vaga para amanhã?"}, "Choose an option": {"fr": "Choisissez une option", "pt": "Escolha uma opção"}, "Remove ": {"fr": "Retirer ", "pt": "Remover "}, "Add ": {"fr": "Ajouter ", "pt": "Adicionar "}, ". Departure ": {"fr": ". Départ ", "pt": ". Saída "}, " (pickup ": {"fr": " (prise en charge ", "pt": " (busca "}, "Uvero Alto and Cap Cana hotels: $85 per adult / $42.50 per child, direct pickup at your hotel, minimum 4 people.": {"fr": "Hôtels d’Uvero Alto et de Cap Cana : 85 $ par adulte / 42,50 $ par enfant, prise en charge directe à votre hôtel, minimum 4 personnes.", "pt": "Hotéis de Uvero Alto e Cap Cana: US$ 85 por adulto / US$ 42,50 por criança, busca direto no seu hotel, mínimo 4 pessoas."}, "Departure": {"fr": "Départ", "pt": "Saída"}, "Pickup time at your hotel: ": {"fr": "Heure de prise en charge à votre hôtel : ", "pt": "Horário de busca no seu hotel: "}, "Sunset ride from 4:00 to 6:00 PM. We confirm your hotel pickup time on WhatsApp.": {"fr": "Balade au coucher du soleil de 16 h à 18 h. Nous confirmons l’heure de prise en charge sur WhatsApp.", "pt": "Passeio ao pôr do sol das 16h às 18h. Confirmamos o horário de busca no WhatsApp."}, "We confirm your pickup time on WhatsApp.": {"fr": "Nous confirmons votre heure de prise en charge sur WhatsApp.", "pt": "Confirmamos seu horário de busca no WhatsApp."}, "The 3:00 PM boat is adults only (18+). With children, choose the 12:00 PM family boat.": {"fr": "Le bateau de 15 h est réservé aux adultes (18+). Avec des enfants, choisissez le bateau familial de 12 h.", "pt": "O barco das 15h é só para adultos (18+). Com crianças, escolha o barco familiar das 12h."}, "From Uvero Alto and Cap Cana hotels this tour runs with 4 people or more. Message us on WhatsApp and we will help you.": {"fr": "Depuis les hôtels d’Uvero Alto et de Cap Cana, cette excursion part à partir de 4 personnes. Écrivez-nous sur WhatsApp et nous vous aidons.", "pt": "Dos hotéis de Uvero Alto e Cap Cana este passeio sai a partir de 4 pessoas. Fale conosco no WhatsApp e ajudamos você."}, " · $85 per adult, min. 4 people": {"fr": " · 85 $ par adulte, min. 4 personnes", "pt": " · US$ 85 por adulto, mín. 4 pessoas"}, "Photo": {"fr": "Photo", "pt": "Foto"}, "Close": {"fr": "Fermer", "pt": "Fechar"}, "Previous": {"fr": "Précédente", "pt": "Anterior"}, "Next": {"fr": "Suivante", "pt": "Próxima"}, "Pick a date · $": {"fr": "Choisir une date · $", "pt": "Escolha a data · US$ "}, " per adult": {"fr": " par adulte", "pt": " por adulto"}, "Your payment wasn’t completed, so the tour isn’t booked yet. You can try again or message us.": {"fr": "Le paiement n’a pas abouti, l’excursion n’est donc pas encore réservée. Vous pouvez réessayer ou nous écrire.", "pt": "O pagamento não foi concluído, então o passeio ainda não está reservado. Você pode tentar de novo ou falar conosco."}, "Need it for tomorrow?": {"fr": "Besoin pour demain ?", "pt": "Precisa para amanhã?"}, "Message us and we’ll check with the operator": {"fr": "Écrivez-nous et nous vérifions avec l’opérateur", "pt": "Fale conosco e consultamos o operador"}};
+  function lg(x) { x = (x || '').slice(0, 2).toLowerCase(); return x === 'es' || x === 'fr' || x === 'pt' ? x : 'en'; }
+  var PL = lg(document.documentElement.lang);
+  function X(l, es, en) { l = lg(l); if (l === 'es') return es; if (l === 'en') return en; var d = XT[en]; return d && d[l] ? d[l] : en; }
+
   var $ = function (s, r) { return (r || document).querySelector(s); };
   var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
 
@@ -61,7 +67,7 @@
       else if (navigator.sendBeacon) navigator.sendBeacon(WA_HOOK, body);
     } catch (e) {}
   }
-  function fmtDate(v, lang) { if (!v) return ''; var p = v.split('-'); return lang === 'es' ? p[2] + '/' + p[1] + '/' + p[0] : p[1] + '/' + p[2] + '/' + p[0]; }
+  function fmtDate(v, lang) { if (!v) return ''; var p = v.split('-'); return lang && lang !== 'en' ? p[2] + '/' + p[1] + '/' + p[0] : p[1] + '/' + p[2] + '/' + p[0]; }
 
   // ---------- pickup time by hotel (same tables Sofia uses on WhatsApp) ----------
   // isl: Saona / Catalina / Santo Domingo (one morning pickup). pb: Party Boat / Snorkel [12 PM boat, 3 PM boat].
@@ -129,9 +135,8 @@
     var out = t + (pm ? ' PM' : ' AM');
     // isl rows may carry the pickup spot: L = lobby, B = barrier/gate, M = hotel's excursion meeting point
     if (g === 'isl' && best[2]) {
-      var es = (document.documentElement.lang || '').indexOf('es') === 0;
-      var SPOT = es ? { L: 'lobby del hotel', B: 'barrera (entrada) del hotel', M: 'meeting point de excursiones del hotel' }
-                    : { L: 'hotel lobby', B: 'hotel barrier gate (entrance)', M: "hotel's excursion meeting point" };
+      var SPOT = { es: { L: 'lobby del hotel', B: 'barrera (entrada) del hotel', M: 'meeting point de excursiones del hotel' }, fr: { L: 'hall de l’hôtel', B: 'barrière (entrée) de l’hôtel', M: 'point de rendez-vous des excursions de l’hôtel' }, pt: { L: 'lobby do hotel', B: 'cancela (entrada) do hotel', M: 'ponto de encontro de passeios do hotel' } }[PL]
+                    || { L: 'hotel lobby', B: 'hotel barrier gate (entrance)', M: "hotel's excursion meeting point" };
       if (SPOT[best[2]]) out += ' · ' + SPOT[best[2]];
     }
     return out;
@@ -142,7 +147,7 @@
   function iso(d) { var m = d.getMonth() + 1, x = d.getDate(); return d.getFullYear() + '-' + (m < 10 ? '0' : '') + m + '-' + (x < 10 ? '0' : '') + x; }
   function picker(root, L, onPick) {
     var btn = $('.dp-btn', root), val = $('.dp-v', root), input = $('input[name=date]', root), pop = $('.dp-pop', root);
-    var loc = L === 'es' ? 'es-DO' : 'en-US', weekStart = L === 'es' ? 1 : 0;
+    var loc = { es: 'es-DO', fr: 'fr-FR', pt: 'pt-BR' }[lg(L)] || 'en-US', weekStart = lg(L) === 'en' ? 0 : 1;
     var min = firstDay();
     var max = new Date(min); max.setFullYear(max.getFullYear() + 1);
     var view = new Date(min.getFullYear(), min.getMonth(), 1), sel = null, focusDay = new Date(min);
@@ -167,8 +172,8 @@
       }
       var late = '';
       if (lateCut()) {
-        var lt = L === 'es' ? ['¿Lo necesitas para mañana?', 'Escríbenos y lo consultamos con el operador'] : ['Need it for tomorrow?', 'Message us and we\u2019ll check with the operator'];
-        late = '<p class="dp-late">' + lt[0] + ' <a href="' + waLink(L === 'es' ? 'Hola, quiero saber si hay cupo para mañana' : 'Hi, is there space for tomorrow?') + '" target="_blank" rel="noopener">' + lt[1] + '</a></p>';
+        var lt = [X(L, '¿Lo necesitas para mañana?', 'Need it for tomorrow?'), X(L, 'Escríbenos y lo consultamos con el operador', 'Message us and we\u2019ll check with the operator')];
+        late = '<p class="dp-late">' + lt[0] + ' <a href="' + waLink(X(L, 'Hola, quiero saber si hay cupo para mañana', 'Hi, is there space for tomorrow?')) + '" target="_blank" rel="noopener">' + lt[1] + '</a></p>';
       }
       pop.innerHTML = h + '</div>' + late;
     }
@@ -199,7 +204,7 @@
   }
 
   function setup(form) {
-    var L = form.dataset.lang || 'en', T = S[L];
+    var L = lg(form.dataset.lang), T = S[L];
     var adult = parseFloat(form.dataset.adult) || 0, child = parseFloat(form.dataset.child) || 0, mode = form.dataset.mode;
     var a = $('[name=adults]', form), c = $('[name=children]', form);
     var pay = $('.pay', form), chat = $('.chat', form), msg = $('.msg', form);
@@ -217,7 +222,7 @@
     if (opts && opts.length) {
       var top = $('.bk-top', form), ob = document.createElement('div');
       ob.className = 'fld bk-opts';
-      ob.innerHTML = '<span class="lbl">' + (form.dataset.optsLbl || (L === 'es' ? 'Elige una opción' : 'Choose an option')) + '</span><div class="opt-l" role="radiogroup"></div>';
+      ob.innerHTML = '<span class="lbl">' + (form.dataset.optsLbl || (X(L, 'Elige una opción', 'Choose an option'))) + '</span><div class="opt-l" role="radiogroup"></div>';
       opts.forEach(function (o, i) {
         var lb = document.createElement('label');
         lb.innerHTML = '<input type="radio" name="' + form.id + '-opt" value="' + i + '"' + (i === 0 ? ' checked' : '') + '><span class="opt-c"><b class="opt-n"></b><b class="opt-p"></b><span class="opt-d"></span></span>';
@@ -269,8 +274,8 @@
           row.innerHTML = '<span class="veh-n"><b></b><small></small></span><div class="step" role="group"><button type="button" class="vb" data-d="-1">−</button><output></output><button type="button" class="vb" data-d="1">+</button></div>';
           $('b', row).textContent = o.n; $('small', row).textContent = o.s + (o.s > 1 ? VT.seats : VT.seat) + ' · ' + money(o.p);
           $('.step', row).setAttribute('aria-label', o.n);
-          $$('.vb', row)[0].setAttribute('aria-label', (L === 'es' ? 'Quitar ' : 'Remove ') + o.n);
-          $$('.vb', row)[1].setAttribute('aria-label', (L === 'es' ? 'Agregar ' : 'Add ') + o.n);
+          $$('.vb', row)[0].setAttribute('aria-label', (X(L, 'Quitar ', 'Remove ')) + o.n);
+          $$('.vb', row)[1].setAttribute('aria-label', (X(L, 'Agregar ', 'Add ')) + o.n);
           $('output', row).textContent = vc[i] || 0;
           $$('.vb', row).forEach(function (b) { b.addEventListener('click', function () { vAuto = false; vc[i] = Math.max(0, Math.min(15, (vc[i] || 0) + (+b.dataset.d))); $('output', row).textContent = vc[i]; showV(); refresh(); ev('vehicle_edit'); }); });
           l.appendChild(row);
@@ -295,16 +300,16 @@
       if (date && date.value) t += T.wa_on.replace('{d}', fmtDate(date.value, L));
       if (a) t += vs ? VT.ppl.replace('{a}', a.value) : T.wa_for.replace('{a}', a.value);
       if (c && +c.value > 0) t += T.wa_kids.replace('{c}', c.value);
-      if (mode !== 'pay' && PK_SHIFTS[PK_GROUP[form.dataset.slug]]) t += (L === 'es' ? '. Salida ' : '. Departure ') + PK_SHIFTS[PK_GROUP[form.dataset.slug]][L === 'es' ? 'es' : 'en'][shiftIdx | 0];
+      if (mode !== 'pay' && PK_SHIFTS[PK_GROUP[form.dataset.slug]]) t += (X(L, '. Salida ', '. Departure ')) + PK_SHIFTS[PK_GROUP[form.dataset.slug]][X(L, 'es', 'en')][shiftIdx | 0];
       var hv = mode !== 'pay' && $('[name=hotel]', form) ? $('[name=hotel]', form).value.trim() : '';
-      if (hv) { var ct = curTime(); t += '. Hotel: ' + hv + (ct ? (L === 'es' ? ' (recogida ' : ' (pickup ') + ct.split(' · ')[0] + ')' : ''); }
+      if (hv) { var ct = curTime(); t += '. Hotel: ' + hv + (ct ? (X(L, ' (recogida ', ' (pickup ')) + ct.split(' · ')[0] + ')' : ''); }
       return t + '.';
     }
     function refresh() {
       if (pay) pay.textContent = T.book_total.replace('{t}', money(total()));
       var zn = $('.bk-zone-msg', form), z = zone85();
       if (z && !zn && pay) { zn = document.createElement('p'); zn.className = 'bk-zone-msg'; zn.setAttribute('aria-live', 'polite'); pay.parentNode.insertBefore(zn, pay); }
-      if (zn) { zn.hidden = !z; zn.textContent = z ? (L === 'es' ? 'Hoteles de Uvero Alto y Cap Cana: $85 por adulto / $42.50 por niño, recogida directa en tu hotel, mínimo 4 personas.' : 'Uvero Alto and Cap Cana hotels: $85 per adult / $42.50 per child, direct pickup at your hotel, minimum 4 people.') : ''; }
+      if (zn) { zn.hidden = !z; zn.textContent = z ? (X(L, 'Hoteles de Uvero Alto y Cap Cana: $85 por adulto / $42.50 por niño, recogida directa en tu hotel, mínimo 4 personas.', 'Uvero Alto and Cap Cana hotels: $85 per adult / $42.50 per child, direct pickup at your hotel, minimum 4 people.')) : ''; }
       if (chat) chat.href = waLink(waText());
     }
     var pkN = $('.pk-n', form), pkH = $('.pk-h', form), hotelIn = $('[name=hotel]', form), nearIn = $('[name=near]', form), nearBox = $('.pk-near', form);
@@ -327,9 +332,9 @@
     if (grp && hotelIn) {
       var pkSel = $('.pk-sel', form) || hotelIn.closest('.fld');
       if (PK_SHIFTS[grp] && pkSel) {
-        var labs = PK_SHIFTS[grp][L === 'es' ? 'es' : 'en'], sh = document.createElement('div');
+        var labs = PK_SHIFTS[grp][X(L, 'es', 'en')], sh = document.createElement('div');
         sh.className = 'fld pk-shift';
-        sh.innerHTML = '<span class="lbl">' + (L === 'es' ? 'Salida' : 'Departure') + '</span><div class="seg' + (labs.length === 3 ? ' seg3' : labs.length > 2 ? ' seg4' : '') + '" role="radiogroup"></div>';
+        sh.innerHTML = '<span class="lbl">' + (X(L, 'Salida', 'Departure')) + '</span><div class="seg' + (labs.length === 3 ? ' seg3' : labs.length > 2 ? ' seg4' : '') + '" role="radiogroup"></div>';
         labs.forEach(function (t, i) {
           var lb = document.createElement('label');
           lb.innerHTML = '<input type="radio" name="' + form.id + '-shift" value="' + i + '"' + (i === 0 ? ' checked' : '') + '><span></span>';
@@ -348,8 +353,8 @@
     function showTime() {
       if (!pkTime) return;
       var t = curTime(), v = hotelIn.value.trim();
-      if (t) { pkTime.textContent = (L === 'es' ? 'Hora de recogida en tu hotel: ' : 'Pickup time at your hotel: ') + t; pkTime.hidden = false; }
-      else if (v.length >= 3 || sunset()) { pkTime.textContent = sunset() ? (L === 'es' ? 'Paseo al atardecer de 4:00 a 6:00 PM. Te confirmamos la hora de recogida en tu hotel por WhatsApp.' : 'Sunset ride from 4:00 to 6:00 PM. We confirm your hotel pickup time on WhatsApp.') : (L === 'es' ? 'Te confirmamos la hora de recogida por WhatsApp.' : 'We confirm your pickup time on WhatsApp.'); pkTime.hidden = false; }
+      if (t) { pkTime.textContent = (X(L, 'Hora de recogida en tu hotel: ', 'Pickup time at your hotel: ')) + t; pkTime.hidden = false; }
+      else if (v.length >= 3 || sunset()) { pkTime.textContent = sunset() ? (X(L, 'Paseo al atardecer de 4:00 a 6:00 PM. Te confirmamos la hora de recogida en tu hotel por WhatsApp.', 'Sunset ride from 4:00 to 6:00 PM. We confirm your hotel pickup time on WhatsApp.')) : (X(L, 'Te confirmamos la hora de recogida por WhatsApp.', 'We confirm your pickup time on WhatsApp.')); pkTime.hidden = false; }
       else pkTime.hidden = true;
     }
     if (hotelIn) ['input', 'change'].forEach(function (k) { hotelIn.addEventListener(k, refresh); });
@@ -377,8 +382,8 @@
         var lbE = bad[0].id ? $('label[for="' + bad[0].id + '"]', form) : null, fl = bad[0].closest('.fld'), nm = lbE ? lbE.textContent : (fl && $('.lbl', fl) ? $('.lbl', fl).textContent : '');
         msg.textContent = T.err_fields + (nm ? ' (' + nm.trim() + ')' : ''); msg.hidden = false; ev('book_missing_fields'); bad[0].focus(); return; }
       if (form._vehBad && form._vehBad()) { msg.textContent = form._vehBad(); msg.hidden = false; ev('book_veh_seats'); return; }
-      if (grp === 'snk' && shiftIdx === 1 && c && +c.value > 0) { msg.textContent = L === 'es' ? 'El barco de las 3:00 PM es solo para adultos (18+). Con niños, elige el barco familiar de las 12:00 PM.' : 'The 3:00 PM boat is adults only (18+). With children, choose the 12:00 PM family boat.'; msg.hidden = false; ev('book_snk_kids_pm'); return; }
-      if (zone85() && pax() < 4) { msg.textContent = L === 'es' ? 'En hoteles de Uvero Alto y Cap Cana este tour sale desde 4 personas. Escríbenos por WhatsApp y te ayudamos.' : 'From Uvero Alto and Cap Cana hotels this tour runs with 4 people or more. Message us on WhatsApp and we will help you.'; msg.hidden = false; ev('book_zone_min4'); return; }
+      if (grp === 'snk' && shiftIdx === 1 && c && +c.value > 0) { msg.textContent = X(L, 'El barco de las 3:00 PM es solo para adultos (18+). Con niños, elige el barco familiar de las 12:00 PM.', 'The 3:00 PM boat is adults only (18+). With children, choose the 12:00 PM family boat.'); msg.hidden = false; ev('book_snk_kids_pm'); return; }
+      if (zone85() && pax() < 4) { msg.textContent = X(L, 'En hoteles de Uvero Alto y Cap Cana este tour sale desde 4 personas. Escríbenos por WhatsApp y te ayudamos.', 'From Uvero Alto and Cap Cana hotels this tour runs with 4 people or more. Message us on WhatsApp and we will help you.'); msg.hidden = false; ev('book_zone_min4'); return; }
       msg.hidden = true;
       cvBookOnce(); ev('book_submit');
       var hp = $('[name=website]', form);
@@ -429,7 +434,7 @@
 
   // quick booking on the mobile offer card: date + people + live total on the first screen, then the full form opens prefilled
   $$('.qk').forEach(function (q) {
-    var L = q.dataset.lang || 'en', ad = parseFloat(q.dataset.adult) || 0, ch = parseFloat(q.dataset.child) || 0;
+    var L = lg(q.dataset.lang), ad = parseFloat(q.dataset.adult) || 0, ch = parseFloat(q.dataset.child) || 0;
     var qa = $('[name=adults]', q), qc = $('[name=children]', q), qt = $('.qk-t', q), go = $('.qk-go', q);
     function clampQ(inp) { var v = parseInt(inp.value, 10), mn = +inp.min, mx = +inp.max; if (isNaN(v)) v = mn; inp.value = Math.max(mn, Math.min(mx, v)); }
     function upd() { qt.textContent = money((+qa.value || 0) * ad + (+qc.value || 0) * ch); }
@@ -476,7 +481,7 @@
     ['Casa de Campo','La Romana'],['Bahía La Romana','La Romana'],['La Estancia','La Romana']
   ];
   function hotelAC(inp) {
-    var form = inp.form, L = (form && form.dataset.lang ? form.dataset.lang : document.documentElement.lang) === 'es' ? 'es' : 'en';
+    var form = inp.form, L = lg(form && form.dataset.lang ? form.dataset.lang : document.documentElement.lang);
     var isl = !!form && PK_GROUP[form.dataset.slug] === 'isl', box = inp.parentNode, cur = -1, items = [];
     inp.setAttribute('autocomplete', 'off'); inp.setAttribute('autocorrect', 'off'); inp.setAttribute('spellcheck', 'false'); inp.removeAttribute('list');
     inp.setAttribute('role', 'combobox'); inp.setAttribute('aria-autocomplete', 'list'); inp.setAttribute('aria-expanded', 'false');
@@ -497,7 +502,7 @@
         var li = document.createElement('li'), b = document.createElement('b'), s = document.createElement('span');
         li.id = ul.id + '-' + i; li.setAttribute('role', 'option'); li.setAttribute('aria-selected', 'false');
         b.textContent = h[0];
-        s.textContent = h[1] + (isl && ZONE85.test(normH(h[0])) ? (L === 'es' ? ' · $85 por adulto, mín. 4 personas' : ' · $85 per adult, min. 4 people') : '');
+        s.textContent = h[1] + (isl && ZONE85.test(normH(h[0])) ? (X(L, ' · $85 por adulto, mín. 4 personas', ' · $85 per adult, min. 4 people')) : '');
         li.appendChild(b); li.appendChild(s);
         // pointerdown + preventDefault: the tap is not lost when the field loses focus
         li.addEventListener('pointerdown', function (e) { e.preventDefault(); choose(h); });
@@ -524,7 +529,7 @@
 
   // booking in two steps (sidebar and phone sheet): 1) date + people → "Check availability"  2) availability confirmed, pickup + contact + pay
   function twoStep(fm) {
-    var L = fm.dataset.lang === 'es' ? 'es' : 'en', T = S[L];
+    var L = lg(fm.dataset.lang), T = S[L];
     var dIn = $('[name=date]', fm), payB = $('button.pay', fm);
     var s1 = [$('.fld.dp', fm), $('.row2', fm), $('.bk-veh', fm)].filter(Boolean);
     var s2 = [$('.pk-shift', fm), $('.pk-sel', fm), $('[name=name]', fm) && $('[name=name]', fm).closest('.fld'), $('[name=whatsapp]', fm) && $('[name=whatsapp]', fm).closest('.row2'), $('[name=email]', fm) && $('[name=email]', fm).closest('.row2, .fld'), $('.hint', fm), payB].filter(Boolean);
@@ -587,7 +592,7 @@
   var leadDone = false;
   try { leadDone = localStorage.getItem('epc_lead') === '1'; } catch (err) {}
   function setupLead(f) {
-    var L = f.dataset.lang === 'es' ? 'es' : 'en', T = S[L];
+    var L = lg(f.dataset.lang), T = S[L];
     var em = $('[name=email]', f), btn = $('button[type=submit]', f), msg = $('.msg', f), ok = $('.lead-ok', f), hp = $('[name=website]', f);
     var hotel = $('[name=hotel]', f), when = $('[name=when]', f);
     if (!em || !btn) return;
@@ -628,7 +633,7 @@
   if (leadIn && !leadDone) {
     var shown = false, dismissed = false;
     try { dismissed = sessionStorage.getItem('epc_save') === '1'; } catch (err) {}
-    var L2 = leadIn.dataset.lang === 'es' ? 'es' : 'en', T2 = S[L2];
+    var L2 = lg(leadIn.dataset.lang), T2 = S[L2];
     var showSave = function () {
       if (shown || dismissed || leadDone) return;
       if (document.body.classList.contains('lock')) { setTimeout(showSave, 4000); return; }
@@ -638,7 +643,7 @@
         '<form class="lead" novalidate><div class="save-r"><input name="email" type="email" maxlength="80" required autocomplete="email" placeholder="you@email.com" aria-label="Email"><button class="btn btn-sea" type="submit"></button></div>' +
         '<div class="hp" aria-hidden="true"><label>Website<input name="website" tabindex="-1" autocomplete="off"></label></div><p class="msg" role="alert" hidden></p><p class="lead-ok" role="status" hidden></p></form>';
       $('b', bar).textContent = T2.save_t; $('p', bar).textContent = T2.save_p; $('button[type=submit]', bar).textContent = T2.save_b;
-      if (L2 === 'es') $('input[name=email]', bar).placeholder = 'tu@correo.com';
+      if (L2 !== 'en') $('input[name=email]', bar).placeholder = { es: 'tu@correo.com', fr: 'vous@email.com', pt: 'voce@email.com' }[L2];
       var lf = $('form.lead', bar); lf.dataset.lang = L2; lf.dataset.tour = leadIn.dataset.tour; lf.dataset.slug = leadIn.dataset.slug;
       document.body.appendChild(bar); setupLead(lf); ev('save_bar_shown');
       $('.x', bar).addEventListener('click', function () { bar.remove(); dismissed = true; try { sessionStorage.setItem('epc_save', '1'); } catch (err) {} ev('save_bar_closed'); });
@@ -657,9 +662,9 @@
   if (gimgs.length) {
     var es2 = (document.documentElement.lang || 'en').indexOf('es') === 0;
     var lb = document.createElement('div'); lb.className = 'lb'; lb.hidden = true;
-    lb.setAttribute('role', 'dialog'); lb.setAttribute('aria-modal', 'true'); lb.setAttribute('aria-label', es2 ? 'Foto' : 'Photo');
-    lb.innerHTML = '<button type="button" class="lb-x" aria-label="' + (es2 ? 'Cerrar' : 'Close') + '">×</button><button type="button" class="lb-p" aria-label="' + (es2 ? 'Anterior' : 'Previous') + '">‹</button><img alt=""><button type="button" class="lb-n" aria-label="' + (es2 ? 'Siguiente' : 'Next') + '">›</button><p class="lb-cap"><span class="lb-num"></span><span class="lb-txt"></span></p>' +
-      (document.getElementById('bk-side') ? '<a class="btn btn-sea lb-cta" href="#bk-side">' + (es2 ? 'Elige tu fecha · $' : 'Pick a date · $') + (document.getElementById('bk-side').dataset.adult || '75') + (es2 ? ' por adulto' : ' per adult') + '</a>' : '');
+    lb.setAttribute('role', 'dialog'); lb.setAttribute('aria-modal', 'true'); lb.setAttribute('aria-label', X(PL, 'Foto', 'Photo'));
+    lb.innerHTML = '<button type="button" class="lb-x" aria-label="' + (X(PL, 'Cerrar', 'Close')) + '">×</button><button type="button" class="lb-p" aria-label="' + (X(PL, 'Anterior', 'Previous')) + '">‹</button><img alt=""><button type="button" class="lb-n" aria-label="' + (X(PL, 'Siguiente', 'Next')) + '">›</button><p class="lb-cap"><span class="lb-num"></span><span class="lb-txt"></span></p>' +
+      (document.getElementById('bk-side') ? '<a class="btn btn-sea lb-cta" href="#bk-side">' + (X(PL, 'Elige tu fecha · $', 'Pick a date · $')) + (document.getElementById('bk-side').dataset.adult || '75') + (X(PL, ' por adulto', ' per adult')) + '</a>' : '');
     document.body.appendChild(lb);
     var lbImg = $('img', lb), cur = 0, sx = null;
     var srcOf = function (im) { var so = im.parentNode && im.parentNode.querySelector ? im.parentNode.querySelector('source[srcset]') : null; if (so) { var c = so.getAttribute('srcset').split(',').map(function (x) { return x.trim().split(' ')[0]; }); if (c.length) return c[c.length - 1]; } return im.currentSrc || im.src; };
@@ -689,7 +694,7 @@
   // payment cancelled notice / thanks reference (only plain query values, never injected as HTML)
   try {
     var q = new URLSearchParams(window.location.search);
-    if (q.get('cancelled') === '1') { var n = $('[data-cancelled]'); if (n) { n.textContent = (document.documentElement.lang || 'en').indexOf('es') === 0 ? 'El pago no se completó, así que el tour todavía no está reservado. Puedes intentarlo de nuevo o escribirnos.' : 'Your payment wasn\u2019t completed, so the tour isn\u2019t booked yet. You can try again or message us.'; n.hidden = false; } }
+    if (q.get('cancelled') === '1') { var n = $('[data-cancelled]'); if (n) { n.textContent = X(PL, 'El pago no se completó, así que el tour todavía no está reservado. Puedes intentarlo de nuevo o escribirnos.', 'Your payment wasn\u2019t completed, so the tour isn\u2019t booked yet. You can try again or message us.'); n.hidden = false; } }
     var ref = q.get('ref'), box = $('[data-ref]');
     if (ref && box && /^EPC-[0-9]{12}-[0-9]{1,3}$/.test(ref)) { $('b', box).textContent = ref; box.hidden = false; }
   } catch (err) { /* old browser: notices stay hidden */ }
