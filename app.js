@@ -321,18 +321,29 @@
       if (chat) chat.href = waLink(waText());
     }
     var pkN = $('.pk-n', form), pkH = $('.pk-h', form), hotelIn = $('[name=hotel]', form), nearIn = $('[name=near]', form), nearBox = $('.pk-near', form);
+    // "I don't know my hotel yet": many customers book weeks ahead and leave at the hotel field (Clarity 12-nov)
+    var HL = { es: ['Aún no sé mi hotel. Te escribimos antes del tour para la hora de recogida.', 'Hotel por confirmar'], en: ['I don’t know my hotel yet. We’ll message you before the tour with your pickup time.', 'Hotel to be confirmed'], fr: ['Je ne connais pas encore mon hôtel. Nous vous écrirons avant l’excursion pour l’heure de prise en charge.', 'Hôtel à confirmer'], pt: ['Ainda não sei meu hotel. Escrevemos antes do passeio com o horário de busca.', 'Hotel a confirmar'], de: ['Ich kenne mein Hotel noch nicht. Wir schreiben Ihnen vor dem Ausflug die Abholzeit.', 'Hotel wird noch bestätigt'], it: ['Non so ancora il mio hotel. Ti scriviamo prima dell’escursione con l’orario di prelievo.', 'Hotel da confermare'], pl: ['Nie znam jeszcze hotelu. Napiszemy przed wycieczką z godziną odbioru.', 'Hotel do potwierdzenia'] }[lg(form.dataset.lang)];
+    var hLater = null;
+    if (pkH && hotelIn && mode === 'pay') {
+      var hl = document.createElement('label'); hl.className = 'opt pk-later'; hl.style.marginTop = '.5rem'; hl.style.fontSize = '.92rem';
+      hl.innerHTML = '<input type="checkbox" name="hotel_later"><span></span>'; hl.lastChild.textContent = HL[0];
+      pkH.appendChild(hl); hLater = hl.firstChild;
+      hLater.addEventListener('change', function () { hotelIn.disabled = hLater.checked; if (hLater.checked) { hotelIn.value = ''; hotelIn.setAttribute('aria-invalid', 'false'); ev('hotel_later'); } syncPk(); refresh(); });
+    }
+    function later() { return !!(hLater && hLater.checked); }
     function pkMode() { var r = $('input[value=nohotel]', form); return r && r.checked ? 'nohotel' : 'hotel'; }
     function nhMode() { var r = $('input[value=meet]', form); return r && r.checked ? 'meet' : 'near'; }
     function syncPk() {
       if (!pkN) return;
       var no = pkMode() === 'nohotel', near = nhMode() === 'near';
-      pkN.hidden = !no; pkH.hidden = no; hotelIn.required = !no; nearIn.required = no && near; nearBox.hidden = !(no && near);
+      pkN.hidden = !no; pkH.hidden = no; hotelIn.required = !no && !later(); nearIn.required = no && near; nearBox.hidden = !(no && near);
     }
     $$('input[type=radio]', form).forEach(function (r) { r.addEventListener('change', function () { syncPk(); refresh(); }); });
     syncPk();
     function pickupValue() {
-      if (grp === 'bg') return (pkMode() === 'hotel' ? hotelIn.value.trim() : (nhMode() === 'meet' ? T.pk_val_meet : T.pk_val_near + nearIn.value.trim())) + ' · Tour ' + PK_SHIFTS.bg.en[shiftIdx | 0];
-      if (pkMode() === 'hotel') return hotelIn.value.trim() + (sunset() ? ' · SUNSET 4-6 PM' : '');
+      var hv0 = later() ? HL[1] : hotelIn.value.trim();
+      if (grp === 'bg') return (pkMode() === 'hotel' ? hv0 : (nhMode() === 'meet' ? T.pk_val_meet : T.pk_val_near + nearIn.value.trim())) + ' · Tour ' + PK_SHIFTS.bg.en[shiftIdx | 0];
+      if (pkMode() === 'hotel') return hv0 + (sunset() ? ' · SUNSET 4-6 PM' : '');
       return (nhMode() === 'meet' ? T.pk_val_meet : T.pk_val_near + nearIn.value.trim()) + (sunset() ? ' · SUNSET 4-6 PM' : '');
     }
     // departure choice (Party Boat / Snorkel / Horseback) + pickup time shown before paying
