@@ -59,7 +59,7 @@
       var body = new URLSearchParams({
         fuente: SRC, pagina: window.location.pathname, idioma: document.documentElement.lang || '',
         tour: pf && pf.dataset.tour ? pf.dataset.tour : '', fecha: g('date'), adultos: g('adults'), ninos: g('children'),
-        boton: label ? label : /chat/.test(c) ? 'formulario' : /wa-fab/.test(c) ? 'flotante' : /mbar-wa/.test(c) ? 'barra movil' : 'pagina',
+        boton: label ? label : /chat/.test(c) ? 'formulario' : /wa-fab/.test(c) ? 'flotante' : /mbar-wa/.test(c) ? 'barra movil' : /x-wa/.test(c) ? 'primera pantalla' : 'pagina',
         dispositivo: window.matchMedia && window.matchMedia('(max-width: 760px)').matches ? 'movil' : 'pc'
       });
       // fetch con keepalive: los bloqueadores de anuncios descartan sendBeacon; queda solo como respaldo.
@@ -484,8 +484,9 @@
     $$('.sb', q).forEach(function (b) { b.addEventListener('click', function () { var inp = $('input', b.parentNode); inp.value = (+inp.value || 0) + (+b.dataset.step); clampQ(inp); upd(); ev('passengers_changed'); }); });
     [qa, qc].forEach(function (inp) { inp.addEventListener('change', function () { clampQ(inp); upd(); }); });
     upd();
-    // while the date card is on screen, hide the fixed bottom bar so the two buttons don't compete
-    if ('IntersectionObserver' in window) new IntersectionObserver(function (en) { document.body.classList.toggle('qk-on', en[0].isIntersecting); }, { threshold: 0.15 }).observe(q);
+    // hide the fixed bottom bar only while the card's own book button is on screen; on the first screen that button
+    // sits just below the fold, so the bar stays up and a book button is always visible
+    if ('IntersectionObserver' in window) new IntersectionObserver(function (en) { document.body.classList.toggle('qk-on', en[0].isIntersecting); }, { threshold: 0.15 }).observe(qwa || go || q);
     go.addEventListener('click', function () {
       var f = document.getElementById(q.dataset.target); if (!f) return;
       var fa = $('[name=adults]', f), fc = $('[name=children]', f);

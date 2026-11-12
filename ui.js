@@ -41,4 +41,9 @@
       document.body.classList.toggle('mbar-off', en[0].isIntersecting && !desk());
     }, { rootMargin: '0px 0px -40px 0px' }).observe(cta);
   }
+  // Saona ES mobile first screen has its own big button; keep the bottom bar away while it is visible
+  var xf = document.querySelector('.x-first');
+  if (xf && 'IntersectionObserver' in window) {
+    new IntersectionObserver(function (en) { document.body.classList.toggle('x-on', en[0].isIntersecting && !desk()); }).observe(xf);
+  }
 })();
