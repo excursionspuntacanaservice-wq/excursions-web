@@ -100,8 +100,8 @@ ul,ol{margin:0;padding:0;list-style:none}
 
 /* ============ home hero ============ */
 .hero{position:relative;isolation:isolate;color:#fff;background:var(--navy);overflow:hidden}
-.hero-media{position:absolute;inset:0;z-index:-2;background:var(--navy) url(img/hero_desk_poster.jpg) center/cover no-repeat;background-image:image-set(url(img/hero_desk_poster.webp) type("image/webp"),url(img/hero_desk_poster.jpg) type("image/jpeg"))}
-@media (max-width:760px){.hero-media{background-image:url(img/hero_mob_poster.jpg);background-image:image-set(url(img/hero_mob_poster.webp) type("image/webp"),url(img/hero_mob_poster.jpg) type("image/jpeg"))}}
+.hero-media{position:absolute;inset:0;z-index:-2;background:var(--navy) url(img/hero_desk_poster.jpg?v=5) center/cover no-repeat;background-image:image-set(url(img/hero_desk_poster.webp?v=5) type("image/webp"),url(img/hero_desk_poster.jpg?v=5) type("image/jpeg"))}
+@media (max-width:760px){.hero-media{background-image:url(img/hero_mob_poster.jpg?v=5);background-image:image-set(url(img/hero_mob_poster.webp?v=5) type("image/webp"),url(img/hero_mob_poster.jpg?v=5) type("image/jpeg"))}}
 .hv{pointer-events:none}
 .hero-media.novid .hv{display:none!important}
 .hv::-webkit-media-controls,.hv::-webkit-media-controls-panel,.hv::-webkit-media-controls-play-button,.hv::-webkit-media-controls-start-playback-button,.hv::-webkit-media-controls-overlay-play-button{display:none!important;-webkit-appearance:none;opacity:0}
@@ -915,7 +915,11 @@ body.lock{overflow:hidden}
 .x-price,.x-first{display:none}
 @media (max-width:639px){
   .th-tour.th-x{height:min(420px,54svh)}
-  .th-x .crumb,.th-x .lede,.th-x .eyebrow{display:none}
+  .th-x .crumb,.th-x .lede{display:none}
+  /* lighter veil: the turquoise water shows; shade only behind the text */
+  .th-tour.th-x::after{background:linear-gradient(180deg,rgba(6,20,31,.42),rgba(6,20,31,0) 20%,rgba(6,20,31,0) 36%,rgba(6,20,31,.3) 62%,rgba(6,20,31,.72))}
+  .th-x h1,.th-x .x-price{text-shadow:0 2px 14px rgba(0,0,0,.45)}
+  .th-x .eyebrow{display:inline-block;margin:0 0 .5rem;padding:.28rem .7rem;border-radius:99px;background:rgba(6,20,31,.42);font-size:.74rem;letter-spacing:.06em;text-shadow:none;-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
   .th-x .th-in{padding-bottom:14px}
   .th-x h1{font-size:2.5rem;line-height:1.02}
   .th-x .th-rate{margin-top:.7rem}

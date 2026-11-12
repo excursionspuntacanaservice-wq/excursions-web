@@ -750,7 +750,7 @@
     var startVid = function () {
       var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       var c = navigator.connection || {};
-      var slow = c.saveData || /(^|-)2g$/.test(c.effectiveType || '');
+      var slow = c.saveData || /(^|-)[23]g$/.test(c.effectiveType || '');
       var mob = window.matchMedia('(max-width:760px)').matches;
       var v = $(mob ? '.hv-m' : '.hv-d', media);
       if (reduce || slow || !v || !v.getAttribute('data-src')) { media.classList.add('novid'); return; }
