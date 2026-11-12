@@ -59,7 +59,7 @@
       var body = new URLSearchParams({
         fuente: SRC, pagina: window.location.pathname, idioma: document.documentElement.lang || '',
         tour: pf && pf.dataset.tour ? pf.dataset.tour : '', fecha: g('date'), adultos: g('adults'), ninos: g('children'),
-        boton: label ? label : /chat/.test(c) ? 'formulario' : /wa-fab/.test(c) ? 'flotante' : /mbar-wa/.test(c) ? 'barra movil' : 'pagina',
+        boton: label ? label : /chat/.test(c) ? 'formulario' : /wa-fab/.test(c) ? 'flotante' : /mbar-wa/.test(c) ? 'barra movil' : /x-wa/.test(c) ? 'primera pantalla' : 'pagina',
         dispositivo: window.matchMedia && window.matchMedia('(max-width: 760px)').matches ? 'movil' : 'pc'
       });
       // fetch con keepalive: los bloqueadores de anuncios descartan sendBeacon; queda solo como respaldo.
