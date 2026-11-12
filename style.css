@@ -100,8 +100,8 @@ ul,ol{margin:0;padding:0;list-style:none}
 
 /* ============ home hero ============ */
 .hero{position:relative;isolation:isolate;color:#fff;background:var(--navy);overflow:hidden}
-.hero-media{position:absolute;inset:0;z-index:-2;background:var(--navy) url(img/hero_desk_poster.jpg) center/cover no-repeat;background-image:image-set(url(img/hero_desk_poster.webp) type("image/webp"),url(img/hero_desk_poster.jpg) type("image/jpeg"))}
-@media (max-width:760px){.hero-media{background-image:url(img/hero_mob_poster.jpg?v=3);background-image:image-set(url(img/hero_mob_poster.webp?v=3) type("image/webp"),url(img/hero_mob_poster.jpg?v=3) type("image/jpeg"))}}
+.hero-media{position:absolute;inset:0;z-index:-2;background:var(--navy) url(img/hero_desk_poster.jpg?v=4) center/cover no-repeat;background-image:image-set(url(img/hero_desk_poster.webp?v=4) type("image/webp"),url(img/hero_desk_poster.jpg?v=4) type("image/jpeg"))}
+@media (max-width:760px){.hero-media{background-image:url(img/hero_mob_poster.jpg?v=4);background-image:image-set(url(img/hero_mob_poster.webp?v=4) type("image/webp"),url(img/hero_mob_poster.jpg?v=4) type("image/jpeg"))}}
 .hv{pointer-events:none}
 .hero-media.novid .hv{display:none!important}
 .hv::-webkit-media-controls,.hv::-webkit-media-controls-panel,.hv::-webkit-media-controls-play-button,.hv::-webkit-media-controls-start-playback-button,.hv::-webkit-media-controls-overlay-play-button{display:none!important;-webkit-appearance:none;opacity:0}
