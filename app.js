@@ -38,7 +38,12 @@
       if (cur && !fresh) { old = { s: cur, t: Date.now() }; fresh = true; }
       if (!fresh) { old = { s: 'directo > ' + window.location.pathname, t: Date.now() }; }
       localStorage.setItem('epc_src', JSON.stringify(old));
-      return (old.s + (cur && cur !== old.s ? ' | ultimo: ' + cur : '')).slice(0, 200);
+      // ID del clic de Google (último clic, 90 días) para importar a Google Ads las ventas cerradas por WhatsApp.
+      var gid = u.get('gclid') || u.get('gbraid') || u.get('wbraid') || '', gk = u.get('gclid') ? 'gclid' : u.get('gbraid') ? 'gbraid' : u.get('wbraid') ? 'wbraid' : '', gc = null;
+      if (gid && /^[\w-]{10,200}$/.test(gid)) { gc = { k: gk, g: gid, t: Date.now() }; localStorage.setItem('epc_gclid', JSON.stringify(gc)); }
+      else { try { gc = JSON.parse(localStorage.getItem('epc_gclid') || 'null'); } catch (e) {} if (gc && (Date.now() - gc.t) > 90 * 864e5) gc = null; }
+      var gs = gc && gc.g ? ' | ' + gc.k + ':' + gc.g : '';
+      return (old.s + (cur && cur !== old.s ? ' | ultimo: ' + cur : '')).slice(0, 200) + gs;
     } catch (e) { return (cur || 'directo').slice(0, 200); }
   })();
   function ev(name) { try { if (typeof window.clarity === 'function') window.clarity('event', name); } catch (e) {} }
