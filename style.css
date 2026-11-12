@@ -938,3 +938,10 @@ body.lock{overflow:hidden}
   .offer-w.offer-x{margin-top:8px}
 }
 @media (max-width:639px){body.x-on .mbar{transform:translateY(110%)}}
+
+/* Saona hero with aerial video, all languages, mobile: lighter veil so the turquoise shows, readable text, short label */
+@media (max-width:639px){
+  .th-tour.th-v2:not(.th-x)::after{background:linear-gradient(180deg,rgba(6,20,31,.42),rgba(6,20,31,0) 22%,rgba(6,20,31,0) 40%,rgba(6,20,31,.35) 70%,rgba(6,20,31,.7))}
+  .th-tour.th-v2 h1{text-shadow:0 2px 14px rgba(0,0,0,.45)}
+  .th-tour.th-v2:not(.th-x) .eyebrow{display:inline-block;margin:0 0 .5rem;padding:.28rem .7rem;border-radius:99px;background:rgba(6,20,31,.42);font-size:.74rem;letter-spacing:.06em;text-shadow:none;-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
+}
