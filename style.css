@@ -100,8 +100,8 @@ ul,ol{margin:0;padding:0;list-style:none}
 
 /* ============ home hero ============ */
 .hero{position:relative;isolation:isolate;color:#fff;background:var(--navy);overflow:hidden}
-.hero-media{position:absolute;inset:0;z-index:-2;background:var(--navy) url(img/hero_desk_poster.jpg) center/cover no-repeat;background-image:image-set(url(img/hero_desk_poster.webp) type("image/webp"),url(img/hero_desk_poster.jpg) type("image/jpeg"))}
-@media (max-width:760px){.hero-media{background-image:url(img/hero_mob_poster.jpg);background-image:image-set(url(img/hero_mob_poster.webp) type("image/webp"),url(img/hero_mob_poster.jpg) type("image/jpeg"))}}
+.hero-media{position:absolute;inset:0;z-index:-2;background:var(--navy) url(img/hero_desk_poster.jpg?v=6) center/cover no-repeat;background-image:image-set(url(img/hero_desk_poster.webp?v=6) type("image/webp"),url(img/hero_desk_poster.jpg?v=6) type("image/jpeg"))}
+@media (max-width:760px){.hero-media{background-image:url(img/hero_mob_poster.jpg?v=6);background-image:image-set(url(img/hero_mob_poster.webp?v=6) type("image/webp"),url(img/hero_mob_poster.jpg?v=6) type("image/jpeg"))}}
 .hv{pointer-events:none}
 .hero-media.novid .hv{display:none!important}
 .hv::-webkit-media-controls,.hv::-webkit-media-controls-panel,.hv::-webkit-media-controls-play-button,.hv::-webkit-media-controls-start-playback-button,.hv::-webkit-media-controls-overlay-play-button{display:none!important;-webkit-appearance:none;opacity:0}
@@ -909,4 +909,39 @@ body.lock{overflow:hidden}
   .th-tour.th-v2{height:auto;min-height:min(300px,38svh)}
   .th-tour.th-v2 .th-in{padding-top:calc(84px + env(safe-area-inset-top,0px))}
   .th-tour.th-v2.th-long h1{font-size:1.95rem;max-width:none}
+}
+
+/* Saona ES mobile first screen v3: photo + price, 4 facts, one big button; the date/hotel card moves below */
+.x-price,.x-first{display:none}
+@media (max-width:639px){
+  .th-tour.th-x{height:min(420px,54svh)}
+  .th-x .crumb,.th-x .lede{display:none}
+  /* lighter veil: the turquoise water shows; shade only behind the text */
+  .th-tour.th-x::after{background:linear-gradient(180deg,rgba(6,20,31,.42),rgba(6,20,31,0) 20%,rgba(6,20,31,0) 36%,rgba(6,20,31,.3) 62%,rgba(6,20,31,.72))}
+  .th-x h1,.th-x .x-price{text-shadow:0 2px 14px rgba(0,0,0,.45)}
+  .th-x .eyebrow{display:inline-block;margin:0 0 .5rem;padding:.28rem .7rem;border-radius:99px;background:rgba(6,20,31,.42);font-size:.74rem;letter-spacing:.06em;text-shadow:none;-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
+  .th-x .th-in{padding-bottom:14px}
+  .th-x h1{font-size:2.5rem;line-height:1.02}
+  .th-x .th-rate{margin-top:.7rem}
+  .x-price{display:block;margin:.8rem 0 0;color:#fff;font-size:1rem;font-weight:600}
+  .x-price b{font:800 2.3rem/1 var(--body);letter-spacing:-.03em;margin-right:.2rem}
+  .x-price span{display:block;margin-top:.3rem;font-size:.85rem;font-weight:500;opacity:.85}
+  .x-first{display:block;padding:16px var(--gut,16px) 6px;background:#fff}
+  .x-facts{list-style:none;margin:0 0 14px;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:12px 14px}
+  .x-facts li{display:flex;gap:7px;align-items:flex-start;font-size:.8rem;line-height:1.25;color:var(--ink-2)}
+  .x-facts .ic{flex:none;width:18px;height:18px;margin-top:1px;stroke:var(--wa-d);fill:none;stroke-width:2.4}
+  .x-facts b{display:block;font-size:.9rem;color:var(--ink);margin-bottom:1px}
+  .x-go{font-size:1.1rem}
+  .x-wa{margin-top:8px;background:#fff;color:var(--wa-d);border:1.5px solid #BFE3CD}
+  .x-n{margin:9px 0 0;text-align:center;font-size:.76rem;color:var(--ink-2)}
+  .offer-x .offer-top,.offer-x .offer-sum{display:none}
+  .offer-w.offer-x{margin-top:8px}
+}
+@media (max-width:639px){body.x-on .mbar{transform:translateY(110%)}}
+
+/* Saona hero with aerial video, all languages, mobile: lighter veil so the turquoise shows, readable text, short label */
+@media (max-width:639px){
+  .th-tour.th-v2:not(.th-x)::after{background:linear-gradient(180deg,rgba(6,20,31,.42),rgba(6,20,31,0) 22%,rgba(6,20,31,0) 40%,rgba(6,20,31,.35) 70%,rgba(6,20,31,.7))}
+  .th-tour.th-v2 h1{text-shadow:0 2px 14px rgba(0,0,0,.45)}
+  .th-tour.th-v2:not(.th-x) .eyebrow{display:inline-block;margin:0 0 .5rem;padding:.28rem .7rem;border-radius:99px;background:rgba(6,20,31,.42);font-size:.74rem;letter-spacing:.06em;text-shadow:none;-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
 }
