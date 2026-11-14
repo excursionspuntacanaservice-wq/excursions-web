@@ -31,3 +31,6 @@ chat-widget-button{display:none!important}
 .sf-tz.sf-mini .sf-msg{margin:0;font-size:.9rem;line-height:1.35}.sf-tz.sf-mini .sf-go{display:none}.sf-tz.sf-mini .sf-x{top:4px;right:4px;width:30px;height:30px;font-size:1.25rem}
 .sf-tz.sf-mini.sf-top{top:calc(12px + env(safe-area-inset-top,0px));bottom:auto;right:16px;width:calc(100vw - 32px)}}
 body.sf-chat-on{overflow:hidden}body.sf-kb-on .sf-bd{display:none}
+.sf-badge{display:none;position:absolute;top:-4px;left:-4px;min-width:20px;height:20px;padding:0 5px;box-sizing:border-box;border-radius:999px;background:#E11D48;color:#fff;font:800 .75rem/20px var(--body,system-ui,sans-serif);text-align:center;box-shadow:0 0 0 2px #fff}
+.sf-fab{position:fixed}.sf-fab.sf-unread .sf-badge{display:block;animation:sf-pop .3s ease-out}
+@keyframes sf-pop{from{transform:scale(0)}to{transform:none}}

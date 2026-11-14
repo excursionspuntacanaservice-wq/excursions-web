@@ -126,6 +126,13 @@
     if (!box || enhanced) return; enhanced = true;
     var st = document.createElement('style');
     st.textContent =
+      // tema claro con los colores de la web (el SDK se ponía oscuro en teléfonos con modo oscuro)
+      ':host,.chat-widget-container,.dark-mode{--chat-primary-color:#0B2233!important;--chat-secondary-color:#566974!important;--chat-text-color:#0B2233!important;' +
+      '--chat-text-secondary-color:#566974!important;--chat-background:#FFFFFF!important;--chat-background-chat:#F6F1E9!important;--chat-white:#FFFFFF!important;' +
+      '--chat-user-message-bg:#0B2233!important;--chat-user-message-text:#FFFFFF!important;--chat-agent-message-bg:#FFFFFF!important;--chat-agent-message-text:#0B2233!important;' +
+      '--chat-border-color:#E7E1D7!important;--chat-hover-color:#F3EEE6!important;--chat-accent-color:#CF4A24!important;--chat-time-color:#8A99A3!important;--chat-icon-color:#566974!important;' +
+      '--chat-send-button:#CF4A24!important;--chat-send-button-hover:#B23D1B!important;--chat-input-background:#FFFFFF!important;--chat-input-placeholder:#8A99A3!important;' +
+      '--chat-light-gray:#F3EEE6!important;--chat-lighter-gray:#FBF9F5!important}' +
       '.selector-btn{display:none!important}' +
       '@media (max-width:768px){.chat-widget-container,.chat-widget-container.expanded{top:auto!important;left:0!important;right:0!important;' +
       'bottom:0!important;width:100vw!important;max-width:100vw!important;height:76dvh!important;max-height:76dvh!important;' +
@@ -136,11 +143,11 @@
       'textarea{font-size:16px!important;line-height:1.35!important}.chat-messages{overscroll-behavior:contain}' +
       // solo el botón de cerrar en la cabecera: la papelera abre un diálogo del sistema que congela la página en el iPhone
       '.chat-header button:not(.back-button){display:none!important}}' +
-      '.sf-hi{align-self:flex-start;max-width:85%;margin:12px 12px 4px;padding:10px 13px;border-radius:4px 16px 16px 16px;background:var(--chat-agent-message-bg,#F3F4F6);' +
-      'color:var(--chat-text-color,#1F2937);font-size:15px;line-height:1.45;white-space:pre-line}' +
+      '.sf-hi{align-self:flex-start;max-width:85%;margin:12px 12px 4px;padding:10px 13px;border-radius:4px 16px 16px 16px;background:#fff;border:1px solid #E7E1D7;' +
+      'color:#0B2233;font-size:15px;line-height:1.45;white-space:pre-line;box-shadow:0 1px 2px rgba(11,34,51,.06)}' +
       '@media (min-width:769px){.chat-widget-container:not(.expanded){height:min(620px,calc(100dvh - 120px))!important;max-height:min(620px,calc(100dvh - 120px))!important}}' +
       '.sf-qr{flex:none;display:flex;gap:8px;overflow-x:auto;padding:8px 12px 4px;scrollbar-width:none;-webkit-overflow-scrolling:touch}.sf-qr::-webkit-scrollbar{display:none}' +
-      '.sf-qr[hidden]{display:none}.sf-qr button{flex:none;border:1px solid rgba(127,140,170,.45);background:rgba(127,140,170,.14);color:inherit;border-radius:999px;' +
+      '.sf-qr[hidden]{display:none}.sf-qr button{flex:none;border:1px solid #E7E1D7;background:#fff;color:#0B2233;border-radius:999px;' +
       'padding:9px 13px;font-family:inherit;font-size:14px;font-weight:600;line-height:1;cursor:pointer;white-space:nowrap}.sf-qr button:active{transform:scale(.97)}';
     r.appendChild(st);
 
@@ -262,7 +269,7 @@
   }
   var opened = false;
   function openChat(why) {
-    hideTeaser(); opened = true; set('sf_open', String(Date.now())); sset('sf_open_s', '1');
+    hideTeaser(); fab.classList.remove('sf-unread'); opened = true; set('sf_open', String(Date.now())); sset('sf_open_s', '1');
     ev('sofia_chat_' + why); logOpen(why);
     loadSdk(function () {
       var wb = document.querySelector('chat-widget-button'), c = document.querySelector('chat-widget-container');
@@ -282,7 +289,7 @@
   // ---------- botón fijo + aviso ----------
   var fab = document.createElement('button');
   fab.type = 'button'; fab.className = 'sf-fab'; fab.setAttribute('aria-label', t.open);
-  fab.innerHTML = '<span class="sf-av" aria-hidden="true">S</span><span class="sf-fab-t"></span><i class="sf-dot" aria-hidden="true"></i>';
+  fab.innerHTML = '<span class="sf-av" aria-hidden="true">S</span><span class="sf-fab-t"></span><i class="sf-dot" aria-hidden="true"></i><b class="sf-badge" aria-hidden="true">1</b>';
   fab.querySelector('.sf-fab-t').textContent = t.fab;
   fab.addEventListener('click', function () { openChat('boton'); });
   fab.addEventListener('pointerenter', function () { loadSdk(function () {}); }, { once: true });
@@ -321,7 +328,7 @@
     var modal = document.getElementById('bk-modal');
     tz.classList.toggle('sf-top', mob1 && !!modal && !modal.hidden);
     tz.classList.toggle('sf-mini', mob1);
-    tz.hidden = false; document.body.classList.add('sf-tz-on'); fabVis();
+    tz.hidden = false; document.body.classList.add('sf-tz-on'); fab.classList.add('sf-unread'); fabVis();
     sset('sf_tz_s', String(Date.now())); set('sf_tz', String(Date.now())); ev('sofia_aviso_' + why);
     clearTimeout(tzHide); if (mob1) tzHide = setTimeout(hideTeaser, 25000);
     loadSdk(function () {});
