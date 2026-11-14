@@ -1,0 +1,23 @@
+/* Sofia en la web: botón fijo y aviso proactivo (solo páginas con sofia.js) */
+.sf-fab{position:fixed;z-index:31;right:calc(16px + env(safe-area-inset-right,0px));bottom:calc(88px + env(safe-area-inset-bottom,0px));display:flex;align-items:center;gap:8px;padding:6px 14px 6px 6px;border:0;border-radius:999px;background:var(--navy,#0B2233);color:#fff;font:700 .95rem/1 var(--body,system-ui,sans-serif);box-shadow:0 10px 28px rgba(0,0,0,.25);cursor:pointer}
+.sf-fab:hover{background:var(--navy-2,#123047)}
+.sf-fab:focus-visible,.sf-tz button:focus-visible{outline:3px solid var(--sun,#F4B740);outline-offset:2px}
+.sf-av{display:grid;place-items:center;width:34px;height:34px;border-radius:50%;background:var(--accent,#CF4A24);color:#fff;font:800 1rem/1 var(--body,system-ui,sans-serif);flex:none}
+.sf-dot{width:9px;height:9px;border-radius:50%;background:#2BB673;box-shadow:0 0 0 2px var(--navy,#0B2233);margin-left:-2px}
+@media (min-width:980px){.sf-fab{bottom:calc(96px + env(safe-area-inset-bottom,0px))}}
+@media (max-width:979px){.sf-fab{bottom:calc(84px + env(safe-area-inset-bottom,0px));padding:5px}.sf-fab-t{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}.sf-fab .sf-av{width:44px;height:44px;font-size:1.15rem}.sf-dot{position:absolute;right:5px;top:5px;margin:0}}
+.sf-tz{position:fixed;z-index:60;right:calc(16px + env(safe-area-inset-right,0px));bottom:calc(150px + env(safe-area-inset-bottom,0px));width:min(340px,calc(100vw - 32px));padding:16px 16px 14px;border-radius:var(--r-lg,18px);background:#fff;color:var(--ink,#0B2233);box-shadow:0 18px 50px rgba(11,34,51,.28);border:1px solid var(--line,#E7E1D7);animation:sf-in .28s ease-out}
+.sf-tz[hidden]{display:none}
+.sf-tz.sf-top{top:calc(12px + env(safe-area-inset-top,0px));bottom:auto}
+@media (min-width:980px){.sf-tz{right:auto;left:24px;bottom:24px}}
+.sf-hd{display:flex;align-items:center;gap:10px;margin-bottom:8px;padding-right:26px}
+.sf-hd b{display:block;font-size:1rem}
+.sf-hd small{display:block;font-size:.8rem;color:var(--ink-3,#566974)}
+.sf-msg{margin:0 0 12px;font-size:.98rem;line-height:1.45}
+.sf-go{width:100%}
+.sf-x{position:absolute;top:8px;right:8px;width:32px;height:32px;border:0;border-radius:50%;background:transparent;color:var(--ink-3,#566974);font-size:1.4rem;line-height:1;cursor:pointer}
+.sf-x:hover{background:var(--sand,#F6F1E9)}
+@keyframes sf-in{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.sf-tz{animation:none}}
+.sf-fab{transition:opacity .2s,transform .2s}.sf-fab.sf-wait{opacity:0;transform:scale(.8);pointer-events:none}
+chat-widget-button{display:none!important}
