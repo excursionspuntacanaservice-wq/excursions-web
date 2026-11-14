@@ -696,7 +696,7 @@
     var L2 = lg(leadIn.dataset.lang), T2 = S[L2];
     var showSave = function () {
       if (shown || dismissed || leadDone) return;
-      if (document.body.classList.contains('lock')) { setTimeout(showSave, 4000); return; }
+      if (document.body.classList.contains('lock') || document.body.classList.contains('sf-tz-on')) { setTimeout(showSave, 4000); return; }
       shown = true;
       var bar = document.createElement('div'); bar.className = 'save'; bar.setAttribute('role', 'dialog'); bar.setAttribute('aria-label', T2.save_t);
       bar.innerHTML = '<button type="button" class="x" aria-label="' + T2.close + '">×</button><b></b><p></p>' +
@@ -751,6 +751,8 @@
     lb.addEventListener('touchend', function (e) { if (sx === null) return; var dx = e.changedTouches[0].clientX - sx; if (Math.abs(dx) > 40) show(cur + (dx < 0 ? 1 : -1)); sx = null; });
   }
 
+  // pagó: Sofia deja de recordarle la reserva a medias
+  if (/thanks\.html$/.test(location.pathname)) { try { localStorage.setItem('sf_paid', String(Date.now())); } catch (err) {} }
   // payment cancelled notice / thanks reference (only plain query values, never injected as HTML)
   try {
     var q = new URLSearchParams(window.location.search);

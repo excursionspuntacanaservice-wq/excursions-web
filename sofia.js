@@ -10,6 +10,7 @@
   var L = (document.documentElement.lang || 'en').slice(0, 2).toLowerCase();
   var T = {
     es: {
+      ret: '¡Hola de nuevo! ¿Seguimos con tu reserva de {t}{w}? Te mando el link de pago aquí mismo, con cancelación gratis hasta 24 h antes.', cta2: 'Seguir mi reserva', w: ' para el {d}', wa: ' ({a} adultos)',
       any: 'tu excursión', status: 'En línea · responde en segundos', open: 'Chatear con Sofia', close: 'Cerrar', cta: 'Chatear aquí', fab: 'Chat',
       hi: 'Hola, soy Sofia de Excursions Punta Cana. ¿Te ayudo a reservar? Te digo el precio exacto y la hora de recogida en tu hotel aquí mismo.',
       back: '¿Pudiste escribirnos por WhatsApp? Si prefieres, te atiendo aquí mismo y te mando el link de pago sin salir de la página.',
@@ -18,6 +19,7 @@
       pre: 'Hola Sofia, quiero reservar {t}', d: ' para el {d}', p: ', {a} adultos', c: ' y {c} niños', h: '. Hotel: {h}', q: 'Hola Sofia, tengo una pregunta sobre {t}'
     },
     en: {
+      ret: 'Welcome back! Shall we continue booking {t}{w}? I can send your payment link right here, with free cancellation up to 24 h before.', cta2: 'Continue my booking', w: ' on {d}', wa: ' ({a} adults)',
       any: 'your tour', status: 'Online · replies in seconds', open: 'Chat with Sofia', close: 'Close', cta: 'Chat here', fab: 'Chat',
       hi: 'Hi, I’m Sofia from Excursions Punta Cana. Can I help you book? I can tell you the exact price and your hotel pickup time right here.',
       back: 'Did you manage to message us on WhatsApp? If you prefer, I can help you right here and send your payment link without leaving the page.',
@@ -26,6 +28,7 @@
       pre: 'Hi Sofia, I’d like to book {t}', d: ' on {d}', p: ', {a} adults', c: ' and {c} children', h: '. Hotel: {h}', q: 'Hi Sofia, I have a question about {t}'
     },
     fr: {
+      ret: 'Bon retour ! On continue la réservation de {t}{w} ? Je vous envoie le lien de paiement ici même, avec annulation gratuite jusqu’à 24 h avant.', cta2: 'Continuer ma réservation', w: ' pour le {d}', wa: ' ({a} adultes)',
       any: 'votre excursion', status: 'En ligne · répond en quelques secondes', open: 'Discuter avec Sofia', close: 'Fermer', cta: 'Discuter ici', fab: 'Chat',
       hi: 'Bonjour, je suis Sofia d’Excursions Punta Cana. Je vous aide à réserver ? Je vous donne le prix exact et l’heure de prise en charge à votre hôtel, ici même.',
       back: 'Avez-vous pu nous écrire sur WhatsApp ? Si vous préférez, je m’occupe de vous ici et je vous envoie le lien de paiement sans quitter la page.',
@@ -34,6 +37,7 @@
       pre: 'Bonjour Sofia, je voudrais réserver {t}', d: ' pour le {d}', p: ', {a} adultes', c: ' et {c} enfants', h: '. Hôtel : {h}', q: 'Bonjour Sofia, j’ai une question sur {t}'
     },
     pt: {
+      ret: 'Que bom te ver de novo! Seguimos com a reserva de {t}{w}? Envio o link de pagamento aqui mesmo, com cancelamento grátis até 24 h antes.', cta2: 'Continuar minha reserva', w: ' para {d}', wa: ' ({a} adultos)',
       any: 'seu passeio', status: 'Online · responde em segundos', open: 'Conversar com a Sofia', close: 'Fechar', cta: 'Conversar aqui', fab: 'Chat',
       hi: 'Olá, sou a Sofia da Excursions Punta Cana. Posso ajudar com a reserva? Digo o preço exato e o horário de busca no seu hotel aqui mesmo.',
       back: 'Conseguiu nos escrever no WhatsApp? Se preferir, atendo você aqui mesmo e envio o link de pagamento sem sair da página.',
@@ -42,6 +46,7 @@
       pre: 'Olá Sofia, quero reservar {t}', d: ' para {d}', p: ', {a} adultos', c: ' e {c} crianças', h: '. Hotel: {h}', q: 'Olá Sofia, tenho uma pergunta sobre {t}'
     },
     de: {
+      ret: 'Willkommen zurück! Sollen wir die Buchung von {t}{w} fortsetzen? Ich schicke Ihnen den Zahlungslink direkt hier, mit kostenloser Stornierung bis 24 h vorher.', cta2: 'Buchung fortsetzen', w: ' am {d}', wa: ' ({a} Erwachsene)',
       any: 'Ihren Ausflug', status: 'Online · antwortet in Sekunden', open: 'Mit Sofia chatten', close: 'Schließen', cta: 'Hier chatten', fab: 'Chat',
       hi: 'Hallo, ich bin Sofia von Excursions Punta Cana. Darf ich bei der Buchung helfen? Ich nenne Ihnen den genauen Preis und die Abholzeit an Ihrem Hotel direkt hier.',
       back: 'Konnten Sie uns auf WhatsApp schreiben? Wenn Sie möchten, helfe ich Ihnen direkt hier und schicke den Zahlungslink, ohne die Seite zu verlassen.',
@@ -50,6 +55,7 @@
       pre: 'Hallo Sofia, ich möchte {t} buchen', d: ' am {d}', p: ', {a} Erwachsene', c: ' und {c} Kinder', h: '. Hotel: {h}', q: 'Hallo Sofia, ich habe eine Frage zu {t}'
     },
     it: {
+      ret: 'Bentornato! Continuiamo la prenotazione di {t}{w}? Ti mando il link di pagamento qui stesso, con cancellazione gratuita fino a 24 h prima.', cta2: 'Continua la prenotazione', w: ' per il {d}', wa: ' ({a} adulti)',
       any: 'la tua escursione', status: 'Online · risponde in pochi secondi', open: 'Chatta con Sofia', close: 'Chiudi', cta: 'Chatta qui', fab: 'Chat',
       hi: 'Ciao, sono Sofia di Excursions Punta Cana. Ti aiuto a prenotare? Ti dico il prezzo esatto e l’orario di prelievo al tuo hotel qui stesso.',
       back: 'Sei riuscito a scriverci su WhatsApp? Se preferisci, ti seguo qui e ti mando il link di pagamento senza lasciare la pagina.',
@@ -58,6 +64,7 @@
       pre: 'Ciao Sofia, vorrei prenotare {t}', d: ' per il {d}', p: ', {a} adulti', c: ' e {c} bambini', h: '. Hotel: {h}', q: 'Ciao Sofia, ho una domanda su {t}'
     },
     pl: {
+      ret: 'Witaj ponownie! Kontynuujemy rezerwację {t}{w}? Wyślę link do płatności tutaj, z darmowym anulowaniem do 24 h przed.', cta2: 'Kontynuuj rezerwację', w: ' na {d}', wa: ' ({a} dorosłych)',
       any: 'Twoją wycieczkę', status: 'Online · odpowiada w kilka sekund', open: 'Czat z Sofią', close: 'Zamknij', cta: 'Czatuj tutaj', fab: 'Chat',
       hi: 'Cześć, jestem Sofia z Excursions Punta Cana. Pomóc w rezerwacji? Podam dokładną cenę i godzinę odbioru z Twojego hotelu tutaj.',
       back: 'Udało się napisać do nas na WhatsApp? Jeśli wolisz, obsłużę Cię tutaj i wyślę link do płatności bez opuszczania strony.',
@@ -94,11 +101,42 @@
     var f = document.querySelector('#bk-modal:not([hidden]) form.bk') || document.querySelector('form.bk.st2') || document.getElementById('bk-side') || document.querySelector('form.bk, form.hf');
     return f;
   }
+  // ---------- memoria: lo que el visitante eligió (tour, fecha, personas, hotel) queda en su navegador 30 días ----------
+  function trip() {
+    var x = null; try { x = JSON.parse(get('sf_trip') || 'null'); } catch (e) {}
+    if (!x || Date.now() - x.t > 30 * 864e5) return null;
+    if (x.date && x.date < new Date().toISOString().slice(0, 10)) return null; // fecha ya pasó
+    var paid = +get('sf_paid') || 0; if (paid && paid > x.t) return null;   // ya pagó después de elegir
+    return x;
+  }
+  var saveT = 0;
+  function saveTrip(f) {
+    clearTimeout(saveT);
+    saveT = setTimeout(function () {
+      if (!f) return;
+      var v = function (n) { var x = f.querySelector('[name=' + n + ']'); return x && x.value ? String(x.value).trim().slice(0, 80) : ''; };
+      var slug = f.dataset.slug || '', old = null; try { old = JSON.parse(get('sf_trip') || 'null'); } catch (e) {}
+      if (!old || old.slug !== slug) old = {};
+      var x = { tour: String(f.dataset.tourL || f.dataset.tour || old.tour || '').trim().slice(0, 60), slug: slug, page: location.pathname,
+        date: v('date') || old.date || '', adults: v('adults') || old.adults || '', children: v('children') || old.children || '', hotel: v('hotel') || old.hotel || '', t: Date.now() };
+      if (!x.date && !x.hotel) return;
+      set('sf_trip', JSON.stringify(x));
+    }, 600);
+  }
+  ['change', 'input', 'click'].forEach(function (n) {
+    document.addEventListener(n, function (e) {
+      var c = e.target && e.target.closest ? (e.target.closest('form.bk') || e.target.closest('.qk') || e.target.closest('form.hf')) : null;
+      if (c) saveTrip(c);
+    }, true);
+  });
+  function fmtD(d) { if (!d) return ''; var p = d.split('-'); return locale === 'en' ? p[1] + '/' + p[2] : p[2] + '/' + p[1]; }
+
   function prefill() {
     var f = form(), tour = (f && (f.dataset.tourL || f.dataset.tour)) || (document.querySelector('h1') || {}).textContent || '';
     tour = String(tour).trim();
     var v = function (n) { var x = f ? f.querySelector('[name=' + n + ']') : null; return x && x.value ? String(x.value).trim() : ''; };
-    var d = v('date'), a = v('adults'), c = v('children'), h = v('hotel');
+    var d = v('date'), a = v('adults'), c = v('children'), h = v('hotel'), tr = trip();
+    if (!d && !h && tr && (!f || !f.dataset.slug || f.dataset.slug === tr.slug)) { d = tr.date || ''; a = tr.adults || ''; c = tr.children || ''; h = tr.hotel || ''; tour = tr.tour || tour; }
     if (!d && !h) return t.q.replace('{t}', tour);
     if (d) { var p = d.split('-'); d = locale === 'en' ? p[1] + '/' + p[2] + '/' + p[0] : p[2] + '/' + p[1] + '/' + p[0]; }
     return t.pre.replace('{t}', tour) + (d ? t.d.replace('{d}', d) : '') + (a ? t.p.replace('{a}', a) : '') +
@@ -173,9 +211,13 @@
   }
   function nudge(why) {
     if (!canNudge()) return;
+    if (document.querySelector('.save') || document.body.classList.contains('lock')) { setTimeout(function () { nudge(why); }, 8000); return; }
     why0 = why; tz.dataset.why = why;
     var f = form(), tn = f && (f.dataset.tourL || f.dataset.tour) ? String(f.dataset.tourL || f.dataset.tour).trim() : t.any;
-    tz.querySelector('.sf-msg').textContent = (t[why] || t.hi).replace('{t}', tn);
+    var msg = (t[why] || t.hi).replace('{t}', tn);
+    if (why === 'ret') { var tr = trip() || {}; msg = t.ret.replace('{t}', tr.tour || tn).replace('{w}', (tr.date ? t.w.replace('{d}', fmtD(tr.date)) : '') + (+tr.adults > 0 ? t.wa.replace('{a}', tr.adults) : '')); }
+    tz.querySelector('.sf-msg').textContent = msg;
+    tz.querySelector('.sf-go').textContent = why === 'ret' ? t.cta2 : t.cta;
     var modal = document.getElementById('bk-modal');
     tz.classList.toggle('sf-top', !desk() && !!modal && !modal.hidden);
     tz.hidden = false; document.body.classList.add('sf-tz-on');
@@ -220,6 +262,22 @@
     if (!desk() && now - t0 > 20000 && maxY > document.body.scrollHeight * 0.35 && lastY - y > 700 && now - lastT < 500) nudge('exit');
     if (now - lastT > 300) { lastY = y; lastT = now; }
   }, { passive: true });
+
+  // 4) vuelve otro día con una reserva a medias: se la recordamos con sus datos (máx. 1 aviso cada 24 h)
+  var tr0 = trip(), visitNew = !get('sf_seen') || Date.now() - (+get('sf_seen')) > 30 * 60 * 1000;
+  set('sf_seen', String(Date.now())); setInterval(function () { set('sf_seen', String(Date.now())); }, 60000);
+  if (tr0 && visitNew && Date.now() - tr0.t > 30 * 60 * 1000) setTimeout(function () { if (!why0) nudge('ret'); }, 6000);
+
+  // 5) visitante frío que lee con interés (30 s y 40 % de la página) en una página con reserva
+  if (form()) {
+    var engT = Date.now(), engDone = false;
+    var eng = function () {
+      if (engDone || why0) return;
+      var h = document.documentElement, pct = (h.scrollTop + window.innerHeight) / Math.max(1, h.scrollHeight);
+      if (Date.now() - engT > 30000 && pct > 0.4) { engDone = true; window.removeEventListener('scroll', eng); nudge('hi'); }
+    };
+    window.addEventListener('scroll', eng, { passive: true }); setTimeout(eng, 31000);
+  }
 
   // aviso inicial suave para visitas de anuncios (después de 25 s sin otra señal)
   if (/[?&](gclid|gbraid|wbraid|gad_source)=/.test(location.search)) setTimeout(function () { if (!why0) nudge('hi'); }, 25000);
