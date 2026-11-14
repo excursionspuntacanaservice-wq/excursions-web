@@ -134,6 +134,8 @@
       '--chat-send-button:#CF4A24!important;--chat-send-button-hover:#B23D1B!important;--chat-input-background:#FFFFFF!important;--chat-input-placeholder:#8A99A3!important;' +
       '--chat-light-gray:#F3EEE6!important;--chat-lighter-gray:#FBF9F5!important}' +
       '.selector-btn{display:none!important}' +
+      // sin micrófono ni adjuntos: Sofia no puede leer notas de voz ni archivos ("No pude leer ese mensaje")
+      'chat-input button:not(.send-button),chat-input input[type=file]{display:none!important}' +
       '@media (max-width:768px){.chat-widget-container,.chat-widget-container.expanded{top:auto!important;left:0!important;right:0!important;' +
       'bottom:0!important;width:100vw!important;max-width:100vw!important;height:76dvh!important;max-height:76dvh!important;' +
       'border-radius:18px 18px 0 0!important;box-sizing:border-box!important}.resize-button{display:none!important}' +
@@ -164,6 +166,10 @@
       qr.appendChild(b);
     });
     var inp = r.querySelector('chat-input'); if (inp) box.insertBefore(qr, inp);
+    // nunca enviar un mensaje vacío (Sofia contestaba "No pude leer ese mensaje")
+    var empty = function () { var x = r.querySelector('textarea'); return !x || !String(x.value || '').trim(); };
+    r.addEventListener('click', function (e) { var sb = e.target && e.target.closest ? e.target.closest('.send-button') : null; if (sb && empty()) { e.stopPropagation(); e.preventDefault(); } }, true);
+    r.addEventListener('keydown', function (e) { if (e.key === 'Enter' && !e.shiftKey && e.target && e.target.tagName === 'TEXTAREA' && empty()) { e.stopPropagation(); e.preventDefault(); } }, true);
     // saludo fijo arriba: el chat nunca se ve vacío al abrirlo
     var msgs0 = r.querySelector('.chat-messages');
     if (msgs0) { var hi = document.createElement('div'); hi.className = 'sf-hi'; hi.textContent = t.mhi; msgs0.insertBefore(hi, msgs0.firstChild); }
