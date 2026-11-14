@@ -133,7 +133,9 @@
       // teclado abierto: el chat ocupa justo lo que se ve encima del teclado, como WhatsApp
       '.chat-widget-container.sf-kbon,.chat-widget-container.expanded.sf-kbon{top:var(--sf-top,0px)!important;bottom:auto!important;height:var(--sf-h,60dvh)!important;max-height:var(--sf-h,60dvh)!important;border-radius:0!important}' +
       // 16 px: el iPhone no hace zoom al tocar el campo de texto (con 14 px agrandaba todo y cortaba los lados)
-      'textarea{font-size:16px!important;line-height:1.35!important}.chat-messages{overscroll-behavior:contain}}' +
+      'textarea{font-size:16px!important;line-height:1.35!important}.chat-messages{overscroll-behavior:contain}' +
+      // solo el botón de cerrar en la cabecera: la papelera abre un diálogo del sistema que congela la página en el iPhone
+      '.chat-header button:not(.back-button){display:none!important}}' +
       '.sf-hi{align-self:flex-start;max-width:85%;margin:12px 12px 4px;padding:10px 13px;border-radius:4px 16px 16px 16px;background:var(--chat-agent-message-bg,#F3F4F6);' +
       'color:var(--chat-text-color,#1F2937);font-size:15px;line-height:1.45;white-space:pre-line}' +
       '@media (min-width:769px){.chat-widget-container:not(.expanded){height:min(620px,calc(100dvh - 120px))!important;max-height:min(620px,calc(100dvh - 120px))!important}}' +
@@ -231,7 +233,7 @@
     var v = function (n) { var x = f ? f.querySelector('[name=' + n + ']') : null; return x && x.value ? String(x.value).trim() : ''; };
     var d = v('date'), a = v('adults'), c = v('children'), h = v('hotel'), tr = trip();
     if (!d && !h && tr && (!f || !f.dataset.slug || f.dataset.slug === tr.slug)) { d = tr.date || ''; a = tr.adults || ''; c = tr.children || ''; h = tr.hotel || ''; tour = tr.tour || tour; }
-    if (!d && !h) return t.q.replace('{t}', tour);
+    if (!d && !h) return desk() ? t.q.replace('{t}', tour) : '';   // en el móvil no dejamos texto que el cliente tenga que borrar
     if (d) { var p = d.split('-'); d = locale === 'en' ? p[1] + '/' + p[2] + '/' + p[0] : p[2] + '/' + p[1] + '/' + p[0]; }
     return t.pre.replace('{t}', tour) + (d ? t.d.replace('{d}', d) : '') + (a ? t.p.replace('{a}', a) : '') +
       (+c > 0 ? t.c.replace('{c}', c) : '') + (h ? t.h.replace('{h}', h.slice(0, 80)) : '');
@@ -269,7 +271,8 @@
       setTimeout(function () {
         var ta2 = c && c.shadowRoot ? c.shadowRoot.querySelector('textarea') : null;
         if (!ta2) return;
-        if (!ta2.value) { ta2.value = prefill(); ta2.dispatchEvent(new Event('input', { bubbles: true })); }
+        var pf = prefill();
+        if (!ta2.value && pf) { ta2.value = pf; ta2.dispatchEvent(new Event('input', { bubbles: true })); }
         // en el móvil no abrimos el teclado solos: primero se ve la conversación, el cliente toca para escribir
         if (desk()) { try { ta2.focus({ preventScroll: true }); } catch (e) {} }
       }, 400);
