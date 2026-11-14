@@ -93,9 +93,76 @@
       var b = document.querySelector('chat-widget-button button'), c = document.querySelector('chat-widget-container');
       if ((b && c && c.shadowRoot) || ++tries > 60) {
         clearInterval(iv); sdkState = b ? 2 : 0;
-        var w = sdkWait; sdkWait = []; if (b) w.forEach(function (f) { f(); });
+        var w = sdkWait; sdkWait = []; if (b) { try { enhance(); } catch (e) {} w.forEach(function (f) { f(); }); }
       }
     }, 250);
+  }
+  // ---------- chat cómodo: hoja flotante en el móvil, respuestas rápidas, teclado del iPhone ----------
+  var QR = {
+    es: ['¿Cuánto cuesta?', '¿A qué hora me recogen?', 'Quiero reservar', '¿Puedo cancelar?'],
+    en: ['How much is it?', 'What time is pickup?', 'I want to book', 'Can I cancel?'],
+    fr: ['Combien ça coûte ?', 'À quelle heure est la prise en charge ?', 'Je veux réserver', 'Puis-je annuler ?'],
+    pt: ['Quanto custa?', 'A que horas me buscam?', 'Quero reservar', 'Posso cancelar?'],
+    de: ['Was kostet es?', 'Wann ist die Abholung?', 'Ich möchte buchen', 'Kann ich stornieren?'],
+    it: ['Quanto costa?', 'A che ora è il prelievo?', 'Voglio prenotare', 'Posso cancellare?'],
+    pl: ['Ile to kosztuje?', 'O której jest odbiór?', 'Chcę zarezerwować', 'Czy mogę anulować?']
+  };
+  var BACK = { es: 'Volver a la página', en: 'Back to the page', fr: 'Retour à la page', pt: 'Voltar à página', de: 'Zurück zur Seite', it: 'Torna alla pagina', pl: 'Wróć do strony' };
+  var enhanced = false;
+  function enhance() {
+    var host = document.querySelector('chat-widget-container'), r = host && host.shadowRoot;
+    var box = r && r.querySelector('.chat-widget-container');
+    if (!box || enhanced) return; enhanced = true;
+    var st = document.createElement('style');
+    st.textContent =
+      '.selector-btn{display:none!important}' +
+      '@media (max-width:768px){.chat-widget-container,.chat-widget-container.expanded{top:auto!important;left:0!important;right:0!important;' +
+      'bottom:var(--sf-kb,0px)!important;width:100vw!important;max-width:100vw!important;height:var(--sf-h,76dvh)!important;max-height:var(--sf-h,76dvh)!important;' +
+      'border-radius:18px 18px 0 0!important;box-sizing:border-box!important}.resize-button{display:none!important}}' +
+      '@media (min-width:769px){.chat-widget-container:not(.expanded){height:min(620px,calc(100dvh - 120px))!important;max-height:min(620px,calc(100dvh - 120px))!important}}' +
+      '.sf-qr{flex:none;display:flex;gap:8px;overflow-x:auto;padding:8px 12px 4px;scrollbar-width:none;-webkit-overflow-scrolling:touch}.sf-qr::-webkit-scrollbar{display:none}' +
+      '.sf-qr[hidden]{display:none}.sf-qr button{flex:none;border:1px solid rgba(127,140,170,.45);background:rgba(127,140,170,.14);color:inherit;border-radius:999px;' +
+      'padding:9px 13px;font-family:inherit;font-size:14px;font-weight:600;line-height:1;cursor:pointer;white-space:nowrap}.sf-qr button:active{transform:scale(.97)}';
+    r.appendChild(st);
+
+    // respuestas rápidas: un toque y se envían, como en cualquier app de mensajería
+    var qr = document.createElement('div'); qr.className = 'sf-qr';
+    (QR[locale] || QR.en).forEach(function (q) {
+      var b = document.createElement('button'); b.type = 'button'; b.textContent = q;
+      b.addEventListener('click', function () {
+        var ta = r.querySelector('textarea'), send = r.querySelector('.send-button');
+        if (!ta || !send) return;
+        ta.value = q; ta.dispatchEvent(new Event('input', { bubbles: true }));
+        setTimeout(function () { send.click(); ev('sofia_rapida'); }, 30);
+      });
+      qr.appendChild(b);
+    });
+    var inp = r.querySelector('chat-input'); if (inp) box.insertBefore(qr, inp);
+    var qrSync = function () { qr.hidden = r.querySelectorAll('.message-wrapper.user').length >= 2; };
+    var msgs = r.querySelector('.messages-container') || r.querySelector('.chat-messages');
+    if (msgs) new MutationObserver(qrSync).observe(msgs, { childList: true, subtree: true });
+    qrSync();
+
+    // móvil: la página sigue visible arriba; tocarla cierra el chat y vuelves donde estabas
+    var bd = document.createElement('button'); bd.type = 'button'; bd.className = 'sf-bd'; bd.hidden = true;
+    bd.innerHTML = '<span>✕ </span>'; bd.querySelector('span').textContent = '✕ ' + (BACK[locale] || BACK.en);
+    bd.addEventListener('click', function () { var b = r.querySelector('.back-button'); if (b) b.click(); });
+    document.body.appendChild(bd);
+    var mob = function () { return window.matchMedia('(max-width:768px)').matches; };
+    var sync = function () { var on = box.classList.contains('visible'); bd.hidden = !(on && mob()); document.body.classList.toggle('sf-chat-on', on && mob()); };
+    new MutationObserver(sync).observe(box, { attributes: true, attributeFilter: ['class'] });
+    sync();
+
+    // iPhone: con el teclado abierto, la hoja sube y el campo de texto queda a la vista
+    var vv = window.visualViewport;
+    if (vv) {
+      var kb = function () {
+        var k = Math.max(0, window.innerHeight - vv.height - vv.offsetTop);
+        if (k > 80 && mob()) { host.style.setProperty('--sf-kb', k + 'px'); host.style.setProperty('--sf-h', Math.round(vv.height - 6) + 'px'); }
+        else { host.style.removeProperty('--sf-kb'); host.style.removeProperty('--sf-h'); }
+      };
+      vv.addEventListener('resize', kb); vv.addEventListener('scroll', kb);
+    }
   }
   function form() {
     var f = document.querySelector('#bk-modal:not([hidden]) form.bk') || document.querySelector('form.bk.st2') || document.getElementById('bk-side') || document.querySelector('form.bk, form.hf');

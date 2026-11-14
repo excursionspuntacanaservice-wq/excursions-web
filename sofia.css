@@ -20,4 +20,8 @@
 @keyframes sf-in{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
 @media (prefers-reduced-motion:reduce){.sf-tz{animation:none}}
 .sf-fab{transition:opacity .2s,transform .2s}.sf-fab.sf-wait{opacity:0;transform:scale(.8);pointer-events:none}
+.sf-bd{position:fixed;z-index:9998;left:0;right:0;top:0;height:calc(24dvh + 18px);border:0;margin:0;padding:0 0 26px;display:flex;align-items:flex-end;justify-content:center;background:rgba(11,34,51,.45);cursor:pointer;-webkit-tap-highlight-color:transparent}
+.sf-bd[hidden]{display:none}
+.sf-bd span{background:#fff;color:var(--navy,#0B2233);font:700 .95rem/1 var(--body,system-ui,sans-serif);padding:10px 16px;border-radius:999px;box-shadow:0 6px 18px rgba(0,0,0,.25)}
+body.sf-chat-on .sf-fab,body.sf-chat-on .sf-tz{display:none}
 chat-widget-button{display:none!important}
