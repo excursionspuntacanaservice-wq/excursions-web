@@ -945,3 +945,6 @@ body.lock{overflow:hidden}
   .th-tour.th-v2 h1{text-shadow:0 2px 14px rgba(0,0,0,.45)}
   .th-tour.th-v2:not(.th-x) .eyebrow{display:inline-block;margin:0 0 .5rem;padding:.28rem .7rem;border-radius:99px;background:rgba(6,20,31,.42);font-size:.74rem;letter-spacing:.06em;text-shadow:none;-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
 }
+.rm-f{margin-top:28px;max-width:440px}.rm-f .fld{margin-bottom:16px}.rm-f label{display:block;font-weight:700;margin-bottom:6px}.rm-f .btn{width:100%}
+.rm-msg{margin-top:18px;padding:14px 16px;border-radius:12px;font-weight:600;line-height:1.45}.rm-ok{background:#E7F5EE;color:#0B5A36}.rm-err{background:#FDECEA;color:#8A1F17}
+.rm-note{margin-top:22px;color:var(--muted,#5b6b75);font-size:.95rem}
