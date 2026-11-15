@@ -948,3 +948,11 @@ body.lock{overflow:hidden}
 .rm-f{margin-top:28px;max-width:440px}.rm-f .fld{margin-bottom:16px}.rm-f label{display:block;font-weight:700;margin-bottom:6px}.rm-f .btn{width:100%}
 .rm-msg{margin-top:18px;padding:14px 16px;border-radius:12px;font-weight:600;line-height:1.45}.rm-ok{background:#E7F5EE;color:#0B5A36}.rm-err{background:#FDECEA;color:#8A1F17}
 .rm-note{margin-top:22px;color:var(--muted,#5b6b75);font-size:.95rem}
+
+/* "ya estás en Punta Cana" pill (portada ES) */
+.here-now{display:flex;align-items:center;gap:.5rem;width:fit-content;max-width:100%;margin:.7rem 0 0;padding:.5rem .9rem .5rem .7rem;border-radius:14px;background:#159A50;color:#fff;text-decoration:none;font-size:.94rem;line-height:1.3;box-shadow:0 6px 18px rgba(0,0,0,.18)}
+.here-now .ic{width:18px;height:18px;flex:none;fill:none;stroke:currentColor;stroke-width:2}
+.here-now b{font-weight:800}
+.here-now:hover{background:#12843f}
+@media (max-width:979px){.here-now{font-size:.86rem;padding:.45rem .75rem .45rem .6rem}.hero-copy:has(.here-now) .eyebrow{display:none}.hero-in:has(.here-now){height:auto;min-height:min(470px,58svh);padding-top:calc(104px + env(safe-area-inset-top,0px))}}
+@media (max-width:380px){.here-now{font-size:.78rem}}
