@@ -266,7 +266,7 @@
     try {
       var f = form(), v = function (n) { var x = f ? f.querySelector('[name=' + n + ']') : null; return x && x.value ? String(x.value) : ''; };
       var body = new URLSearchParams({
-        fuente: fuente(), pagina: location.pathname, idioma: document.documentElement.lang || '',
+        fuente: fuente(), codigo: (function () { try { var o = JSON.parse(get('epc_vid') || 'null'); return o && o.v ? o.v : ''; } catch (e) { return ''; } })(), pagina: location.pathname, idioma: document.documentElement.lang || '',
         tour: f && f.dataset.tour ? f.dataset.tour : '', fecha: v('date'), adultos: v('adults'), ninos: v('children'),
         boton: 'chat web Sofia (' + why + ')', dispositivo: desk() ? 'pc' : 'movil'
       });
