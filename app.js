@@ -20,7 +20,23 @@
   function lateCut() { return new Date(Date.now() - 4 * 3600 * 1000).getUTCHours() >= CUTOFF_H; }
   function tomorrow() { var d = firstDay(); var m = d.getMonth() + 1, day = d.getDate();
     return d.getFullYear() + '-' + (m < 10 ? '0' : '') + m + '-' + (day < 10 ? '0' : '') + day; }
-  function waLink(text) { return 'https://wa.me/' + WA + '?text=' + encodeURIComponent(text); }
+  // Código de visitante (90 días): va al final de cada mensaje de WhatsApp, a la hoja "Clics WhatsApp" y a Clarity.
+  // Une clic web ↔ conversación ↔ venta sin adivinar por la hora. No identifica a la persona.
+  var VID = (function () {
+    try {
+      var o = JSON.parse(localStorage.getItem('epc_vid') || 'null');
+      if (!o || !o.v || Date.now() - o.t > 90 * 864e5) { o = { v: Math.random().toString(36).slice(2, 7), t: Date.now() }; localStorage.setItem('epc_vid', JSON.stringify(o)); }
+      return o.v;
+    } catch (e) { return ''; }
+  })();
+  var TAG = VID ? ' #' + VID : '';
+  function waLink(text) { return 'https://wa.me/' + WA + '?text=' + encodeURIComponent(text + TAG); }
+  function waTag(l) {
+    if (!TAG) return;
+    var u = l.getAttribute('href') || '';
+    if (u.indexOf(encodeURIComponent(TAG)) >= 0 || u.indexOf(TAG) >= 0) return;
+    l.href = u.indexOf('?text=') >= 0 ? u + encodeURIComponent(TAG) : u + (u.indexOf('?') >= 0 ? '&' : '?') + 'text=' + encodeURIComponent((/^es/.test(document.documentElement.lang || '') ? 'Hola' : 'Hi') + ' 👋' + TAG);
+  }
   // Google Ads secondary counters (observation only, not used for bidding)
   // Origen de la visita (primer toque, 30 días): anuncio, ChatGPT, Google, Instagram o directo.
   var SRC = (function () {
@@ -47,11 +63,12 @@
     } catch (e) { return (cur || 'directo').slice(0, 200); }
   })();
   function ev(name) { try { if (typeof window.clarity === 'function') window.clarity('event', name); } catch (e) {} }
+  try { if (VID && typeof window.clarity === 'function') window.clarity('set', 'codigo', VID); } catch (e) {}
   function conv(label) { try { if (typeof window.gtag === 'function') window.gtag('event', 'conversion', { send_to: 'AW-18525941849/' + label }); } catch (e) {} }
   var CV_BOOK = 'JUcZCPfonaUdENng7YFF', CV_WA = 'Qk6_CPronaUdENng7YFF';
   document.addEventListener('click', function (e) {
     var l = e.target && e.target.closest ? e.target.closest('a[href*="wa.me/"]') : null;
-    if (l) { conv(CV_WA); ev('whatsapp_click'); waLog(l); }
+    if (l) { waTag(l); conv(CV_WA); ev('whatsapp_click'); waLog(l); }
   }, true);
   // Registro interno del origen de cada clic a WhatsApp (sin datos personales). Si falla, el clic sigue igual.
   var WA_HOOK = 'https://hook.us2.make.com/a4pf96xny4cxg2m2m6v6s9omc4b42fu6', waLast = 0;
@@ -62,7 +79,7 @@
       var g = function (n) { var x = f ? f.querySelector('[name=' + n + ']') : null; return x && x.value ? String(x.value) : ''; };
       var c = el && el.className ? String(el.className) : '';
       var body = new URLSearchParams({
-        fuente: SRC, pagina: window.location.pathname, idioma: document.documentElement.lang || '',
+        fuente: SRC, codigo: VID, pagina: window.location.pathname, idioma: document.documentElement.lang || '',
         tour: pf && pf.dataset.tour ? pf.dataset.tour : '', fecha: g('date'), adultos: g('adults'), ninos: g('children'),
         boton: label ? label : /chat/.test(c) ? 'formulario' : /wa-fab/.test(c) ? 'flotante' : /mbar-wa/.test(c) ? 'barra movil' : /x-wa/.test(c) ? 'primera pantalla' : 'pagina',
         dispositivo: window.matchMedia && window.matchMedia('(max-width: 760px)').matches ? 'movil' : 'pc'
@@ -410,7 +427,7 @@
         tour: form.dataset.tour, slug: form.dataset.slug, date: date.value, adults: a.value, children: c ? c.value : '0',
         hotel: pickupValue(), name: $('[name=name]', form) ? $('[name=name]', form).value.trim() : '',
         whatsapp: (function (v) { var d = v.replace(/\D/g, ''); return (d.length === 10 && v.trim().charAt(0) !== '+') ? '1' + d : d; })($('[name=whatsapp]', form) ? $('[name=whatsapp]', form).value : ''), email: $('[name=email]', form).value.trim(),
-        lang: L, website: hp ? hp.value : '', pickup_time: curTime(), fuente: SRC, veh: veh && veh.length ? vc.map(function (n) { return n || 0; }).join(',') : ''
+        lang: L, website: hp ? hp.value : '', pickup_time: curTime(), fuente: SRC, codigo: VID, veh: veh && veh.length ? vc.map(function (n) { return n || 0; }).join(',') : ''
       });
       pay.disabled = true; pay.textContent = T.opening;
       var ctl = window.AbortController ? new AbortController() : null, timer = setTimeout(function () { if (ctl) ctl.abort(); }, 25000);
