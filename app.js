@@ -308,6 +308,7 @@
       if (date && date.value) t += T.wa_on.replace('{d}', fmtDate(date.value, L));
       if (a) t += vs ? VT.ppl.replace('{a}', a.value) : T.wa_for.replace('{a}', a.value);
       if (c && +c.value > 0) t += T.wa_kids.replace('{c}', c.value);
+      var ib = $('[name=infants]', form); if (ib && +ib.value > 0) t += ' + ' + bbWord(L, ib.value) + (BB[lg(L)] || BB.en)[1];
       if (mode !== 'pay' && PK_SHIFTS[PK_GROUP[form.dataset.slug]]) t += (X(L, '. Salida ', '. Departure ')) + shLabs(PK_GROUP[form.dataset.slug], L)[shiftIdx | 0];
       var hv = mode !== 'pay' && $('[name=hotel]', form) ? $('[name=hotel]', form).value.trim() : '';
       if (hv) { var ct = curTime(); t += '. Hotel: ' + hv + (ct ? (X(L, ' (recogida ', ' (pickup ')) + ct.split(' · ')[0] + ')' : ''); }
@@ -382,7 +383,7 @@
     $$('.sb', form).forEach(function (b) {
       b.addEventListener('click', function () { var inp = $('input', b.parentNode); inp.value = (+inp.value || 0) + (+b.dataset.step); clamp(inp); refresh(); });
     });
-    [a, c].forEach(function (inp) { if (inp) inp.addEventListener('change', function () { clamp(inp); refresh(); }); });
+    [a, c, $('[name=infants]', form)].forEach(function (inp) { if (inp) inp.addEventListener('change', function () { clamp(inp); refresh(); }); });
     refresh();
 
     form.addEventListener('submit', function (e) {
@@ -407,7 +408,7 @@
       cvBookOnce(); ev('book_submit');
       var hp = $('[name=website]', form);
       var body = new URLSearchParams({
-        tour: form.dataset.tour, slug: form.dataset.slug, date: date.value, adults: a.value, children: c ? c.value : '0',
+        tour: form.dataset.tour, slug: form.dataset.slug, date: date.value, adults: a.value, children: c ? c.value : '0', infants: $('[name=infants]', form) ? $('[name=infants]', form).value : '0',
         hotel: pickupValue(), name: $('[name=name]', form) ? $('[name=name]', form).value.trim() : '',
         whatsapp: (function (v) { var d = v.replace(/\D/g, ''); return (d.length === 10 && v.trim().charAt(0) !== '+') ? '1' + d : d; })($('[name=whatsapp]', form) ? $('[name=whatsapp]', form).value : ''), email: $('[name=email]', form).value.trim(),
         lang: L, website: hp ? hp.value : '', pickup_time: curTime(), fuente: SRC, veh: veh && veh.length ? vc.map(function (n) { return n || 0; }).join(',') : ''
@@ -428,6 +429,20 @@
     });
     $$('input', form).forEach(function (i) { i.addEventListener('input', function () { if (i.getAttribute('aria-invalid') === 'true') i.setAttribute('aria-invalid', 'false'); }); });
   }
+  // bebés gratis (0–4 en Saona/Catalina/Santo Domingo, 0–1 en Snorkel/Caballos): campo propio, no cambia el total; va a Make como infants → menores2
+  var BB = { es: ['Bebés', ' (gratis)', ' bebé', ' bebés', 'Quitar uno', 'Agregar uno'], en: ['Babies', ' (free)', ' baby', ' babies', 'Remove one', 'Add one'], fr: ['Bébés', ' (gratuit)', ' bébé', ' bébés', 'Retirer', 'Ajouter'], pt: ['Bebês', ' (grátis)', ' bebê', ' bebês', 'Remover', 'Adicionar'], de: ['Babys', ' (gratis)', ' Baby', ' Babys', 'Entfernen', 'Hinzufügen'], it: ['Neonati', ' (gratis)', ' neonato', ' neonati', 'Rimuovi', 'Aggiungi'], pl: ['Niemowlęta', ' (gratis)', ' niemowlę', ' niemowląt', 'Usuń', 'Dodaj'] };
+  function bbWord(L, n) { var w = BB[lg(L)] || BB.en; return n + (+n === 1 ? w[2] : w[3]); }
+  $$('form.bk').forEach(function (form) {
+    var c = $('[name=children]', form); if (!c || $('[name=infants]', form) || /party/.test(form.dataset.slug || '')) return;
+    var cf = c.closest('.fld'), lb = cf ? $('.lbl', cf) : null; if (!cf || !lb) return;
+    var m = (lb.textContent || '').match(/(\d+)\s*[–-]\s*\d+/), mx = m ? Math.max(0, +m[1] - 1) : 4;
+    var w = BB[lg(form.dataset.lang)] || BB.en, id = (form.id || 'bk') + '-l-inf';
+    var f = document.createElement('div'); f.className = 'fld fld-inf';
+    f.innerHTML = '<span class="lbl" id="' + id + '"></span><div class="step" role="group" aria-labelledby="' + id + '"><button type="button" class="sb" data-step="-1">−</button><input name="infants" type="number" inputmode="numeric" min="0" max="6" value="0" aria-labelledby="' + id + '"><button type="button" class="sb" data-step="1">+</button></div>';
+    $('.lbl', f).textContent = w[0] + ' 0–' + mx + w[1];
+    var bs = $$('.sb', f); bs[0].setAttribute('aria-label', w[4]); bs[1].setAttribute('aria-label', w[5]);
+    cf.parentNode.insertBefore(f, cf.nextSibling);
+  });
   $$('form.bk').forEach(setup);
   // 'Tocó Reservar': first tap on any booking button (Check dates / Book now) or inside the booking form, once per page view
   var cvBookSent = false;
@@ -635,7 +650,7 @@
       var vb2 = fm._vehBad && fm._vehBad(); if (vb2) { if (msgE) { msgE.textContent = vb2; msgE.hidden = false; } return; }
       if (msgE) msgE.hidden = true;
       var dv = $('.dp-v', fm), a = $('[name=adults]', fm), c = $('[name=children]', fm);
-      var ppl = $('.bk-veh', fm) ? a.value + ({ es: [' persona', ' personas'], fr: [' personne', ' personnes'], pt: [' pessoa', ' pessoas'], de: [' Person', ' Personen'], it: [' persona', ' persone'], pl: [' osoba', ' os.'] }[lg(L)] || [' person', ' people'])[a.value === '1' ? 0 : 1] : a.value + (a.value === '1' ? T.adult : T.adults) + (c && +c.value > 0 ? ', ' + c.value + T.kids : '');
+      var ppl = $('.bk-veh', fm) ? a.value + ({ es: [' persona', ' personas'], fr: [' personne', ' personnes'], pt: [' pessoa', ' pessoas'], de: [' Person', ' Personen'], it: [' persona', ' persone'], pl: [' osoba', ' os.'] }[lg(L)] || [' person', ' people'])[a.value === '1' ? 0 : 1] : a.value + (a.value === '1' ? T.adult : T.adults) + (c && +c.value > 0 ? ', ' + c.value + T.kids : '') + ($('[name=infants]', fm) && +$('[name=infants]', fm).value > 0 ? ', ' + bbWord(L, $('[name=infants]', fm).value) : '');
       sumT.textContent = T.avail_ok.replace('{d}', dv ? dv.textContent : dIn.value);
       sumS.textContent = ppl + ' · ' + amount();
       showStep(2); ev('book_step2');
