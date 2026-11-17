@@ -659,6 +659,24 @@
       if (h && !h.closest('[hidden]')) { if (touch) { try { sum.scrollIntoView({ block: 'start' }); } catch (e) {} } else h.focus({ preventScroll: true }); }
     });
     sumE.addEventListener('click', function () { showStep(1); });
+    // celular: al escribir hotel o correo el teclado tapa el botón de pago. Correo: subimos lo justo para ver campo + botón;
+    // teclado muestra "Siguiente" en hotel y "Ir" en correo (Enter en correo = pagar). Carlos 17-nov.
+    (function () {
+      var em = $('[name=email]', fm), ht = $('[name=hotel]', fm), nr = $('[name=near]', fm), vv = window.visualViewport;
+      if (ht) ht.setAttribute('enterkeyhint', 'next'); if (nr) nr.setAttribute('enterkeyhint', 'next');
+      if (!em || !payB) return; em.setAttribute('enterkeyhint', 'go');
+      var sp = function (el) { for (var n = el.parentElement; n && n !== document.body; n = n.parentElement) { var o = getComputedStyle(n).overflowY; if ((o === 'auto' || o === 'scroll') && n.scrollHeight > n.clientHeight) return n; } return null; };
+      var fit = function () {
+        if (document.activeElement !== em) return;
+        var top = vv ? vv.offsetTop : 0, bot = top + (vv ? vv.height : window.innerHeight) - 10;
+        var d = payB.getBoundingClientRect().bottom - bot; if (d <= 0) return;
+        d = Math.min(d, em.getBoundingClientRect().top - top - 30); if (d <= 0) return;
+        var c = sp(em); if (c) c.scrollTop += d; else window.scrollBy(0, d);
+      };
+      em.addEventListener('focus', function () { [250, 600].forEach(function (t) { setTimeout(fit, t); }); });
+      if (vv) vv.addEventListener('resize', fit); else window.addEventListener('resize', fit);
+      [ht, nr].forEach(function (i) { if (i) i.addEventListener('keydown', function (e) { if (e.key === 'Enter' && !e.defaultPrevented) { e.preventDefault(); em.focus(); } }); });
+    })();
     $$('.sb, input', fm).forEach(function (el) { el.addEventListener('click', function () { setTimeout(label, 0); }); el.addEventListener('change', function () { setTimeout(label, 0); }); });
     new MutationObserver(label).observe(payB, { childList: true, characterData: true, subtree: true });
     showStep(1);
