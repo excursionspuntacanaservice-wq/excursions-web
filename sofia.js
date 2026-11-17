@@ -314,7 +314,7 @@
   // en el móvil el botón aparece al bajar, para no tapar el botón Reservar de la primera pantalla
   function fabVis() { fab.classList.toggle('sf-wait', !desk() && window.scrollY < 500 && tz.hidden); }
   fabVis(); window.addEventListener('scroll', fabVis, { passive: true }); window.addEventListener('resize', fabVis);
-  var why0 = '';
+  var why0 = '', bkTouched = false;
   var tzHide = 0;
   function hideTeaser() { clearTimeout(tzHide); tz.hidden = true; document.body.classList.remove('sf-tz-on'); fabVis(); }
   // una vez por sesión: sessionStorage (se borra al cerrar la pestaña)
@@ -324,6 +324,8 @@
   }
   function nudge(why) {
     if (!canNudge()) return;
+    // no interrumpir a quien ya está llenando la reserva (Clarity 17-nov: el aviso salía a mitad del paso 2)
+    if (bkTouched && why !== 'form' && why !== 'back') return;
     if (document.querySelector('.save') || document.body.classList.contains('lock')) { setTimeout(function () { nudge(why); }, 8000); return; }
     why0 = why; tz.dataset.why = why;
     var f = form(), tn = f && (f.dataset.tourL || f.dataset.tour) ? String(f.dataset.tourL || f.dataset.tour).trim() : t.any;
@@ -355,6 +357,7 @@
   // 2) 40 s en el formulario sin pulsar Continuar / Reservar
   var fTimer = 0, fDone = false;
   function fStart(e) {
+    if (e.target && e.target.closest && e.target.closest('form.bk, form.hf, #bk-modal')) bkTouched = true;
     if (fDone || fTimer) return;
     if (!(e.target && e.target.closest && e.target.closest('form.bk, form.hf, #bk-modal'))) return;
     fTimer = setTimeout(function () { if (!fDone) nudge('form'); }, 40000);
@@ -394,14 +397,14 @@
     window.addEventListener('scroll', eng, { passive: true }); setTimeout(eng, 31000);
   }
 
-  // 6) móvil: burbuja corta tras 8 s en la página y algo de scroll (cualquier página con el chat)
+  // 6) móvil: burbuja corta tras 30 s (antes 8 s: salía al 67% de las visitas, Clarity 17-nov) en la página y algo de scroll (cualquier página con el chat)
   var mT = Date.now(), mDone = false;
   var mScroll = function () {
     if (mDone || why0 || desk()) return;
     var h = document.documentElement, y = window.scrollY || h.scrollTop, room = h.scrollHeight - window.innerHeight;
-    if (Date.now() - mT > 8000 && (y > 500 || (room > 0 && y / room > 0.3) || room < 300)) { mDone = true; window.removeEventListener('scroll', mScroll); nudge('hi'); }
+    if (Date.now() - mT > 30000 && (y > 500 || (room > 0 && y / room > 0.3) || room < 300)) { mDone = true; window.removeEventListener('scroll', mScroll); nudge('hi'); }
   };
-  window.addEventListener('scroll', mScroll, { passive: true }); setTimeout(mScroll, 8200);
+  window.addEventListener('scroll', mScroll, { passive: true }); setTimeout(mScroll, 30200);
 
   // aviso inicial suave para visitas de anuncios (después de 25 s sin otra señal)
   if (/[?&](gclid|gbraid|wbraid|gad_source)=/.test(location.search)) setTimeout(function () { if (!why0) nudge('hi'); }, 25000);

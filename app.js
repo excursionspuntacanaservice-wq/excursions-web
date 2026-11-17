@@ -315,7 +315,7 @@
       return t + '.';
     }
     function refresh() {
-      if (pay) pay.textContent = T.book_total.replace('{t}', money(total()));
+      if (pay) pay.textContent = (zone85() && pax() < 4) ? X(L, 'Mínimo 4 personas desde tu hotel · Reservar por WhatsApp', 'Min. 4 people from your hotel · Book on WhatsApp') : T.book_total.replace('{t}', money(total()));
       var zn = $('.bk-zone-msg', form), z = zone85();
       if (z && !zn && pay) { zn = document.createElement('p'); zn.className = 'bk-zone-msg'; zn.setAttribute('aria-live', 'polite'); pay.parentNode.insertBefore(zn, pay); }
       if (zn) { zn.hidden = !z; zn.textContent = z ? (X(L, 'Hoteles de Uvero Alto y Cap Cana: $85 por adulto / $42.50 por niño, recogida directa en tu hotel, mínimo 4 personas.', 'Uvero Alto and Cap Cana hotels: $85 per adult / $42.50 per child, direct pickup at your hotel, minimum 4 people.')) : ''; }
@@ -403,7 +403,7 @@
         msg.textContent = T.err_fields + (nm ? ' (' + nm.trim() + ')' : ''); msg.hidden = false; ev('book_missing_fields'); bad[0].focus(); return; }
       if (form._vehBad && form._vehBad()) { msg.textContent = form._vehBad(); msg.hidden = false; ev('book_veh_seats'); return; }
       if (grp === 'snk' && shiftIdx === 1 && c && +c.value > 0) { msg.textContent = X(L, 'El barco de las 3:00 PM es solo para adultos (18+). Con niños, elige el barco familiar de las 12:00 PM.', 'The 3:00 PM boat is adults only (18+). With children, choose the 12:00 PM family boat.'); msg.hidden = false; ev('book_snk_kids_pm'); return; }
-      if (zone85() && pax() < 4) { msg.textContent = X(L, 'En hoteles de Uvero Alto y Cap Cana este tour sale desde 4 personas. Escríbenos por WhatsApp y te ayudamos.', 'From Uvero Alto and Cap Cana hotels this tour runs with 4 people or more. Message us on WhatsApp and we will help you.'); msg.hidden = false; ev('book_zone_min4'); return; }
+      if (zone85() && pax() < 4) { msg.textContent = X(L, 'En hoteles de Uvero Alto y Cap Cana este tour sale desde 4 personas. Escríbenos por WhatsApp y te ayudamos.', 'From Uvero Alto and Cap Cana hotels this tour runs with 4 people or more. Message us on WhatsApp and we will help you.'); msg.hidden = false; ev('book_zone_min4'); try { window.open(waLink(waText()), '_blank', 'noopener'); } catch (e) {} return; }
       msg.hidden = true;
       cvBookOnce(); ev('book_submit');
       var hp = $('[name=website]', form);
