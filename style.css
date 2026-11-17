@@ -956,3 +956,6 @@ body.lock{overflow:hidden}
 .here-now:hover{background:#12843f}
 @media (max-width:979px){.here-now{font-size:.86rem;padding:.45rem .75rem .45rem .6rem}.hero-copy:has(.here-now) .eyebrow{display:none}.hero-in:has(.here-now){height:auto;min-height:min(470px,58svh);padding-top:calc(104px + env(safe-area-inset-top,0px))}}
 @media (max-width:380px){.here-now{font-size:.78rem}}
+
+/* Tablet 640–979 px: the hero grows with its text so the H1 never slides under the transparent header (17-nov) */
+@media (min-width:640px) and (max-width:979px){.th-tour{height:auto;min-height:min(390px,48svh)}.hero-in{height:auto;min-height:min(470px,58svh)}}
