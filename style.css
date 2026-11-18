@@ -959,3 +959,4 @@ body.lock{overflow:hidden}
 
 /* Tablet 640–979 px: the hero grows with its text so the H1 never slides under the transparent header (17-nov) */
 @media (min-width:640px) and (max-width:979px){.th-tour{height:auto;min-height:min(390px,48svh)}.hero-in{height:auto;min-height:min(470px,58svh)}}
+.found{margin:1.6rem 0 1.8rem;padding:1.1rem 1.2rem;border:1px solid rgba(14,42,58,.15);border-radius:14px}.found-q{font-weight:700;margin:0 0 .7rem}.found-o{display:flex;flex-wrap:wrap;gap:.5rem}.found-o[hidden],.found-ok[hidden],.found[hidden]{display:none}.found-ok{margin:0;font-weight:600}

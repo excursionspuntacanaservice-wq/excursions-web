@@ -788,6 +788,27 @@
 
   // pagó: Sofia deja de recordarle la reserva a medias
   if (/thanks\.html$/.test(location.pathname)) { try { localStorage.setItem('sf_paid', String(Date.now())); } catch (err) {} }
+  // página de gracias: "¿Cómo nos encontraste?" (un toque, una vez). Va a Clarity y a la pestaña "Clics WhatsApp" del Sheet (boton = "encuesta: ...").
+  var fnd = $('[data-found]');
+  if (fnd) {
+    var fref = '';
+    try { var fq = new URLSearchParams(window.location.search).get('ref'); if (fq && /^EPC-[0-9]{12}-[0-9]{1,3}$/.test(fq)) fref = fq; } catch (err) {}
+    var fdone = false; try { fdone = !!localStorage.getItem('epc_found_' + (fref || 'x')); } catch (err) {}
+    if (fdone) fnd.hidden = true;
+    fnd.addEventListener('click', function (e) {
+      var b = e.target.closest ? e.target.closest('button[data-v]') : null; if (!b || fdone) return;
+      fdone = true; var v = b.getAttribute('data-v');
+      try { localStorage.setItem('epc_found_' + (fref || 'x'), v); } catch (err) {}
+      try { if (typeof window.clarity === 'function') { window.clarity('set', 'encontro', v); window.clarity('event', 'found_' + v); } } catch (err) {}
+      try {
+        var body = new URLSearchParams({ fuente: SRC, pagina: window.location.pathname, idioma: document.documentElement.lang || '', tour: fref, boton: 'encuesta: ' + v,
+          dispositivo: window.matchMedia && window.matchMedia('(max-width: 760px)').matches ? 'movil' : 'pc' });
+        if (window.fetch) fetch(WA_HOOK, { method: 'POST', body: body, keepalive: true, credentials: 'omit', referrerPolicy: 'strict-origin' }).catch(function () {});
+        else if (navigator.sendBeacon) navigator.sendBeacon(WA_HOOK, body);
+      } catch (err) {}
+      $('.found-o', fnd).hidden = true; $('.found-ok', fnd).hidden = false;
+    });
+  }
   // payment cancelled notice / thanks reference (only plain query values, never injected as HTML)
   try {
     var q = new URLSearchParams(window.location.search);
