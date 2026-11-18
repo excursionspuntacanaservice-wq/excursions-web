@@ -23,6 +23,36 @@
 - Precio: 75 USD por adulto, 37.50 USD por niño de 5 a 8 años, gratis de 0 a 4 años. Cap Cana y Uvero Alto: 85 / 42.50 USD, mínimo 4 personas.
 - Incluye: recogida y regreso al hotel, transporte, guía y almuerzo. Zona Colonial a pie, Catedral Primada de América y Alcázar de Colón.
 
+## Snorkel en catamarán (3 horas, costa de Bávaro)
+- Precio: 75 USD por adulto (13 años o más), 37.50 USD por niño de 2 a 12 años, gratis menores de 2.
+- Dos barcos: 12:00 PM familiar (con niños) y 3:00 PM solo adultos 18+.
+- Incluye: recogida y regreso al hotel, equipo de snorkel, open bar (cerveza, ron, refrescos y agua), fruta tropical y snacks, tripulación bilingüe. No incluye: propinas, toallas ni paquete de fotos.
+- Página: https://excursionspuntacana.net/es/snorkel-punta-cana-precio.html
+
+## Party Boat hip hop (solo mayores de 18)
+- Precio: 65 USD por persona. Solo adultos 18+ por el open bar; con niños se recomienda el snorkel de las 12:00 PM.
+- Salidas 12:00 PM y 3:00 PM por la costa de Bávaro; recogida entre 10:15 y 11:40 AM o entre 1:15 y 2:40 PM según el hotel.
+- Incluye: recogida y regreso al hotel, open bar con bebidas nacionales, música hip hop a bordo y parada para nadar. No incluye: propinas ni bebidas premium o importadas.
+- Ideal para despedidas de soltero/a, girls trips y cumpleaños: https://excursionspuntacana.net/party-boat.html
+
+## Paseo a caballo
+- Precio: 75 USD por adulto (13 años o más), 37.50 USD por niño de 2 a 12 años, gratis menores de 2.
+- Dos opciones: atardecer en la playa de Uvero Alto (4:00 a 6:00 PM) o campo y playa Macao (unas 2 horas).
+- Incluye: recogida y regreso al hotel, caballo, casco y guía. No incluye propinas.
+- Página: https://excursionspuntacana.net/es/paseo-a-caballo-punta-cana-precio.html
+
+## Buggy y ATV en Macao (unas 4 horas)
+- Precio por vehículo: 80 USD individual, 90 USD doble. Buggy familiar VIP: 135 USD (3 personas) o 180 USD (4 personas). En ATV, para manejar hay que tener 18 años o más.
+- Salidas 9:00 AM, 12:00 PM o 3:00 PM.
+- Incluye: recogida y regreso al hotel, guía y charla de seguridad, senderos de lodo privados en Macao, baño en la cueva Cueva Chiquita, degustación de café, cacao, té y mamajuana, y agua. No incluye: fotos y videos, propinas, casilleros ni bebidas alcohólicas.
+- Página: https://excursionspuntacana.net/es/buggy-punta-cana-precio.html
+
+## Barco privado (3 horas por la costa de Punta Cana, no va a Saona)
+- Precio: 650 USD el barco completo hasta 10 personas; desde la persona 11, 50 USD por adulto y 25 USD por niño extra.
+- Incluye: capitán y tripulación, snacks y bebidas nacionales (ron, jugos y refrescos). No incluye: comida caliente, bebidas premium ni propinas.
+- La disponibilidad se confirma por WhatsApp antes del pago.
+- Página: https://excursionspuntacana.net/es/barco-privado-punta-cana-precio.html
+
 ## Reserva y pago
 - Pago completo al reservar, solo con tarjeta, en dólares estadounidenses (USD), procesado por Stripe. No se cobra en efectivo.
 - Cancelación gratis hasta 24 horas antes con reembolso completo. Un cambio de fecha gratis hasta 24 horas antes.
