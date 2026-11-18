@@ -87,7 +87,7 @@
       // Bávaro (new provider)
       ['punta cana princess','7:10','L'],['princess punta cana','7:10','L'],['occidental caribe','7:15','L'],['royalton splash','7:15','B'],['splash punta cana','7:15','B'],
       ['riu republica','7:20','L'],['ocean blue','7:20','L'],['bahia principe','7:20','B'],['riu','7:25','L'],['bavaro princess','7:30','L'],['vista sol','7:30','B'],
-      ['iberostar','7:35','L'],['palladium','7:40','L'],['occidental punta cana','7:40','L'],['impressive','7:50','B'],['melia','7:55','B'],['lopesan','7:55','M'],['barcelo','8:00','L'],
+      ['iberostar','7:35','L'],['palladium','7:40','L'],['occidental punta cana','7:40','L'],['impressive','7:30','B'],['melia','7:55','B'],['lopesan','7:55','M'],['barcelo','8:00','L'],
       // Bávaro (previous provider)
       ['royalton','7:05'],['majestic','7:05'],['vik arena','7:30'],['caribe deluxe','7:40'],['whala','7:50'],['whalas','7:50'],['dreams royal beach','7:55'],
       // Cabeza de Toro (new provider: Catalonia, Serenade, Sunscape Coco)
