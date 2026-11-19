@@ -1,4 +1,4 @@
-/* Sofia en la web: chat de BuilderBot (segunda Sofia, solo web) + aviso proactivo.
+/* Sofia en la web: chat propio conectado a Sofía 2.0 (sofia-bot en Render, misma Sofía que WhatsApp) + aviso proactivo.
    El aviso sale como mucho una vez por sesión (pestaña) y nunca si el visitante ya abrió el chat en esta sesión.
    En el móvil: burbuja corta junto al botón tras 8 s y algo de scroll (no tapa la página, se oculta sola a los 25 s).
    Además sale en estos momentos:
@@ -8,7 +8,6 @@
    El mensaje del visitante va prellenado con lo que ya eligió (tour, fecha, personas, hotel); él decide si lo envía. */
 (function () {
   'use strict';
-  var BOT = 'a7ad56cd-39c2-4dcb-a924-0c09e82aa09d', SDK = 'https://cdn.builderbot.cloud/sdk.umd.js';
   var L = (document.documentElement.lang || 'en').slice(0, 2).toLowerCase();
   var T = {
     es: {
@@ -82,7 +81,7 @@
       pre: 'Cześć Sofia, chcę zarezerwować {t}', d: ' na {d}', p: ', {a} dorosłych', c: ' i {c} dzieci', h: '. Hotel: {h}', q: 'Cześć Sofia, mam pytanie o {t}'
     }
   };
-  var t = T[L] || T.en, locale = T[L] ? L : 'en', sdkLoc = locale === 'es' ? 'es' : 'en';
+  var t = T[L] || T.en, locale = T[L] ? L : 'en';
   var desk = function () { return window.matchMedia('(min-width:980px)').matches; };
   var get = function (k) { try { return localStorage.getItem(k); } catch (e) { return null; } };
   var set = function (k, v) { try { localStorage.setItem(k, v); } catch (e) {} };
@@ -90,25 +89,8 @@
   var sset = function (k, v) { try { sessionStorage.setItem(k, v); } catch (e) {} };
   function ev(name) { try { if (typeof window.clarity === 'function') window.clarity('event', name); } catch (e) {} }
 
-  // ---------- SDK (se carga solo cuando hace falta) ----------
-  var sdkState = 0, sdkWait = [];
-  function loadSdk(cb) {
-    if (sdkState === 2) return cb();
-    sdkWait.push(cb); if (sdkState === 1) return; sdkState = 1;
-    var s = document.createElement('script'); s.src = SDK; s.async = true;
-    s.setAttribute('data-builderbot-chat', ''); s.setAttribute('data-id', BOT);
-    s.setAttribute('data-company', 'Sofia · Excursions Punta Cana'); s.setAttribute('data-avatar-initials', 'S');
-    s.setAttribute('data-locale', sdkLoc);
-    document.body.appendChild(s);
-    var tries = 0, iv = setInterval(function () {
-      var b = document.querySelector('chat-widget-button button'), c = document.querySelector('chat-widget-container');
-      if ((b && c && c.shadowRoot) || ++tries > 60) {
-        clearInterval(iv); sdkState = b ? 2 : 0;
-        var w = sdkWait; sdkWait = []; if (b) { try { enhance(); } catch (e) {} w.forEach(function (f) { f(); }); }
-      }
-    }, 250);
-  }
-  // ---------- chat cómodo: hoja flotante en el móvil, respuestas rápidas, teclado del iPhone ----------
+  // ---------- chat propio conectado a Sofía 2.0 (antes: SDK de BuilderBot) ----------
+  var API = 'https://sofia-bot-0s0d.onrender.com';
   var QR = {
     es: ['¿Cuánto cuesta?', '¿A qué hora me recogen?', 'Quiero reservar', '¿Puedo cancelar?'],
     en: ['How much is it?', 'What time is pickup?', 'I want to book', 'Can I cancel?'],
@@ -119,93 +101,123 @@
     pl: ['Ile to kosztuje?', 'O której jest odbiór?', 'Chcę zarezerwować', 'Czy mogę anulować?']
   };
   var BACK = { es: 'Volver a la página', en: 'Back to the page', fr: 'Retour à la page', pt: 'Voltar à página', de: 'Zurück zur Seite', it: 'Torna alla pagina', pl: 'Wróć do strony' };
-  var enhanced = false;
-  function enhance() {
-    var host = document.querySelector('chat-widget-container'), r = host && host.shadowRoot;
-    var box = r && r.querySelector('.chat-widget-container');
-    if (!box || enhanced) return; enhanced = true;
-    var st = document.createElement('style');
-    st.textContent =
-      // tema claro con los colores de la web (el SDK se ponía oscuro en teléfonos con modo oscuro)
-      ':host,.chat-widget-container,.dark-mode{--chat-primary-color:#0B2233!important;--chat-secondary-color:#566974!important;--chat-text-color:#0B2233!important;' +
-      '--chat-text-secondary-color:#566974!important;--chat-background:#FFFFFF!important;--chat-background-chat:#F6F1E9!important;--chat-white:#FFFFFF!important;' +
-      '--chat-user-message-bg:#0B2233!important;--chat-user-message-text:#FFFFFF!important;--chat-agent-message-bg:#FFFFFF!important;--chat-agent-message-text:#0B2233!important;' +
-      '--chat-border-color:#E7E1D7!important;--chat-hover-color:#F3EEE6!important;--chat-accent-color:#CF4A24!important;--chat-time-color:#8A99A3!important;--chat-icon-color:#566974!important;' +
-      '--chat-send-button:#CF4A24!important;--chat-send-button-hover:#B23D1B!important;--chat-input-background:#FFFFFF!important;--chat-input-placeholder:#8A99A3!important;' +
-      '--chat-light-gray:#F3EEE6!important;--chat-lighter-gray:#FBF9F5!important}' +
-      '.selector-btn{display:none!important}' +
-      // sin micrófono ni adjuntos: Sofia no puede leer notas de voz ni archivos ("No pude leer ese mensaje")
-      'chat-input button:not(.send-button),chat-input input[type=file]{display:none!important}' +
-      '@media (max-width:768px){.chat-widget-container,.chat-widget-container.expanded{top:auto!important;left:0!important;right:0!important;' +
-      'bottom:0!important;width:100vw!important;max-width:100vw!important;height:76dvh!important;max-height:76dvh!important;' +
-      'border-radius:18px 18px 0 0!important;box-sizing:border-box!important}.resize-button{display:none!important}' +
-      // teclado abierto: el chat ocupa justo lo que se ve encima del teclado, como WhatsApp
-      '.chat-widget-container.sf-kbon,.chat-widget-container.expanded.sf-kbon{top:var(--sf-top,0px)!important;bottom:auto!important;height:var(--sf-h,60dvh)!important;max-height:var(--sf-h,60dvh)!important;border-radius:0!important}' +
-      // 16 px: el iPhone no hace zoom al tocar el campo de texto (con 14 px agrandaba todo y cortaba los lados)
-      'textarea{font-size:16px!important;line-height:1.35!important}.chat-messages{overscroll-behavior:contain}' +
-      // solo el botón de cerrar en la cabecera: la papelera abre un diálogo del sistema que congela la página en el iPhone
-      '.chat-header button:not(.back-button){display:none!important}}' +
-      '.sf-hi{align-self:flex-start;max-width:85%;margin:12px 12px 4px;padding:10px 13px;border-radius:4px 16px 16px 16px;background:#fff;border:1px solid #E7E1D7;' +
-      'color:#0B2233;font-size:15px;line-height:1.45;white-space:pre-line;box-shadow:0 1px 2px rgba(11,34,51,.06)}' +
-      '@media (min-width:769px){.chat-widget-container:not(.expanded){height:min(620px,calc(100dvh - 120px))!important;max-height:min(620px,calc(100dvh - 120px))!important}}' +
-      '.sf-qr{flex:none;display:flex;gap:8px;overflow-x:auto;padding:8px 12px 4px;scrollbar-width:none;-webkit-overflow-scrolling:touch}.sf-qr::-webkit-scrollbar{display:none}' +
-      '.sf-qr[hidden]{display:none}.sf-qr button{flex:none;border:1px solid #E7E1D7;background:#fff;color:#0B2233;border-radius:999px;' +
-      'padding:9px 13px;font-family:inherit;font-size:14px;font-weight:600;line-height:1;cursor:pointer;white-space:nowrap}.sf-qr button:active{transform:scale(.97)}';
-    r.appendChild(st);
-
-    // respuestas rápidas: un toque y se envían, como en cualquier app de mensajería
-    var qr = document.createElement('div'); qr.className = 'sf-qr';
-    (QR[locale] || QR.en).forEach(function (q) {
-      var b = document.createElement('button'); b.type = 'button'; b.textContent = q;
-      b.addEventListener('click', function () {
-        var ta = r.querySelector('textarea'), send = r.querySelector('.send-button');
-        if (!ta || !send) return;
-        ta.value = q; ta.dispatchEvent(new Event('input', { bubbles: true }));
-        setTimeout(function () { send.click(); ev('sofia_rapida'); }, 30);
-      });
-      qr.appendChild(b);
-    });
-    var inp = r.querySelector('chat-input'); if (inp) box.insertBefore(qr, inp);
-    // nunca enviar un mensaje vacío (Sofia contestaba "No pude leer ese mensaje")
-    var empty = function () { var x = r.querySelector('textarea'); return !x || !String(x.value || '').trim(); };
-    r.addEventListener('click', function (e) { var sb = e.target && e.target.closest ? e.target.closest('.send-button') : null; if (sb && empty()) { e.stopPropagation(); e.preventDefault(); } }, true);
-    r.addEventListener('keydown', function (e) { if (e.key === 'Enter' && !e.shiftKey && e.target && e.target.tagName === 'TEXTAREA' && empty()) { e.stopPropagation(); e.preventDefault(); } }, true);
-    // saludo fijo arriba: el chat nunca se ve vacío al abrirlo
-    var msgs0 = r.querySelector('.chat-messages');
-    if (msgs0) { var hi = document.createElement('div'); hi.className = 'sf-hi'; hi.textContent = t.mhi; msgs0.insertBefore(hi, msgs0.firstChild); }
-    var qrSync = function () { qr.hidden = r.querySelectorAll('.message-wrapper.user').length >= 2; };
-    var msgs = r.querySelector('.messages-container') || r.querySelector('.chat-messages');
-    var toEnd = function () { var m = r.querySelector('.chat-messages'); if (m) m.scrollTop = m.scrollHeight; };
-    if (msgs) new MutationObserver(function () { qrSync(); toEnd(); }).observe(msgs, { childList: true, subtree: true });
-    qrSync();
-
-    // móvil: la página sigue visible arriba; tocarla cierra el chat y vuelves donde estabas
-    var bd = document.createElement('button'); bd.type = 'button'; bd.className = 'sf-bd'; bd.hidden = true;
-    bd.innerHTML = '<span>✕ </span>'; bd.querySelector('span').textContent = '✕ ' + (BACK[locale] || BACK.en);
-    bd.addEventListener('click', function () { var b = r.querySelector('.back-button'); if (b) b.click(); });
-    document.body.appendChild(bd);
-    var mob = function () { return window.matchMedia('(max-width:768px)').matches; };
-    var sync = function () { var on = box.classList.contains('visible'); bd.hidden = !(on && mob()); document.body.classList.toggle('sf-chat-on', on && mob()); };
-    new MutationObserver(sync).observe(box, { attributes: true, attributeFilter: ['class'] });
-    sync();
-
-    // iPhone: con el teclado abierto, la hoja sube y el campo de texto queda a la vista
+  var UI = {
+    es: { ph: 'Escribe tu mensaje…', typing: 'Sofia está escribiendo…', err: 'No se pudo enviar. Revisa tu conexión e inténtalo otra vez.', pay: 'Pagar ahora', link: 'Abrir enlace', wait: 'Un momento, por favor: estás enviando muchos mensajes.' },
+    en: { ph: 'Type your message…', typing: 'Sofia is typing…', err: 'Could not send. Check your connection and try again.', pay: 'Pay now', link: 'Open link', wait: 'One moment please: too many messages.' },
+    fr: { ph: 'Écrivez votre message…', typing: 'Sofia écrit…', err: 'Envoi impossible. Vérifiez votre connexion et réessayez.', pay: 'Payer', link: 'Ouvrir le lien', wait: 'Un instant, s’il vous plaît.' },
+    pt: { ph: 'Escreva sua mensagem…', typing: 'Sofia está digitando…', err: 'Não foi possível enviar. Verifique sua conexão e tente de novo.', pay: 'Pagar agora', link: 'Abrir link', wait: 'Um momento, por favor.' },
+    de: { ph: 'Nachricht schreiben…', typing: 'Sofia schreibt…', err: 'Senden fehlgeschlagen. Bitte Verbindung prüfen und erneut versuchen.', pay: 'Jetzt bezahlen', link: 'Link öffnen', wait: 'Einen Moment bitte.' },
+    it: { ph: 'Scrivi il tuo messaggio…', typing: 'Sofia sta scrivendo…', err: 'Invio non riuscito. Controlla la connessione e riprova.', pay: 'Paga ora', link: 'Apri link', wait: 'Un momento, per favore.' },
+    pl: { ph: 'Napisz wiadomość…', typing: 'Sofia pisze…', err: 'Nie udało się wysłać. Sprawdź połączenie i spróbuj ponownie.', pay: 'Zapłać teraz', link: 'Otwórz link', wait: 'Chwileczkę, proszę.' }
+  };
+  var u = UI[locale] || UI.en;
+  var sid = get('sf_sid');
+  if (!sid || !/^[a-z0-9]{16,40}$/.test(sid)) {
+    sid = ''; var ab = 'abcdefghijklmnopqrstuvwxyz0123456789';
+    for (var si = 0; si < 24; si++) sid += ab[Math.floor(Math.random() * 36)];
+    set('sf_sid', sid);
+  }
+  var lastId = 0, seenIds = {}, panel = null, list, ta, sendB, qr, typing, bd, busy = false, isOpen = false, pollT = 0, nUser = 0;
+  var mob = function () { return window.matchMedia('(max-width:768px)').matches; };
+  function el(tag, cls, txt) { var e = document.createElement(tag); if (cls) e.className = cls; if (txt != null) e.textContent = txt; return e; }
+  var toEnd = function () { if (list) list.scrollTop = list.scrollHeight; };
+  // texto con links: el de Stripe sale como botón "Pagar"; el resto como link normal (nada de HTML del servidor)
+  function render(text, box) {
+    var re = /https?:\/\/[^\s<>"']+/g, s = String(text || ''), i = 0, m;
+    while ((m = re.exec(s))) {
+      var url = m[0].replace(/[).,;:!?]+$/, '');
+      if (m.index > i) box.appendChild(document.createTextNode(s.slice(i, m.index)));
+      var stripe = /^https:\/\/(checkout|buy)\.stripe\.com\//.test(url);
+      var a = el('a', stripe ? 'sf-pay' : 'sf-lnk', stripe ? u.pay : (/wa\.me|maps|goo\.gl/.test(url) ? u.link : url));
+      a.href = url; a.target = '_blank'; a.rel = 'noopener';
+      if (stripe) a.addEventListener('click', function () { ev('sofia_link_pago'); });
+      box.appendChild(a);
+      i = m.index + url.length; re.lastIndex = i;
+    }
+    if (i < s.length) box.appendChild(document.createTextNode(s.slice(i)));
+  }
+  function addMsg(m) {
+    if (!m || seenIds[m.id]) return; seenIds[m.id] = 1; lastId = Math.max(lastId, m.id || 0);
+    var txt = String(m.content || '');
+    if (!txt.trim() || /^\[(imagen|image|audio|nota de voz)/i.test(txt)) return;
+    var mine = m.role === 'user'; if (mine) nUser++;
+    var b = el('div', 'sf-m ' + (mine ? 'sf-u' : 'sf-a')); render(txt, b);
+    list.insertBefore(b, typing); qr.hidden = nUser >= 2; toEnd();
+    if (!mine && !isOpen) fab.classList.add('sf-unread');
+  }
+  function api(path, opt) {
+    return fetch(API + path, Object.assign({ credentials: 'omit', referrerPolicy: 'strict-origin', cache: 'no-store' }, opt || {}))
+      .then(function (r) { return r.json().then(function (j) { j.__s = r.status; return j; }); });
+  }
+  function poll() {
+    clearTimeout(pollT);
+    if (!panel || document.visibilityState === 'hidden') { pollT = setTimeout(poll, 8000); return; }
+    api('/chat/poll?sid=' + sid + '&after=' + lastId).then(function (j) { (j.messages || []).forEach(addMsg); })
+      .catch(function () {}).then(function () { pollT = setTimeout(poll, isOpen ? 3000 : 15000); });
+  }
+  function send(text) {
+    text = String(text || '').trim(); if (!text || busy) return;
+    busy = true; sendB.disabled = true; typing.hidden = false; toEnd();
+    var tmp = el('div', 'sf-m sf-u'); render(text, tmp); list.insertBefore(tmp, typing); nUser++; qr.hidden = nUser >= 2; toEnd();
+    ta.value = ''; autoH();
+    api('/chat/send', { method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ sid: sid, text: text.slice(0, 1000), page: location.pathname, lang: locale, after: lastId }) })
+      .then(function (j) {
+        if (j.__s === 429) { list.insertBefore(el('div', 'sf-m sf-a sf-err', u.wait), typing); return; }
+        if (j.__s !== 200) throw new Error('http ' + j.__s);
+        tmp.remove(); nUser--; (j.messages || []).forEach(addMsg);
+      })
+      .catch(function () { tmp.classList.add('sf-fail'); list.insertBefore(el('div', 'sf-m sf-a sf-err', u.err), typing); if (!ta.value) ta.value = text; })
+      .then(function () { busy = false; sendB.disabled = false; typing.hidden = true; toEnd(); ev('sofia_msg'); });
+  }
+  function autoH() { ta.style.height = 'auto'; ta.style.height = Math.min(ta.scrollHeight, 120) + 'px'; }
+  function loadSdk(cb) {
+    if (panel) return cb && cb();
+    panel = el('div', 'sf-chat'); panel.setAttribute('role', 'dialog'); panel.setAttribute('aria-label', t.open); panel.hidden = true;
+    var hd = el('div', 'sf-ch-h'), av = el('span', 'sf-av', 'S'), nm = el('span', 'sf-ch-n'), x = el('button', 'sf-ch-x', '×');
+    av.setAttribute('aria-hidden', 'true'); nm.appendChild(el('b', '', 'Sofia')); nm.appendChild(el('small', '', t.status));
+    x.type = 'button'; x.setAttribute('aria-label', t.close); x.addEventListener('click', closeChat);
+    hd.appendChild(av); hd.appendChild(nm); hd.appendChild(x);
+    list = el('div', 'sf-ch-l'); list.appendChild(el('div', 'sf-m sf-a', t.mhi));
+    typing = el('div', 'sf-ch-t', u.typing); typing.hidden = true; list.appendChild(typing);
+    qr = el('div', 'sf-qr');
+    (QR[locale] || QR.en).forEach(function (q) { var b = el('button', '', q); b.type = 'button'; b.addEventListener('click', function () { send(q); ev('sofia_rapida'); }); qr.appendChild(b); });
+    var f = el('form', 'sf-ch-f'); ta = el('textarea'); ta.rows = 1; ta.maxLength = 1000; ta.placeholder = u.ph; ta.setAttribute('aria-label', u.ph);
+    sendB = el('button', 'sf-ch-s', '➤'); sendB.type = 'submit'; sendB.setAttribute('aria-label', 'Enviar');
+    f.appendChild(ta); f.appendChild(sendB);
+    f.addEventListener('submit', function (e) { e.preventDefault(); send(ta.value); });
+    ta.addEventListener('keydown', function (e) { if (e.key === 'Enter' && !e.shiftKey && desk()) { e.preventDefault(); send(ta.value); } });
+    ta.addEventListener('input', autoH);
+    panel.appendChild(hd); panel.appendChild(list); panel.appendChild(qr); panel.appendChild(f);
+    document.body.appendChild(panel);
+    // móvil: la página sigue visible arriba; tocarla cierra el chat
+    bd = el('button', 'sf-bd'); bd.type = 'button'; bd.hidden = true; bd.appendChild(el('span', '', '✕ ' + (BACK[locale] || BACK.en)));
+    bd.addEventListener('click', closeChat); document.body.appendChild(bd);
+    // iPhone/Android: con el teclado abierto el chat ocupa lo visible encima del teclado
     var vv = window.visualViewport;
     if (vv) {
-      // el chat se ajusta a lo que queda visible encima del teclado (iPhone y Android) y baja al último mensaje
       var kb = function () {
-        var on = mob() && box.classList.contains('visible') && window.innerHeight - vv.height > 120;
-        if (on) {
-          host.style.setProperty('--sf-top', Math.round(vv.offsetTop) + 'px'); host.style.setProperty('--sf-h', Math.round(vv.height) + 'px');
-          if (!box.classList.contains('sf-kbon')) { box.classList.add('sf-kbon'); setTimeout(toEnd, 60); }
-        } else if (box.classList.contains('sf-kbon')) { box.classList.remove('sf-kbon'); host.style.removeProperty('--sf-top'); host.style.removeProperty('--sf-h'); }
-        document.body.classList.toggle('sf-kb-on', on);
+        var on = isOpen && mob() && window.innerHeight - vv.height > 120;
+        if (on) { panel.style.top = Math.round(vv.offsetTop) + 'px'; panel.style.height = Math.round(vv.height) + 'px'; panel.classList.add('sf-kbon'); setTimeout(toEnd, 60); }
+        else if (panel.classList.contains('sf-kbon')) { panel.classList.remove('sf-kbon'); panel.style.top = ''; panel.style.height = ''; }
       };
       vv.addEventListener('resize', kb); vv.addEventListener('scroll', kb);
-      r.addEventListener('focusin', function () { setTimeout(kb, 350); setTimeout(toEnd, 400); });
-      r.addEventListener('focusout', function () { setTimeout(kb, 350); });
+      ta.addEventListener('focus', function () { setTimeout(kb, 350); setTimeout(toEnd, 400); });
+      ta.addEventListener('blur', function () { setTimeout(kb, 350); });
     }
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && isOpen) closeChat(); });
+    document.addEventListener('visibilitychange', function () { if (document.visibilityState === 'visible') poll(); });
+    // historial de esta persona (si ya habló antes en este navegador)
+    api('/chat/poll?sid=' + sid + '&after=0').then(function (j) { (j.messages || []).forEach(addMsg); }).catch(function () {}).then(function () { poll(); });
+    if (cb) cb();
   }
+  function closeChat() {
+    if (!panel) return; isOpen = false; panel.hidden = true; bd.hidden = true;
+    document.body.classList.remove('sf-chat-on'); panel.classList.remove('sf-kbon'); panel.style.top = ''; panel.style.height = '';
+    try { ta.blur(); } catch (e) {}
+  }
+  // el chat ya abierto antes por esta persona: se carga el historial en segundo plano para avisar si Sofia contestó
+  if (get('sf_open')) setTimeout(function () { loadSdk(); }, 3000);
   function form() {
     var f = document.querySelector('#bk-modal:not([hidden]) form.bk') || document.querySelector('form.bk.st2') || document.getElementById('bk-side') || document.querySelector('form.bk, form.hf');
     return f;
@@ -278,17 +290,12 @@
     hideTeaser(); fab.classList.remove('sf-unread'); opened = true; set('sf_open', String(Date.now())); sset('sf_open_s', '1');
     ev('sofia_chat_' + why); logOpen(why);
     loadSdk(function () {
-      var wb = document.querySelector('chat-widget-button'), c = document.querySelector('chat-widget-container');
-      // el botón propio del SDK queda oculto: se abre con nuestro botón y se cierra con el "—" del panel
-      if (wb && !wb.hasAttribute('is-open')) wb.querySelector('button').click();
-      setTimeout(function () {
-        var ta2 = c && c.shadowRoot ? c.shadowRoot.querySelector('textarea') : null;
-        if (!ta2) return;
-        var pf = prefill();
-        if (!ta2.value && pf) { ta2.value = pf; ta2.dispatchEvent(new Event('input', { bubbles: true })); }
-        // en el móvil no abrimos el teclado solos: primero se ve la conversación, el cliente toca para escribir
-        if (desk()) { try { ta2.focus({ preventScroll: true }); } catch (e) {} }
-      }, 400);
+      isOpen = true; panel.hidden = false; bd.hidden = !mob(); document.body.classList.toggle('sf-chat-on', mob());
+      var pf = prefill();
+      if (!ta.value && pf) { ta.value = pf; autoH(); }
+      toEnd(); poll();
+      // en el móvil no abrimos el teclado solos: primero se ve la conversación, el cliente toca para escribir
+      if (desk()) { try { ta.focus({ preventScroll: true }); } catch (e) {} }
     });
   }
 
