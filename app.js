@@ -51,8 +51,47 @@
   var CV_BOOK = 'JUcZCPfonaUdENng7YFF', CV_WA = 'Qk6_CPronaUdENng7YFF';
   document.addEventListener('click', function (e) {
     var l = e.target && e.target.closest ? e.target.closest('a[href*="wa.me/"]') : null;
-    if (l) { conv(CV_WA); ev('whatsapp_click'); waLog(l); }
+    if (l) { waFix(l); conv(CV_WA); ev('whatsapp_click'); waLog(l); waBack.t = Date.now(); }
   }, true);
+  // Mensaje de WhatsApp siempre completo y listo para enviar: sin chat vacío ni frases a medio llenar
+  // ("Mi hotel es ", "___"). Agrega tour, fecha y personas si el visitante ya los eligió en la página.
+  var WA_END = { es: '¿Me envían el link de pago?', en: 'Can you send me the payment link?', fr: 'Pouvez-vous m’envoyer le lien de paiement ?', pt: 'Podem me enviar o link de pagamento?', de: 'Können Sie mir den Zahlungslink schicken?', it: 'Potete inviarmi il link di pagamento?', pl: 'Czy możecie wysłać mi link do płatności?' };
+  var WA_GEN = { es: 'una excursión', en: 'a tour', fr: 'une excursion', pt: 'um passeio', de: 'einen Ausflug', it: 'un’escursione', pl: 'wycieczkę' };
+  function waFix(a) {
+    try {
+      var u = new URL(a.href), txt = (u.searchParams.get('text') || '').trim(), L = lg(document.documentElement.lang), T = S[L] || S.en;
+      var bad = /(_{2,}|(hotel is|hotel es|hotel:|my date:|mi fecha:|meu hotel é|mon hôtel est|mein hotel ist|il mio hotel è|mój hotel to)\s*:?\s*\.?$)/i;
+      if (txt && !bad.test(txt) && (/\?\s*$|\d/.test(txt) || /pregunta|question|dúvida|pergunta|Frage|domanda|pytanie/i.test(txt))) return;
+      var f = (a.closest && a.closest('form.bk, .qk')) || document.querySelector('form.bk[data-tour-l], .qk[data-tour-l]');
+      var g = function (n) { var x = f ? f.querySelector('[name=' + n + ']') : null; return x && x.value ? String(x.value) : ''; };
+      var parts = txt.replace(/([.!?])\s+/g, '$1\n').split('\n').filter(function (p) { return p && !/_{2,}/.test(p) && !bad.test(p); });
+      var out = parts.join(' ').replace(/\s*[.,:]\s*$/, '');
+      if (!out) out = T.wa_msg.replace('{tour}', (f && f.dataset.tourL) || WA_GEN[L]);
+      var d = g('date'), ad = parseInt(g('adults'), 10) || 0, ch = parseInt(g('children'), 10) || 0;
+      if (d && out.indexOf(fmtDate(d, L)) < 0) out += T.wa_on.replace('{d}', fmtDate(d, L));
+      if (d && ad && !/\d+\s*(adult|adulto|adulte|Erwachsen|dorosł)/i.test(out)) out += T.wa_for.replace('{a}', ad) + (ch ? T.wa_kids.replace('{c}', ch) : '');
+      out = out.replace(/[.!]?$/, '. ') + WA_END[L];
+      u.searchParams.set('text', out); a.href = u.toString();
+    } catch (e) {}
+  }
+  // Si vuelve a la página después de tocar WhatsApp, le ofrecemos reservar aquí mismo (como Brandi: pagó sola en 75 s).
+  var waBack = { t: 0, shown: false };
+  document.addEventListener('visibilitychange', function () {
+    try {
+      if (document.visibilityState !== 'visible' || waBack.shown || !waBack.t || Date.now() - waBack.t > 15 * 60e3 || Date.now() - waBack.t < 4000) return;
+      var bk = document.getElementById('bk-side'); if (!bk) return;
+      waBack.shown = true; ev('wa_back_offer');
+      var L = lg(document.documentElement.lang);
+      var msg = { es: '¿Prefieres no esperar? Reserva aquí y paga seguro en 1 minuto.', en: 'Rather not wait? Book here and pay securely in 1 minute.', fr: 'Pas envie d’attendre ? Réservez ici et payez en sécurité en 1 minute.', pt: 'Prefere não esperar? Reserve aqui e pague com segurança em 1 minuto.', de: 'Nicht warten? Hier buchen und in 1 Minute sicher bezahlen.', it: 'Non vuoi aspettare? Prenota qui e paga in sicurezza in 1 minuto.', pl: 'Nie chcesz czekać? Zarezerwuj tutaj i zapłać bezpiecznie w 1 minutę.' }[L];
+      var bar = document.createElement('div'), p = document.createElement('span'), b = document.createElement('a'), x = document.createElement('button');
+      bar.className = 'wa-back'; bar.setAttribute('role', 'status'); p.textContent = msg;
+      b.className = 'btn btn-sea hero-cta'; b.href = '#bk-side'; b.textContent = (S[L] || S.en).book;
+      x.type = 'button'; x.className = 'wa-back-x'; x.setAttribute('aria-label', (S[L] || S.en).close); x.textContent = '×';
+      b.addEventListener('click', function () { ev('wa_back_book'); bar.remove(); });
+      x.addEventListener('click', function () { bar.remove(); });
+      bar.appendChild(p); bar.appendChild(b); bar.appendChild(x); document.body.appendChild(bar);
+    } catch (e) {}
+  });
   // Registro interno del origen de cada clic a WhatsApp (sin datos personales). Si falla, el clic sigue igual.
   var WA_HOOK = 'https://hook.us2.make.com/a4pf96xny4cxg2m2m6v6s9omc4b42fu6', waLast = 0;
   function waLog(el, label) {
