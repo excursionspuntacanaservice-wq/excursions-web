@@ -141,8 +141,15 @@
     var txt = String(m.content || '');
     if (!txt.trim() || /^\[(imagen|image|audio|nota de voz)/i.test(txt)) return;
     var mine = m.role === 'user'; if (mine) nUser++;
+    // "[botones: A | B | C]" (los botones de WhatsApp) salen como opciones que se tocan y se envían
+    var opts = []; txt = txt.replace(/\n?\[(?:botones|buttons|lista|list)[^:\]]*:\s*([^\]]+)\]/gi, function (_, x) { opts = opts.concat(x.split('|').map(function (o) { return o.trim(); }).filter(Boolean)); return ''; }).trim();
     var b = el('div', 'sf-m ' + (mine ? 'sf-u' : 'sf-a')); render(txt, b);
-    list.insertBefore(b, typing); qr.hidden = nUser >= 2; toEnd();
+    list.insertBefore(b, typing);
+    if (!mine && opts.length) {
+      var ob = el('div', 'sf-opts');
+      opts.slice(0, 10).forEach(function (o) { var x = el('button', '', o); x.type = 'button'; x.addEventListener('click', function () { ob.remove(); send(o); ev('sofia_boton'); }); ob.appendChild(x); });
+      list.insertBefore(ob, typing);
+    } qr.hidden = nUser >= 2; toEnd();
     if (!mine && !isOpen) fab.classList.add('sf-unread');
   }
   function api(path, opt) {
