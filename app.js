@@ -742,7 +742,7 @@
       var body = new URLSearchParams({
         email: v, hotel: hotel ? hotel.value.trim() : '', when: when ? when.value.trim() : '',
         tour: f.dataset.tour || 'Saona Island', slug: f.dataset.slug || 'saona-island', lang: L,
-        pickup_time: hotel ? pickupTime(f.dataset.slug || 'saona-island', hotel.value, 0) : '',
+        pickup_time: hotel ? pickupTime(f.dataset.slug || 'saona-island', hotel.value, 0).split(' · ')[0] : '', // solo la hora: Make deja POR CONFIRMAR si va con el punto (caso Sandra 19-nov)
         source: ('web ' + q).slice(0, 120), website: hp ? hp.value : ''
       });
       var old = btn.textContent; btn.disabled = true; btn.textContent = '…';
