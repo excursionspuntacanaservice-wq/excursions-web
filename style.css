@@ -975,3 +975,9 @@ body.lock{overflow:hidden}
 .art-pics img{display:block;width:100%;height:auto;aspect-ratio:4/3;object-fit:cover}
 .art-pics figcaption{position:absolute;left:0;right:0;bottom:0;padding:14px 8px 6px;font-size:.78rem;line-height:1.2;font-weight:600;color:#fff;background:linear-gradient(transparent,rgba(0,0,0,.6))}
 @media (min-width:720px){.art-pics{gap:12px}.art-pics figcaption{font-size:.9rem;padding:18px 12px 8px}}
+
+/* Confianza de pago junto al botón de pagar (Clarity 14–20 nov: 5 de 5 de anuncios se frenan en el paso 2 antes de pagar) */
+.bk-trust{display:flex;gap:8px;align-items:flex-start;margin:10px 0 12px;padding:10px 12px;border-radius:var(--r-sm);background:#EEF7F2;border:1px solid #CFE7DA;font-size:.82rem;line-height:1.4;color:var(--ink-2)}
+.bk-trust .ic{flex:0 0 18px;width:18px;height:18px;margin-top:1px;fill:none;stroke:#1E8E5A;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.bk-trust b{color:var(--ink)}
+form.bk:has(.bk-next:not([hidden])) .bk-trust{display:none}
