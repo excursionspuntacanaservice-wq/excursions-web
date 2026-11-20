@@ -400,8 +400,13 @@
   set('sf_seen', String(Date.now())); setInterval(function () { set('sf_seen', String(Date.now())); }, 60000);
   if (tr0 && visitNew && Date.now() - tr0.t > 30 * 60 * 1000) setTimeout(function () { if (!why0) nudge('ret'); }, 6000);
 
+  // Avisos 'hi' automáticos APAGADOS (Clarity 14–20 nov: salieron en 97 de 195 visitas, 27 los cerraron con la X
+  // y 0 abrieron el chat desde ellos; en el móvil tapaban el botón Reservar de la primera pantalla).
+  // Siguen activos: salida, vuelta de WhatsApp, formulario parado 40 s y reserva a medias.
+  var HI_AUTO = false;
+
   // 5) visitante frío que lee con interés (30 s y 40 % de la página) en una página con reserva
-  if (form()) {
+  if (HI_AUTO && form()) {
     var engT = Date.now(), engDone = false;
     var eng = function () {
       if (engDone || why0) return;
@@ -418,8 +423,8 @@
     var h = document.documentElement, y = window.scrollY || h.scrollTop, room = h.scrollHeight - window.innerHeight;
     if (Date.now() - mT > 30000 && (y > 500 || (room > 0 && y / room > 0.3) || room < 300)) { mDone = true; window.removeEventListener('scroll', mScroll); nudge('hi'); }
   };
-  window.addEventListener('scroll', mScroll, { passive: true }); setTimeout(mScroll, 30200);
+  if (HI_AUTO) { window.addEventListener('scroll', mScroll, { passive: true }); setTimeout(mScroll, 30200); }
 
   // aviso inicial suave para visitas de anuncios (después de 25 s sin otra señal)
-  if (/[?&](gclid|gbraid|wbraid|gad_source)=/.test(location.search)) setTimeout(function () { if (!why0) nudge('hi'); }, 25000);
+  if (HI_AUTO && /[?&](gclid|gbraid|wbraid|gad_source)=/.test(location.search)) setTimeout(function () { if (!why0) nudge('hi'); }, 25000);
 })();
