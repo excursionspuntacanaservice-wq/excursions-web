@@ -968,3 +968,10 @@ body.lock{overflow:hidden}
 .art-cta{display:flex;flex-wrap:wrap;gap:12px;margin:22px 0 8px}
 .art .art-cta .btn{flex:1 1 240px;color:#fff;text-decoration:none}
 .art-cta-n{margin:0 0 8px;font-size:.95rem;color:var(--ink-2)}
+
+/* Página de precio Saona: 3 fotos bajo el título (Clarity 14–20 nov: 22 visitas de anuncio, 0 toques; la página no tenía fotos) */
+.art-pics{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:14px 0 18px}
+.art-pics figure{margin:0;position:relative;border-radius:12px;overflow:hidden}
+.art-pics img{display:block;width:100%;height:auto;aspect-ratio:4/3;object-fit:cover}
+.art-pics figcaption{position:absolute;left:0;right:0;bottom:0;padding:14px 8px 6px;font-size:.78rem;line-height:1.2;font-weight:600;color:#fff;background:linear-gradient(transparent,rgba(0,0,0,.6))}
+@media (min-width:720px){.art-pics{gap:12px}.art-pics figcaption{font-size:.9rem;padding:18px 12px 8px}}
