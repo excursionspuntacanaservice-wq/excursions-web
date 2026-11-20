@@ -965,3 +965,6 @@ body.lock{overflow:hidden}
 .wa-back span{flex:1}
 .wa-back .btn{white-space:nowrap;flex:none}
 .wa-back-x{flex:none;background:none;border:0;font-size:22px;line-height:1;color:#5a6a72;cursor:pointer;padding:4px 6px}
+.art-cta{display:flex;flex-wrap:wrap;gap:12px;margin:22px 0 8px}
+.art .art-cta .btn{flex:1 1 240px;color:#fff;text-decoration:none}
+.art-cta-n{margin:0 0 8px;font-size:.95rem;color:var(--ink-2)}
