@@ -885,4 +885,42 @@
     if (document.readyState === 'complete') setTimeout(startVid, 300);
     else window.addEventListener('load', function () { setTimeout(startVid, 300); });
   }
+
+  // ---------- reserva a medias (20-nov) ----------
+  // Si alguien llega al paso 2, escribe un correo válido y se va sin pagar, guardamos su reserva (una vez por correo y tour)
+  // para que Make le mande UN solo correo con su reserva lista. Clarity 14–20 nov: 13 llegaron al paso 2 y solo 1 pagó.
+  var HALF_HOOK = 'https://hook.us2.make.com/pm9fpulxtr8ptub5lwp91qq6f436ephj';
+  $$('form.bk').forEach(function (fm) {
+    if (fm.dataset.mode !== 'pay') return;
+    var em = $('[name=email]', fm); if (!em) return;
+    var sent = false, paid = false, tmr = 0;
+    var ok = function () {
+      var hp = $('[name=website]', fm), v = em.value.trim();
+      return fm.classList.contains('st2') && /^[^\s@]+@[^\s@]+\.[a-z]{2,}$/i.test(v) && !(hp && hp.value);
+    };
+    var val = function (n) { var x = $('[name=' + n + ']', fm); return x && x.value ? String(x.value).trim() : ''; };
+    var send = function (why) {
+      if (sent || paid || !ok()) return;
+      var key = 'epc_half_' + (fm.dataset.slug || '') + '_' + em.value.trim().toLowerCase();
+      try { if (localStorage.getItem(key)) { sent = true; return; } localStorage.setItem(key, String(Date.now())); } catch (e) {}
+      sent = true; clearTimeout(tmr);
+      var pb = $('.pay', fm), m = pb ? (pb.textContent || '').match(/\$[\d,.]+/) : null;
+      var body = new URLSearchParams({
+        email: em.value.trim(), tour: fm.dataset.tourL || fm.dataset.tour || '', slug: fm.dataset.slug || '', fecha: val('date'),
+        adultos: val('adults') || '0', ninos: val('children') || '0', bebes: val('infants') || '0',
+        hotel: val('hotel'), total: m ? m[0] : '', lang: fm.dataset.lang || document.documentElement.lang || 'en',
+        pagina: 'https://excursionspuntacana.net' + location.pathname, fuente: SRC, motivo: why
+      });
+      ev('book_half_saved');
+      try {
+        if (window.fetch) fetch(HALF_HOOK, { method: 'POST', body: body, keepalive: true, credentials: 'omit', referrerPolicy: 'strict-origin' }).catch(function () {});
+        else if (navigator.sendBeacon) navigator.sendBeacon(HALF_HOOK, body);
+      } catch (e) {}
+    };
+    // pulsó "Reservar y pagar" con todo bien: ese camino ya tiene su propio recordatorio, aquí no se guarda nada
+    fm.addEventListener('submit', function () { if (ok()) { paid = true; clearTimeout(tmr); } }, true);
+    em.addEventListener('change', function () { clearTimeout(tmr); if (ok()) tmr = setTimeout(function () { send('3min'); }, 180000); });
+    document.addEventListener('visibilitychange', function () { if (document.visibilityState === 'hidden') send('salio'); });
+    window.addEventListener('pagehide', function () { send('cerro'); });
+  });
 })();
