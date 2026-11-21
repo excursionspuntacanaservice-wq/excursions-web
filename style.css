@@ -981,3 +981,5 @@ body.lock{overflow:hidden}
 .bk-trust .ic{flex:0 0 18px;width:18px;height:18px;margin-top:1px;fill:none;stroke:#1E8E5A;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .bk-trust b{color:var(--ink)}
 form.bk:has(.bk-next:not([hidden])) .bk-trust{display:none}
+
+.rv-link{cursor:pointer}.rv-all{display:inline-block;margin-top:18px;font-weight:600;text-decoration:underline}
