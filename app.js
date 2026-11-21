@@ -618,8 +618,8 @@
         b.textContent = h[0];
         s.textContent = h[1] + (isl && ZONE85.test(normH(h[0])) ? (X(L, ' · $85 por adulto, mín. 4 personas', ' · $85 per adult, min. 4 people')) : '');
         li.appendChild(b); li.appendChild(s);
-        // pointerdown + preventDefault: the tap is not lost when the field loses focus
-        li.addEventListener('pointerdown', function (e) { e.preventDefault(); choose(h); });
+        // pointerdown + preventDefault: the field keeps focus; the click below chooses (choosing here let the click land on "I don't know my hotel")
+        li.addEventListener('pointerdown', function (e) { e.preventDefault(); });
         li.addEventListener('click', function (e) { e.preventDefault(); if (!ul.hidden) choose(h); });
         ul.appendChild(li);
       });
