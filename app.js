@@ -47,6 +47,7 @@
     } catch (e) { return (cur || 'directo').slice(0, 200); }
   })();
   function ev(name) { try { if (typeof window.clarity === 'function') window.clarity('event', name); } catch (e) {} }
+  function fbev(name) { try { if (typeof window.fbq === 'function') window.fbq('track', name); } catch (e) {} }
   function conv(label) { try { if (typeof window.gtag === 'function') window.gtag('event', 'conversion', { send_to: 'AW-18525941849/' + label }); } catch (e) {} }
   var CV_BOOK = 'JUcZCPfonaUdENng7YFF', CV_WA = 'Qk6_CPronaUdENng7YFF';
   document.addEventListener('click', function (e) {
@@ -469,7 +470,7 @@
       if (grp === 'snk' && shiftIdx === 1 && c && +c.value > 0) { msg.textContent = X(L, 'El barco de las 3:00 PM es solo para adultos (18+). Con niños, elige el barco familiar de las 12:00 PM.', 'The 3:00 PM boat is adults only (18+). With children, choose the 12:00 PM family boat.'); msg.hidden = false; ev('book_snk_kids_pm'); return; }
       if (zone85() && pax() < 4) { msg.textContent = X(L, 'En hoteles de Uvero Alto y Cap Cana este tour sale desde 4 personas. Escríbenos por WhatsApp y te ayudamos.', 'From Uvero Alto and Cap Cana hotels this tour runs with 4 people or more. Message us on WhatsApp and we will help you.'); msg.hidden = false; ev('book_zone_min4'); try { window.open(waLink(waText()), '_blank', 'noopener'); } catch (e) {} return; }
       msg.hidden = true;
-      cvBookOnce(); ev('book_submit');
+      cvBookOnce(); ev('book_submit'); fbev('InitiateCheckout');
       var hp = $('[name=website]', form);
       var body = new URLSearchParams({
         tour: form.dataset.tour, slug: form.dataset.slug, date: date.value, adults: a.value, children: c ? c.value : '0', infants: $('[name=infants]', form) ? $('[name=infants]', form).value : '0',
