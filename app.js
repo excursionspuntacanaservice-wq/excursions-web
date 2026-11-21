@@ -792,13 +792,13 @@
   }
 
   // photo viewer: tapping a gallery photo opens it large (was a dead click)
-  var gimgs = $$('.gal img, picture.m1 img, picture.m2 img, picture.m3 img, .hlc img');
+  var gimgs = $$('.gal img, picture.m1 img, picture.m2 img, picture.m3 img, .hlc img, .art-pics img');
   if (gimgs.length) {
     var es2 = (document.documentElement.lang || 'en').indexOf('es') === 0;
     var lb = document.createElement('div'); lb.className = 'lb'; lb.hidden = true;
     lb.setAttribute('role', 'dialog'); lb.setAttribute('aria-modal', 'true'); lb.setAttribute('aria-label', X(PL, 'Foto', 'Photo'));
     lb.innerHTML = '<button type="button" class="lb-x" aria-label="' + (X(PL, 'Cerrar', 'Close')) + '">×</button><button type="button" class="lb-p" aria-label="' + (X(PL, 'Anterior', 'Previous')) + '">‹</button><img alt=""><button type="button" class="lb-n" aria-label="' + (X(PL, 'Siguiente', 'Next')) + '">›</button><p class="lb-cap"><span class="lb-num"></span><span class="lb-txt"></span></p>' +
-      (document.getElementById('bk-side') ? '<a class="btn btn-sea lb-cta" href="#bk-side">' + (X(PL, 'Elige tu fecha · $', 'Pick a date · $')) + (document.getElementById('bk-side').dataset.adult || '75') + (X(PL, ' por adulto', ' per adult')) + '</a>' : '');
+      (document.getElementById('bk-side') ? '<a class="btn btn-sea lb-cta" href="#bk-side">' + (X(PL, 'Elige tu fecha · $', 'Pick a date · $')) + (document.getElementById('bk-side').dataset.adult || '75') + (X(PL, ' por adulto', ' per adult')) + '</a>' : (document.querySelector('.art-cta a.btn-sea') ? '<a class="btn btn-sea lb-out" href="' + document.querySelector('.art-cta a.btn-sea').getAttribute('href') + '">' + document.querySelector('.art-cta a.btn-sea').textContent + '</a>' : ''));
     document.body.appendChild(lb);
     var lbImg = $('img', lb), cur = 0, sx = null;
     var srcOf = function (im) { var so = im.parentNode && im.parentNode.querySelector ? im.parentNode.querySelector('source[srcset]') : null; if (so) { var c = so.getAttribute('srcset').split(',').map(function (x) { return x.trim().split(' ')[0]; }); if (c.length) return c[c.length - 1]; } return im.currentSrc || im.src; };
