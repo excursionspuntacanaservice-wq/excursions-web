@@ -21,7 +21,8 @@
       }
     }, r.top < 0 || r.top > window.innerHeight * 0.5 ? 450 : 0);
   }
-  function go(a) { var id = (a.getAttribute('href') || '').slice(1); if (desk()) openCard(id); else openSheet(); }
+  // sin hoja de reserva en la página (landing "mañana": el formulario ya está abierto en la página) → bajar al formulario
+  function go(a) { var id = (a.getAttribute('href') || '').slice(1); if (desk() || !document.querySelector('[data-open="bk-modal"]')) openCard(id); else openSheet(); }
 
   // llegada desde otra página con #bk-side / #bk-hero (botón Reservar de la página de precio): abrir el formulario, no dejar en la portada
   if (/^#bk-(side|hero)$/.test(location.hash)) window.addEventListener('load', function () { setTimeout(function () { go({ getAttribute: function () { return location.hash; } }); }, 300); });
@@ -42,6 +43,16 @@
     new IntersectionObserver(function (en) {
       document.body.classList.toggle('mbar-off', en[0].isIntersecting && !desk());
     }, { rootMargin: '0px 0px -40px 0px' }).observe(cta);
+  }
+  // landing "mañana": la barra fija se aparta mientras el formulario está en pantalla (tiene su propio botón de pago)
+  var mo = document.querySelectorAll('[data-mbar-off]');
+  if (mo.length && 'IntersectionObserver' in window) {
+    var vis = 0;
+    var io = new IntersectionObserver(function (en) {
+      en.forEach(function (x) { vis += x.isIntersecting ? 1 : (x.target._seen ? -1 : 0); x.target._seen = x.isIntersecting; });
+      document.body.classList.toggle('mbar-off', vis > 0 && !desk());
+    }, { rootMargin: '0px 0px -80px 0px' });
+    Array.prototype.forEach.call(mo, function (el) { el._seen = false; io.observe(el); });
   }
   // Saona ES mobile first screen has its own big button; keep the bottom bar away while it is visible
   var xf = document.querySelector('.x-first');
