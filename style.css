@@ -983,3 +983,49 @@ body.lock{overflow:hidden}
 form.bk:has(.bk-next:not([hidden])) .bk-trust{display:none}
 
 .rv-link{cursor:pointer}.rv-all{display:inline-block;margin-top:18px;font-weight:600;text-decoration:underline}
+
+/* atajos de fecha "Mañana · …" / "Pasado mañana · …" y corte de las 10 PM RD (21-nov, P4) */
+.dp-q{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:0 0 8px}
+.dp-qb{min-height:46px;padding:.45rem .5rem;border:1.5px solid var(--line-2);border-radius:var(--r-sm);background:#fff;color:var(--ink);font:600 .9rem/1.2 var(--body);cursor:pointer;text-align:center}
+.dp-qb:hover{border-color:var(--ink-3)}
+.dp-qb[aria-pressed="true"]{background:#EEF7F1;border-color:#1E8E5A;color:#17784B}
+.dp-qb[aria-pressed="true"]::after{content:" \2713"}
+.dp-cut{margin:6px 2px 0;font-size:.8rem;line-height:1.35;color:var(--ink-2)}
+.dp-cut a{color:inherit;font-weight:600;text-decoration:underline}
+
+/* landing "Isla Saona mañana" (solo anuncios): foto, formulario abierto, barra fija */
+.lp-hdr{padding-top:calc(8px + env(safe-area-inset-top,0px));padding-bottom:8px}
+.lp-hdr .logo img{width:54px;height:auto}
+.lp-hero{background:var(--navy);color:#fff}
+.lp-img{display:block}
+.lp-img img{display:block;width:100%;height:auto;aspect-ratio:16/9;max-height:46vh;object-fit:cover}
+.lp-in{padding-top:18px;padding-bottom:22px;max-width:640px}
+.lp-hero h1{margin:0 0 .45rem;font:500 clamp(1.85rem,6.4vw,2.8rem)/1.08 var(--display);color:#fff;letter-spacing:-.01em}
+.lp-sub{margin:0 0 14px;color:#DCE6EC;font-size:1rem;line-height:1.45}
+.lp-go{font-size:1.12rem}
+.lp-cut{margin:10px 0 0;color:#fff;font-weight:600;font-size:.92rem;line-height:1.4}
+.lp-cut a{color:#fff;text-decoration:underline}
+.lp-rate{display:inline-flex;align-items:center;gap:.4rem;margin-top:10px;color:#DCE6EC;text-decoration:none;font-size:.92rem}
+.lp-rate b{color:#fff}
+.lp-sec{padding:28px 0}
+.lp-alt{background:var(--paper)}
+.lp-narrow{max-width:640px}
+.lp-h2{margin:0 0 .7rem;font:500 clamp(1.45rem,4.6vw,1.9rem)/1.15 var(--display)}
+.lp-sec p{margin:0 0 .8rem;color:var(--ink-2)}
+.lp-sec p b{color:var(--ink)}
+.lp-bk-w{padding-top:22px}
+.lp-bk{box-shadow:var(--shadow-1);border:1px solid var(--line);padding:18px}
+.lp-list{margin:0 0 1rem;padding-left:1.2rem;color:var(--ink-2)}
+.lp-list li{margin:0 0 .45rem}
+.lp-ok{list-style:none;padding:0}
+.lp-ok li{position:relative;padding-left:1.6rem}
+.lp-ok li::before{content:"";position:absolute;left:.2rem;top:.45rem;width:10px;height:5px;border-left:2px solid #1E8E5A;border-bottom:2px solid #1E8E5A;transform:rotate(-45deg)}
+.lp-more a{color:var(--accent-d);font-weight:700}
+.lp-ftr{padding:22px 0 calc(96px + env(safe-area-inset-bottom,0px));background:var(--navy);color:#C5D3DB;font-size:.85rem}
+.lp-ftr p{margin:0 0 .5rem}
+.lp-ftr a{color:#fff}
+.lp-ftr b{color:#fff}
+.lp-bar .lp-bar-go{min-width:0;padding-left:1rem;padding-right:1rem;line-height:1.15;text-align:center}
+@media (min-width:980px){.lp-ftr{padding-bottom:24px}.lp-img img{max-height:52vh}}
+.lp-bar .lp-bar-go span{color:#fff;font-size:inherit}
+.dp-qd{white-space:nowrap}
