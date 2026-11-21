@@ -23,6 +23,8 @@
   }
   function go(a) { var id = (a.getAttribute('href') || '').slice(1); if (desk()) openCard(id); else openSheet(); }
 
+  // llegada desde otra página con #bk-side / #bk-hero (botón Reservar de la página de precio): abrir el formulario, no dejar en la portada
+  if (/^#bk-(side|hero)$/.test(location.hash)) window.addEventListener('load', function () { setTimeout(function () { go({ getAttribute: function () { return location.hash; } }); }, 300); });
   document.addEventListener('click', function (e) {
     var a = e.target.closest && e.target.closest(BK);
     if (!a || a.classList.contains('lb-cta') || e.defaultPrevented) return;
