@@ -1029,3 +1029,5 @@ form.bk:has(.bk-next:not([hidden])) .bk-trust{display:none}
 @media (min-width:980px){.lp-ftr{padding-bottom:24px}.lp-img img{max-height:52vh}}
 .lp-bar .lp-bar-go span{color:#fff;font-size:inherit}
 .dp-qd{white-space:nowrap}
+.bk-ask{margin:4px 0 10px;font-size:.86rem;line-height:1.4;color:var(--ink-2);text-align:center}
+.bk-ask a{color:#128C4A;font-weight:600;text-decoration:underline;text-underline-offset:2px}
