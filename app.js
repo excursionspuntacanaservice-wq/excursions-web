@@ -394,6 +394,7 @@
       var hl = document.createElement('label'); hl.className = 'opt pk-later'; hl.style.marginTop = '.5rem'; hl.style.fontSize = '.92rem';
       hl.innerHTML = '<input type="checkbox" name="hotel_later"><span></span>'; hl.lastChild.textContent = HL[0];
       pkH.appendChild(hl); hLater = hl.firstChild;
+      function hlVis() { if (!hLater.checked) hl.hidden = hotelIn.value.trim().length >= 3; } ['input', 'change'].forEach(function (k) { hotelIn.addEventListener(k, hlVis); }); hlVis();
       hLater.addEventListener('change', function () { hotelIn.disabled = hLater.checked; if (hLater.checked) { hotelIn.value = ''; hotelIn.setAttribute('aria-invalid', 'false'); ev('hotel_later'); } syncPk(); refresh(); });
     }
     function later() { return !!(hLater && hLater.checked); }
