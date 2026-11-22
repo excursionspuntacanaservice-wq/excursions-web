@@ -1031,3 +1031,4 @@ form.bk:has(.bk-next:not([hidden])) .bk-trust{display:none}
 .dp-qd{white-space:nowrap}
 
 .bk-wa-link{display:block;text-align:center;margin:.6rem 0 0;font-size:.92rem;font-weight:600;color:#1E7A46;text-decoration:underline}
+.offer-incl{margin:.4rem 0 .2rem;font-size:.9rem;line-height:1.4;color:var(--ink);opacity:.85}
