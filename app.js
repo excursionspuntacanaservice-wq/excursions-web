@@ -727,7 +727,7 @@
       showStep(2); ev('book_step2');
       // en el celular no abrimos el teclado solo: tapaba "Aún no sé mi hotel", el correo y el botón de pago (Clarity 16-nov, kvryb7)
       var h = $('[name=hotel]', fm), touch = window.matchMedia && window.matchMedia('(pointer: coarse)').matches;
-      if (h && !h.closest('[hidden]')) { if (touch) { try { sum.scrollIntoView({ block: 'start' }); } catch (e) {} } else h.focus({ preventScroll: true }); }
+      if (h && !h.closest('[hidden]')) { if (touch) { try { sum.scrollIntoView({ block: 'start' }); } catch (e) {} } else { var em2 = h.value.trim() ? $('[name=email]', fm) : null; (em2 || h).focus({ preventScroll: true }); } }
     });
     sumE.addEventListener('click', function () { showStep(1); });
     kbFit(fm, payB);
