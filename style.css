@@ -219,7 +219,7 @@ ul,ol{margin:0;padding:0;list-style:none}
 .opt input{margin-top:.25rem;accent-color:var(--navy);flex:none;width:18px;height:18px}
 .opt b{display:block;font-size:.95rem}
 .opt small{display:block;color:var(--ink-2);font-size:.84rem;line-height:1.4;margin-top:2px}
-.pk-time{margin:6px 0 0;font-size:.88rem;font-weight:700;color:var(--accent-d);line-height:1.35}
+.pk-time{margin:6px 0 0;font-size:.88rem;font-weight:700;color:#1E7A46;line-height:1.35}
 
 /* ============ offer card (phones/tablets: the 4 answers above the fold) ============ */
 .offer-w{position:relative;z-index:3;margin-top:-44px}
@@ -895,8 +895,8 @@ body.lock{overflow:hidden}
 .hf-wa[hidden]{display:none}
 .offer-sum{margin:0;font-size:.92rem;line-height:1.4;color:var(--ink-2)}
 .offer-op-es b{color:var(--ink)}
-.qk-wa,.bk.wa-up .chat{font-size:1.08rem}
-.qk .qk-wa{padding-top:1rem;padding-bottom:1rem;box-shadow:0 8px 20px rgba(17,127,66,.28)}
+.qk-wa.btn,.bk.wa-up .chat.btn{font-size:1.08rem}
+.qk .qk-wa.btn{padding-top:1rem;padding-bottom:1rem;box-shadow:0 8px 20px rgba(17,127,66,.28)}
 .qk .qk-go.v2-cta{font-size:1.05rem;padding:.85rem 1rem;box-shadow:none}
 .bk.wa-up>.chat{order:1}
 .bk.wa-up>.bk-notes{order:2}
@@ -1029,3 +1029,6 @@ form.bk:has(.bk-next:not([hidden])) .bk-trust{display:none}
 @media (min-width:980px){.lp-ftr{padding-bottom:24px}.lp-img img{max-height:52vh}}
 .lp-bar .lp-bar-go span{color:#fff;font-size:inherit}
 .dp-qd{white-space:nowrap}
+
+.bk-wa-link{display:block;text-align:center;margin:.6rem 0 0;font-size:.92rem;font-weight:600;color:#1E7A46;text-decoration:underline}
+.offer-incl{margin:.4rem 0 .2rem;font-size:.9rem;line-height:1.4;color:var(--ink);opacity:.85}
