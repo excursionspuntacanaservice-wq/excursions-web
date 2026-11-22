@@ -60,3 +60,5 @@ body.sf-chat-on{overflow:hidden}body.sf-kb-on .sf-bd{display:none}
 .sf-opts{align-self:flex-start;display:flex;flex-wrap:wrap;gap:6px;max-width:92%}
 .sf-opts button{border:1px solid var(--navy,#0B2233);background:#fff;color:var(--navy,#0B2233);border-radius:999px;padding:8px 13px;font:600 14px/1.1 var(--body,system-ui,sans-serif);cursor:pointer}
 .sf-opts button:active{transform:scale(.97)}
+/* barra "Reservar aquí" al volver de WhatsApp: el botón y el aviso de Sofia se esconden mientras se ve (no se apilan) */
+body:has(.wa-back) .sf-fab,body:has(.wa-back) .sf-tz{display:none}

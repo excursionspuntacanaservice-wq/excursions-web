@@ -340,6 +340,10 @@
     if (!canNudge()) return;
     // no interrumpir a quien ya está llenando la reserva (Clarity 17-nov: el aviso salía a mitad del paso 2)
     if (bkTouched && why !== 'form' && why !== 'back') return;
+    // al volver de WhatsApp la página ya ofrece "Reservar aquí" (barra .wa-back): no sacamos un segundo aviso encima (Clarity 22-nov)
+    if (document.querySelector('.wa-back')) return;
+    // formulario abierto 40 s: si el visitante lo cierra, no le saltamos con un aviso justo al cerrar (Clarity 22-nov, sesión 16c1qqp)
+    if (why === 'form' && document.body.classList.contains('lock')) return;
     if (document.querySelector('.save') || document.body.classList.contains('lock')) { setTimeout(function () { nudge(why); }, 8000); return; }
     why0 = why; tz.dataset.why = why;
     var f = form(), tn = f && (f.dataset.tourL || f.dataset.tour) ? String(f.dataset.tourL || f.dataset.tour).trim() : t.any;
