@@ -52,7 +52,7 @@
   var CV_BOOK = 'JUcZCPfonaUdENng7YFF', CV_WA = 'Qk6_CPronaUdENng7YFF';
   document.addEventListener('click', function (e) {
     var l = e.target && e.target.closest ? e.target.closest('a[href*="wa.me/"]') : null;
-    if (l) { waFix(l); conv(CV_WA); ev('whatsapp_click'); waLog(l); waBack.t = Date.now(); }
+    if (l) { waFix(l); conv(CV_WA); ev('whatsapp_click'); waLog(l); waBack.t = Date.now(); waBack.href = l.href; }
   }, true);
   // Mensaje de WhatsApp siempre completo y listo para enviar: sin chat vacío ni frases a medio llenar
   // ("Mi hotel es ", "___"). Agrega tour, fecha y personas si el visitante ya los eligió en la página.
@@ -77,21 +77,31 @@
     } catch (e) {}
   }
   // Si vuelve a la página después de tocar WhatsApp, le ofrecemos reservar aquí mismo (como Brandi: pagó sola en 75 s).
-  var waBack = { t: 0, shown: false };
+  // Si vuelve a la página después de tocar WhatsApp: muchos abren WhatsApp y no tocan Enviar (17-nov: 3 de 10; 22-nov Dreams Royal Beach).
+  // Le recordamos que el mensaje ya está escrito y le damos el mismo enlace otra vez; donde hay formulario, también Reservar aquí.
+  // Sofía no escribe primero (regla de Meta): el cliente es quien envía. En todas las páginas, no solo las que tienen formulario.
+  var waBack = { t: 0, shown: false, href: '' };
   document.addEventListener('visibilitychange', function () {
     try {
       if (document.visibilityState !== 'visible' || waBack.shown || !waBack.t || Date.now() - waBack.t > 15 * 60e3 || Date.now() - waBack.t < 4000) return;
-      var bk = document.getElementById('bk-side'); if (!bk) return;
+      var bk = document.getElementById('bk-side');
       waBack.shown = true; ev('wa_back_offer');
       var L = lg(document.documentElement.lang);
-      var msg = { es: '¿Prefieres no esperar? Reserva aquí y paga seguro en 1 minuto.', en: 'Rather not wait? Book here and pay securely in 1 minute.', fr: 'Pas envie d’attendre ? Réservez ici et payez en sécurité en 1 minute.', pt: 'Prefere não esperar? Reserve aqui e pague com segurança em 1 minuto.', de: 'Nicht warten? Hier buchen und in 1 Minute sicher bezahlen.', it: 'Non vuoi aspettare? Prenota qui e paga in sicurezza in 1 minuto.', pl: 'Nie chcesz czekać? Zarezerwuj tutaj i zapłać bezpiecznie w 1 minutę.' }[L];
-      var bar = document.createElement('div'), p = document.createElement('span'), b = document.createElement('a'), x = document.createElement('button');
-      bar.className = 'wa-back'; bar.setAttribute('role', 'status'); p.textContent = msg;
-      b.className = 'btn btn-sea hero-cta'; b.href = '#bk-side'; b.textContent = (S[L] || S.en).book;
+      var msg = { es: '¿No llegaste a enviar el mensaje? Ya está escrito: ábrelo y toca Enviar. Te respondemos en segundos.', en: 'Didn’t send the message? It’s already written: open it and tap Send. We reply in seconds.', fr: 'Message pas envoyé ? Il est déjà écrit : ouvrez-le et touchez Envoyer. Nous répondons en quelques secondes.', pt: 'Não chegou a enviar a mensagem? Ela já está escrita: abra e toque em Enviar. Respondemos em segundos.', de: 'Nachricht nicht gesendet? Sie ist schon geschrieben: öffnen und auf Senden tippen. Wir antworten in Sekunden.', it: 'Non hai inviato il messaggio? È già scritto: aprilo e tocca Invia. Rispondiamo in pochi secondi.', pl: 'Nie wysłałeś wiadomości? Jest już napisana: otwórz ją i dotknij Wyślij. Odpowiadamy w kilka sekund.' }[L];
+      var wtx = { es: 'Abrir WhatsApp', en: 'Open WhatsApp', fr: 'Ouvrir WhatsApp', pt: 'Abrir WhatsApp', de: 'WhatsApp öffnen', it: 'Apri WhatsApp', pl: 'Otwórz WhatsApp' }[L];
+      var bar = document.createElement('div'), p = document.createElement('span'), acts = document.createElement('span'), w = document.createElement('a'), x = document.createElement('button');
+      bar.className = 'wa-back'; bar.setAttribute('role', 'status'); p.className = 'wa-back-t'; p.textContent = msg; acts.className = 'wa-back-a';
+      w.className = 'btn btn-wa wa-back-w'; w.href = waBack.href || ('https://wa.me/' + WA); w.target = '_blank'; w.rel = 'noopener'; w.textContent = wtx;
+      w.addEventListener('click', function () { ev('wa_back_resend'); bar.remove(); });
+      acts.appendChild(w);
+      if (bk) {
+        var b = document.createElement('a'); b.className = 'btn btn-sea'; b.href = '#bk-side'; b.textContent = (S[L] || S.en).book;
+        b.addEventListener('click', function () { ev('wa_back_book'); bar.remove(); });
+        acts.appendChild(b);
+      }
       x.type = 'button'; x.className = 'wa-back-x'; x.setAttribute('aria-label', (S[L] || S.en).close); x.textContent = '×';
-      b.addEventListener('click', function () { ev('wa_back_book'); bar.remove(); });
-      x.addEventListener('click', function () { bar.remove(); });
-      bar.appendChild(p); bar.appendChild(b); bar.appendChild(x); document.body.appendChild(bar);
+      x.addEventListener('click', function () { ev('wa_back_cerrado'); bar.remove(); });
+      bar.appendChild(p); bar.appendChild(acts); bar.appendChild(x); document.body.appendChild(bar);
     } catch (e) {}
   });
   // Registro interno del origen de cada clic a WhatsApp (sin datos personales). Si falla, el clic sigue igual.
