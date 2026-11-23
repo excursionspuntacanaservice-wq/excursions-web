@@ -1032,3 +1032,6 @@ form.bk:has(.bk-next:not([hidden])) .bk-trust{display:none}
 
 .bk-wa-link{display:block;text-align:center;margin:.6rem 0 0;font-size:.92rem;font-weight:600;color:#1E7A46;text-decoration:underline}
 .offer-incl{margin:.4rem 0 .2rem;font-size:.9rem;line-height:1.4;color:var(--ink);opacity:.85}
+/* barra al volver de WhatsApp: texto arriba, botones abajo (22-nov) */
+.wa-back{flex-wrap:wrap;padding:12px}.wa-back .wa-back-t{flex:1 1 100%;padding:0 30px 0 4px}.wa-back .wa-back-a{display:flex;gap:8px;flex:1 1 100%}.wa-back .wa-back-a .btn{flex:1 1 0;min-width:0;justify-content:center;padding-left:8px;padding-right:8px;font-size:.95rem}.wa-back .wa-back-x{position:absolute;top:6px;right:6px}
+body:has(.wa-back) .wa-fab{display:none}
