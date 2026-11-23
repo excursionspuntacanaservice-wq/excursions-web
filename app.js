@@ -873,6 +873,22 @@
     lb.addEventListener('touchend', function (e) { if (sx === null) return; var dx = e.changedTouches[0].clientX - sx; if (Math.abs(dx) > 40) show(cur + (dx < 0 ? 1 : -1)); sx = null; });
   }
 
+  // dead clicks (Clarity 23-nov, saona-island EN/ES): taps on the hero photo/price, the "Save ~$45" pill
+  // and the booking-box stars did nothing. Hero + pill now take you to the booking form; stars go to reviews.
+  var bkT = document.getElementById('bk-side');
+  var goBk = function (src) { if (!bkT) return; try { bkT.scrollIntoView({ behavior: 'smooth', block: 'start' }); } catch (err) { bkT.scrollIntoView(); } ev('deadtap_' + src); };
+  var hero = $('.th-tour');
+  if (hero && bkT) {
+    hero.style.cursor = 'pointer';
+    hero.addEventListener('click', function (e) { if (e.target.closest('a,button,input,select,label,summary')) return; goBk('hero'); });
+  }
+  $$('.v2-save').forEach(function (el) { if (!bkT || el.closest('a,button')) return; el.style.cursor = 'pointer'; el.setAttribute('role', 'link'); el.setAttribute('tabindex', '0');
+    el.addEventListener('click', function () { goBk('save'); });
+    el.addEventListener('keydown', function (e) { if (e.key === 'Enter') goBk('save'); }); });
+  var revT = document.getElementById('reviews');
+  $$('.bk-rate').forEach(function (el) { if (!revT || el.closest('a,button')) return; el.style.cursor = 'pointer';
+    el.addEventListener('click', function () { try { revT.scrollIntoView({ behavior: 'smooth', block: 'start' }); } catch (err) { revT.scrollIntoView(); } ev('deadtap_stars'); }); });
+
   // pagó: Sofia deja de recordarle la reserva a medias
   if (/thanks\.html$/.test(location.pathname)) { try { localStorage.setItem('sf_paid', String(Date.now())); } catch (err) {} }
   // página de gracias: "¿Cómo nos encontraste?" (un toque, una vez). Va a Clarity y a la pestaña "Clics WhatsApp" del Sheet (boton = "encuesta: ...").
