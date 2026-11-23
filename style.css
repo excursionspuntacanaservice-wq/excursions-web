@@ -859,6 +859,9 @@ body.lock{overflow:hidden}
 .art h1{font-size:clamp(2rem,5vw,3.2rem);line-height:1.06;max-width:22ch;color:var(--ink);text-shadow:none;margin:0 0 1rem}
 .art h2{font-size:clamp(1.45rem,3vw,1.9rem);line-height:1.15;margin:2.4rem 0 .8rem}
 .art .intro.big{color:var(--ink);max-width:68ch;margin:0}
+.art .top-cta{margin:var(--s4) 0 0}
+.art .top-cta .btn-sea{color:#fff;text-decoration:none}
+@media (max-width:640px){.art .top-cta .btn{display:flex;width:100%;justify-content:center}}
 .art p,.art li{color:var(--ink-2);max-width:68ch}
 .art p{margin:0 0 1rem}
 .art ol,.art ul{margin:0 0 1rem;padding-left:1.3rem}
