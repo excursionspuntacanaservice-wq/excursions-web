@@ -294,8 +294,12 @@
 
     function clamp(inp) { var v = parseInt(inp.value, 10), mn = +inp.min, mx = +inp.max; if (isNaN(v)) v = mn; inp.value = Math.max(mn, Math.min(mx, v)); }
     // Uvero Alto / Cap Cana hotels: Saona, Catalina, Santo Domingo cost $85 / $42.50 and need 4+ people (same rule as Make)
-    function zone85() { var hi = $('[name=hotel]', form), r = $('input[value=nohotel]', form);
+    function zoneHot() { var hi = $('[name=hotel]', form), r = $('input[value=nohotel]', form);
       return PK_GROUP[form.dataset.slug] === 'isl' && !!hi && !(r && r.checked) && ZONE85.test(normH(hi.value)); }
+    // Saona VIP (23-nov): $120/$60 fijo; desde Uvero Alto / Cap Cana se reserva por WhatsApp (Make rechaza VIP en esa zona)
+    var vip = !!form.dataset.vip;
+    function zone85() { return !vip && zoneHot(); }
+    function vipZone() { return vip && zoneHot(); }
     function pax() { return (a ? +a.value : 0) + (c ? +c.value : 0); }
     function total() { if (veh && veh.length) return vTotal(); var z = zone85(); return (a ? +a.value : 0) * (z ? 85 : adult) + (c ? +c.value : 0) * (z ? 42.5 : child); }
     // product options (dolphin programs, buggy vehicles, private boat sizes): pick one, price and WhatsApp text follow it
@@ -390,7 +394,7 @@
       return t + '.';
     }
     function refresh() {
-      if (pay) pay.textContent = (zone85() && pax() < 4) ? X(L, 'Mínimo 4 personas desde tu hotel · Reservar por WhatsApp', 'Min. 4 people from your hotel · Book on WhatsApp') : T.book_total.replace('{t}', money(total()));
+      if (pay) pay.textContent = vipZone() ? X(L, 'Uvero Alto y Cap Cana: VIP por WhatsApp', 'Uvero Alto and Cap Cana: VIP on WhatsApp') : (zone85() && pax() < 4) ? X(L, 'Mínimo 4 personas desde tu hotel · Reservar por WhatsApp', 'Min. 4 people from your hotel · Book on WhatsApp') : T.book_total.replace('{t}', money(total()));
       var zn = $('.bk-zone-msg', form), z = zone85();
       if (z && !zn && pay) { zn = document.createElement('p'); zn.className = 'bk-zone-msg'; zn.setAttribute('aria-live', 'polite'); pay.parentNode.insertBefore(zn, pay); }
       if (zn) { zn.hidden = !z; zn.textContent = z ? (X(L, 'Hoteles de Uvero Alto y Cap Cana: $85 por adulto / $42.50 por niño, recogida directa en tu hotel, mínimo 4 personas.', 'Uvero Alto and Cap Cana hotels: $85 per adult / $42.50 per child, direct pickup at your hotel, minimum 4 people.')) : ''; }
@@ -479,6 +483,7 @@
         msg.textContent = T.err_fields + (nm ? ' (' + nm.trim() + ')' : ''); msg.hidden = false; ev('book_missing_fields'); bad[0].focus(); return; }
       if (form._vehBad && form._vehBad()) { msg.textContent = form._vehBad(); msg.hidden = false; ev('book_veh_seats'); return; }
       if (grp === 'snk' && shiftIdx === 1 && c && +c.value > 0) { msg.textContent = X(L, 'El barco de las 3:00 PM es solo para adultos (18+). Con niños, elige el barco familiar de las 12:00 PM.', 'The 3:00 PM boat is adults only (18+). With children, choose the 12:00 PM family boat.'); msg.hidden = false; ev('book_snk_kids_pm'); return; }
+      if (vipZone()) { msg.textContent = X(L, 'Desde hoteles de Uvero Alto y Cap Cana la Saona VIP se reserva por WhatsApp. Te abrimos el chat con tu reserva escrita.', 'From Uvero Alto and Cap Cana hotels the Saona VIP is booked on WhatsApp. We open the chat with your booking already written.'); msg.hidden = false; ev('book_vip_zone'); try { window.open(waLink(waText()), '_blank', 'noopener'); } catch (e) {} return; }
       if (zone85() && pax() < 4) { msg.textContent = X(L, 'En hoteles de Uvero Alto y Cap Cana este tour sale desde 4 personas. Escríbenos por WhatsApp y te ayudamos.', 'From Uvero Alto and Cap Cana hotels this tour runs with 4 people or more. Message us on WhatsApp and we will help you.'); msg.hidden = false; ev('book_zone_min4'); try { window.open(waLink(waText()), '_blank', 'noopener'); } catch (e) {} return; }
       msg.hidden = true;
       cvBookOnce(); ev('book_submit'); fbev('InitiateCheckout');
