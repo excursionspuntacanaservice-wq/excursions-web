@@ -167,8 +167,16 @@
     busy = true; sendB.disabled = true; typing.hidden = false; toEnd();
     var tmp = el('div', 'sf-m sf-u'); render(text, tmp); list.insertBefore(tmp, typing); nUser++; qr.hidden = nUser >= 2; toEnd();
     ta.value = ''; autoH();
-    api('/chat/send', { method: 'POST', headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ sid: sid, text: text.slice(0, 1000), page: location.pathname, lang: locale, after: lastId }) })
+    // Si Sofía se está reiniciando (publicación, ~1–3 min), se reintenta solo hasta ~2 min antes de mostrar error.
+    // El reintento lleva retry:1 y el servidor no procesa dos veces el mismo mensaje.
+    var tries = 0;
+    function sendOnce() {
+      return api('/chat/send', { method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ sid: sid, text: text.slice(0, 1000), page: location.pathname, lang: locale, after: lastId, retry: tries ? 1 : 0 }) })
+        .then(function (j) { if (j.__s >= 500) throw new Error('http ' + j.__s); return j; })
+        .catch(function (e) { if (++tries > 12) throw e; return new Promise(function (r) { setTimeout(r, 10000); }).then(sendOnce); });
+    }
+    sendOnce()
       .then(function (j) {
         if (j.__s === 429) { list.insertBefore(el('div', 'sf-m sf-a sf-err', u.wait), typing); return; }
         if (j.__s !== 200) throw new Error('http ' + j.__s);
