@@ -690,6 +690,17 @@
     var s1 = [$('.fld.dp', fm), $('.row2', fm), $('.bk-veh', fm)].filter(Boolean);
     var s2 = [$('.pk-shift', fm), $('.pk-sel', fm), $('[name=name]', fm) && $('[name=name]', fm).closest('.fld'), $('[name=whatsapp]', fm) && $('[name=whatsapp]', fm).closest('.row2'), $('[name=email]', fm) && $('[name=email]', fm).closest('.row2, .fld'), $('.hint', fm), payB].filter(Boolean);
     if (!(dIn && payB && s1.length >= 2 && s2.length >= 4)) return;
+    // paso 2 (Clarity 23-nov): quien llega al pago abre las preguntas de cancelación, lluvia y pago seguro y se va sin volver.
+    // Cancelación y pago seguro ya están bajo el botón (.bk-notes / .bk-trust); faltaba la lluvia. Mismo texto que las FAQ.
+    var WX = { en: 'Bad weather? If we cancel, you pick a new date or a full refund.', es: '¿Mal tiempo? Si cancelamos, eliges otra fecha o el reembolso completo.',
+      fr: 'Mauvais temps ? Si nous annulons, vous choisissez une autre date ou le remboursement intégral.', pt: 'Mau tempo? Se cancelarmos, você escolhe outra data ou o reembolso total.',
+      de: 'Schlechtes Wetter? Sagen wir ab, wählen Sie ein neues Datum oder die volle Erstattung.', it: 'Maltempo? Se annulliamo, scegli una nuova data o il rimborso completo.',
+      pl: 'Zła pogoda? Jeśli odwołamy, wybierasz nowy termin albo pełny zwrot.' }[lg(L)];
+    if (!fm.querySelector('[data-wx]')) {
+      var notes = $('.bk-notes', fm), wli = document.createElement('li'); wli.setAttribute('data-wx', ''); wli.textContent = WX;
+      if (notes) notes.appendChild(wli);
+      else { var wul = document.createElement('ul'); wul.className = 'bk-notes'; wul.appendChild(wli); var tb = $('.bk-trust', fm) || payB; tb.parentNode.insertBefore(wul, tb.nextSibling); }
+    }
     if (fm.hasAttribute('data-one')) { fm.classList.add('st2'); kbFit(fm, payB); return; } // todo a la vista (landing "mañana")
     var nxt = document.createElement('button'); nxt.type = 'button'; nxt.className = 'btn btn-sea btn-block btn-lg bk-next';
     var sum = document.createElement('div'); sum.className = 'bk-sum ok'; sum.hidden = true;
