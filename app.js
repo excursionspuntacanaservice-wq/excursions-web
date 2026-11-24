@@ -999,23 +999,5 @@
     window.addEventListener('pagehide', function () { send('cerro'); });
   });
 
-  // Reseñas: tocar una tarjeta abre la ficha real de Google (Clarity 21-nov: toques muertos en reseñas).
-  (function () {
-    var GM = 'https://www.google.com/maps/search/?api=1&query=Excursions+Punta+Cana&query_place_id=ChIJP2tF-Q2TqI4ReE00kqLMYPU';
-    var cards = document.querySelectorAll('.rv');
-    if (!cards.length) return;
-    var open = function () { try { window.open(GM, '_blank', 'noopener'); } catch (e) { location.href = GM; } };
-    Array.prototype.forEach.call(cards, function (c) {
-      c.classList.add('rv-link'); c.setAttribute('role', 'link'); c.setAttribute('tabindex', '0');
-      c.addEventListener('click', function (ev) { if (ev.target.closest('a')) return; open(); });
-      c.addEventListener('keydown', function (ev) { if (ev.key === 'Enter') open(); });
-    });
-    var grid = cards[0].parentNode;
-    if (grid && !grid.parentNode.querySelector('.rv-all')) {
-      var a = document.createElement('a');
-      a.className = 'rv-all'; a.href = GM; a.target = '_blank'; a.rel = 'noopener';
-      a.textContent = X(PL, 'Ver todas las reseñas en Google ›', 'Read all reviews on Google ›');
-      grid.parentNode.insertBefore(a, grid.nextSibling);
-    }
-  })();
+  // Reseñas: se leen en la página; ya no abren Google (Carlos 24-nov: sacaba al visitante del flujo de reserva).
 })();
