@@ -891,6 +891,17 @@
       im.style.cursor = 'zoom-in'; im.addEventListener('click', function () { open(j); }); });
     $$('.hlc li').forEach(function (li) { var im = li.querySelector('img'), j = Array.prototype.indexOf.call(gimgs, im); if (j < 0) return;
       li.style.cursor = 'zoom-in'; li.addEventListener('click', function (e) { if (e.target !== im) open(j); }); });
+    // Clarity 25-nov: tocar un paso del día ("Playa de Saona", "Piscina natural"…) no hacía nada. Ahora abre la foto de ese paso
+    // (por palabras del título en el alt), o la primera foto de esa sección. El paso de recogida va a la tabla de horarios (goPk).
+    var STOP = /^(saona|isla|island|hacia|desde|from|with|your|tour|after|vers|para|pour|nach|dalla|regreso|return)$/;
+    $$('ol.day li, ol.iti li').forEach(function (li) { if (li.closest('a,button')) return;
+      var tt = ((li.querySelector('b') || li).textContent || '').toLowerCase();
+      if (/recogida|pickup|pick-up|ramassage|recolha|abholung|prelievo|odbi[oó]r/.test(tt) && document.getElementById('pickup')) return;
+      var ws = tt.split(/[^a-záéíóúñüçàèìòùâêîôûäößąćęłńśźż]+/).filter(function (w) { return w.length > 3 && !STOP.test(w); });
+      var best = -1, bs = 0; gimgs.forEach(function (g, i) { var a = (g.alt || '').toLowerCase(), n = 0; ws.forEach(function (w) { if (a.indexOf(w) >= 0) n++; }); if (n > bs) { bs = n; best = i; } });
+      if (best < 0) { var sec = li.closest('section, .split'), f = sec ? sec.querySelector('picture img') : null; best = f ? Array.prototype.indexOf.call(gimgs, f) : -1; }
+      if (best < 0) return;
+      li.style.cursor = 'zoom-in'; li.addEventListener('click', function () { open(best); ev('deadtap_day'); }); });
     lbImg.addEventListener('click', function (e) { e.stopPropagation(); show(cur + 1); });
     $('.lb-x', lb).addEventListener('click', close);
     var lbCta = $('.lb-cta', lb);
@@ -915,6 +926,16 @@
   $$('.v2-save').forEach(function (el) { if (!bkT || el.closest('a,button')) return; el.style.cursor = 'pointer'; el.setAttribute('role', 'link'); el.setAttribute('tabindex', '0');
     el.addEventListener('click', function () { goBk('save'); });
     el.addEventListener('keydown', function (e) { if (e.key === 'Enter') goBk('save'); }); });
+  // Clarity 25-nov: "Hotel pickup included" / "Recogida en el hotel incluida" (fila de garantías y chips) era un clic muerto.
+  // Ahora lleva a la tabla de horarios de recogida (#pickup) o, si la página no la tiene, al formulario de reserva.
+  var pkT = document.getElementById('pickup'), PKR = /pickup|pick-up|recogida|ramassage|recolha|abholung|prelievo|odbi[oó]r/i;
+  var goPk = function () { var t = pkT || bkT; if (!t) return; try { t.scrollIntoView({ behavior: 'smooth', block: 'start' }); } catch (err) { t.scrollIntoView(); } ev('deadtap_pickup'); };
+  $$('.trust-row .ti, .trust-in .ti, ul.chips li, ol.day li, ol.iti li').forEach(function (el) {
+    if (el.closest('a,button') || el.querySelector('a,button')) return;
+    if (!PKR.test((el.querySelector('b') || el).textContent || '') || !(pkT || bkT)) return;
+    if (el.matches('ol.day li, ol.iti li') && !pkT) return;
+    el.style.cursor = 'pointer'; el.setAttribute('role', 'link'); el.setAttribute('tabindex', '0');
+    el.addEventListener('click', goPk); el.addEventListener('keydown', function (e) { if (e.key === 'Enter') goPk(); }); });
   var revT = document.getElementById('reviews');
   $$('.bk-rate').forEach(function (el) { if (!revT || el.closest('a,button')) return; el.style.cursor = 'pointer';
     el.addEventListener('click', function () { try { revT.scrollIntoView({ behavior: 'smooth', block: 'start' }); } catch (err) { revT.scrollIntoView(); } ev('deadtap_stars'); }); });
