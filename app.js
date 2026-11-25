@@ -702,6 +702,12 @@
       else { var wul = document.createElement('ul'); wul.className = 'bk-notes'; wul.appendChild(wli); var tb = $('.bk-trust', fm) || payB; tb.parentNode.insertBefore(wul, tb.nextSibling); }
     }
     if (fm.hasAttribute('data-one')) { fm.classList.add('st2'); kbFit(fm, payB); return; } // todo a la vista (landing "mañana")
+    // paso 2 (Clarity 18–24 nov): 15 de 22 se fueron del paso 2 y solo 3 dejaron correo → sin forma de recuperarlos.
+    // El correo va primero (antes de la recogida): así el aviso "tu reserva sigue guardada" llega a más gente. Carlos 25-nov.
+    (function () {
+      var emF = $('[name=email]', fm) && $('[name=email]', fm).closest('.fld'), pk = $('.pk-sel', fm);
+      if (emF && pk && emF.parentNode === pk.parentNode && !emF.classList.contains('row2')) pk.parentNode.insertBefore(emF, pk);
+    })();
     var nxt = document.createElement('button'); nxt.type = 'button'; nxt.className = 'btn btn-sea btn-block btn-lg bk-next';
     var sum = document.createElement('div'); sum.className = 'bk-sum ok'; sum.hidden = true;
     var sumT = document.createElement('b'), sumS = document.createElement('span'), sumE = document.createElement('button');
@@ -749,7 +755,7 @@
       showStep(2); ev('book_step2');
       // en el celular no abrimos el teclado solo: tapaba "Aún no sé mi hotel", el correo y el botón de pago (Clarity 16-nov, kvryb7)
       var h = $('[name=hotel]', fm), touch = window.matchMedia && window.matchMedia('(pointer: coarse)').matches;
-      if (h && !h.closest('[hidden]')) { if (touch) { try { sum.scrollIntoView({ block: 'start' }); } catch (e) {} } else { var em2 = h.value.trim() ? $('[name=email]', fm) : null; (em2 || h).focus({ preventScroll: true }); } }
+      if (h && !h.closest('[hidden]')) { if (touch) { try { sum.scrollIntoView({ block: 'start' }); } catch (e) {} } else { var em2 = $('[name=email]', fm); ((em2 && !em2.value.trim() && !em2.closest('[hidden]')) ? em2 : h).focus({ preventScroll: true }); } }
     });
     sumE.addEventListener('click', function () { showStep(1); });
     kbFit(fm, payB);
