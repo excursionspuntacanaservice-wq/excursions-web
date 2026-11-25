@@ -701,6 +701,19 @@
       if (notes) notes.appendChild(wli);
       else { var wul = document.createElement('ul'); wul.className = 'bk-notes'; wul.appendChild(wli); var tb = $('.bk-trust', fm) || payB; tb.parentNode.insertBefore(wul, tb.nextSibling); }
     }
+    // Clarity 18–25 nov: 11 de 14 que eligieron hotel no escribieron el nombre y se fueron a leer cancelación, lluvia y pago.
+    // Esas garantías estaban DEBAJO del botón (fuera de pantalla en el celular). Una línea justo encima del botón (Carlos sí, 25-nov).
+    var AS = { en: '✓ Free cancellation up to 24 h before, full refund. If the port closes for weather, pick another date or get your money back. Card payment via Stripe; no cash.',
+      es: '✓ Cancelas gratis hasta 24 h antes y te devolvemos todo. Si el puerto cierra por lluvia, eliges otra fecha o el reembolso. Pagas con tarjeta en Stripe; nada en efectivo.',
+      fr: '✓ Annulation gratuite jusqu’à 24 h avant, remboursement intégral. Si le port ferme à cause de la météo, choisissez une autre date ou le remboursement. Paiement par carte via Stripe ; pas d’espèces.',
+      pt: '✓ Cancelamento grátis até 24 h antes, reembolso total. Se o porto fechar pelo tempo, você escolhe outra data ou o reembolso. Pagamento com cartão pela Stripe; nada em dinheiro.',
+      de: '✓ Kostenlose Stornierung bis 24 h vorher, volle Erstattung. Schließt der Hafen wegen des Wetters, wählen Sie ein neues Datum oder Ihr Geld zurück. Kartenzahlung über Stripe; kein Bargeld.',
+      it: '✓ Cancellazione gratuita fino a 24 h prima, rimborso completo. Se il porto chiude per il maltempo, scegli un’altra data o il rimborso. Pagamento con carta tramite Stripe; niente contanti.',
+      pl: '✓ Bezpłatne anulowanie do 24 h przed, pełny zwrot. Jeśli port zamkną z powodu pogody, wybierasz inny termin albo zwrot pieniędzy. Płatność kartą przez Stripe; bez gotówki.' }[lg(L)];
+    if (AS && !fm.querySelector('.bk-assure')) {
+      var asP = document.createElement('p'); asP.className = 'bk-assure'; asP.textContent = AS;
+      payB.parentNode.insertBefore(asP, payB); s2.splice(s2.indexOf(payB), 0, asP);
+    }
     if (fm.hasAttribute('data-one')) { fm.classList.add('st2'); kbFit(fm, payB); return; } // todo a la vista (landing "mañana")
     // paso 2 (Clarity 18–24 nov): 15 de 22 se fueron del paso 2 y solo 3 dejaron correo → sin forma de recuperarlos.
     // El correo va primero (antes de la recogida): así el aviso "tu reserva sigue guardada" llega a más gente. Carlos 25-nov.
