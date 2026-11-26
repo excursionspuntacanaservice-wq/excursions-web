@@ -20,7 +20,14 @@
 
 ## Tour de Santo Domingo (día completo)
 - Precio: 75 USD por adulto, 37.50 USD por niño de 5 a 8 años, gratis de 0 a 4 años. Cap Cana y Uvero Alto: 85 / 42.50 USD, mínimo 4 personas.
-- Incluye: recogida y regreso al hotel, transporte, guía y almuerzo. Zona Colonial a pie, Catedral Primada de América y Alcázar de Colón.
+- Incluye: recogida y regreso al hotel, transporte, guía y almuerzo. Unas 2 h 45 min de carretera por trayecto; regreso al hotel alrededor de las 6 PM. Zona Colonial a pie, Catedral Primada de América y Alcázar de Colón.
+
+## Samaná y Cayo Levantado (día completo)
+- Precio: 110 USD por adulto (9 años o más), 55 USD por niño de 5 a 8 años, gratis de 0 a 4 años. Recogida en hoteles de Punta Cana y Bávaro.
+- Recorrido: hacia Miches, barco desde La Cañita a la península de Samaná, camión safari, paseo a caballo al Salto del Limón, almuerzo típico dominicano, catamarán a Cayo Levantado (cerca de 1 h 30 min en la isla) y regreso al hotel.
+- Incluye: transporte ida y vuelta, guía en tu idioma, camión safari, paseos en barco, caballo al Salto del Limón, almuerzo y Cayo Levantado. No incluye propinas.
+- Recogida temprano en la mañana; la hora exacta se confirma el día antes. Se reserva por WhatsApp +1 829 962 1705 y se paga con link seguro de Stripe.
+- Página: https://excursionspuntacana.net/es/tour-samana-precio.html (English: https://excursionspuntacana.net/samana-tour-price.html)
 
 ## Snorkel en catamarán (3 horas, costa de Bávaro)
 - Precio: 75 USD por adulto (13 años o más), 37.50 USD por niño de 2 a 12 años, gratis menores de 2.
