@@ -212,6 +212,17 @@
     var fMonth = new Intl.DateTimeFormat(loc, { month: 'long', year: 'numeric' });
     var fLong = new Intl.DateTimeFormat(loc, { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' });
     var fFull = new Intl.DateTimeFormat(loc, { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+    // Días de operación (Carlos 27-nov): Samaná no sale en domingo; Santo Domingo el lunes es la versión panorámica.
+    var slugEl = root.closest('[data-slug]'), slug = slugEl ? slugEl.dataset.slug : (location.pathname.split('/').pop() || '');
+    var isSam = /saman/i.test(slug), isSD = /santo-domingo/i.test(slug);
+    var PAN = { es: 'Los lunes el tour de Santo Domingo es panorámico.', fr: 'Le lundi, le tour de Saint-Domingue est panoramique.', pt: 'Às segundas, o tour de Santo Domingo é panorâmico.',
+      de: 'Montags ist die Santo-Domingo-Tour eine Panoramatour.', it: 'Il lunedì il tour di Santo Domingo è panoramico.', pl: 'W poniedziałki wycieczka do Santo Domingo jest panoramiczna.' }[lg(L)] || 'On Mondays the Santo Domingo tour is the panoramic version.';
+    var panEl = null;
+    function dayNote(d) {
+      if (!isSD || !btn) return;
+      if (!panEl) { panEl = document.createElement('p'); panEl.className = 'dp-cut dp-pan'; btn.parentNode.insertBefore(panEl, btn.nextSibling); }
+      panEl.textContent = d && d.getDay() === 1 ? PAN : ''; panEl.hidden = !(d && d.getDay() === 1);
+    }
     var fWd = new Intl.DateTimeFormat(loc, { weekday: 'narrow' });
     function same(a, b) { return a && b && a.getFullYear() === b.getFullYear() && a.getMonth() === b.getMonth() && a.getDate() === b.getDate(); }
     function render() {
@@ -224,7 +235,7 @@
       var first = new Date(y, m, 1), lead = (first.getDay() - weekStart + 7) % 7, days = new Date(y, m + 1, 0).getDate();
       for (i = 0; i < lead; i++) h += '<span></span>';
       for (var d = 1; d <= days; d++) {
-        var dt = new Date(y, m, d), off = dt < min || dt > max;
+        var dt = new Date(y, m, d), off = dt < min || dt > max || (isSam && dt.getDay() === 0);
         h += '<button type="button" class="dp-d' + (same(dt, sel) ? ' on' : '') + '" data-d="' + iso(dt) + '" tabindex="' + (same(dt, focusDay) ? '0' : '-1') + '"' +
           (off ? ' disabled' : '') + (same(dt, sel) ? ' aria-pressed="true"' : '') + ' aria-label="' + fFull.format(dt) + '">' + d + '</button>';
       }
@@ -239,7 +250,7 @@
       var f = $('.dp-d[tabindex="0"]:not([disabled])', pop) || $('.dp-d:not([disabled])', pop); if (f) f.focus(); }
     function close(refocus) { if (pop.hidden) return; pop.hidden = true; btn.setAttribute('aria-expanded', 'false'); if (refocus) btn.focus(); }
     function pick(s) { var p = s.split('-'); sel = new Date(+p[0], +p[1] - 1, +p[2]); input.value = s; val.textContent = fLong.format(sel); root.classList.add('has');
-      btn.setAttribute('aria-invalid', 'false'); close(true); syncQ(s); onPick(); }
+      btn.setAttribute('aria-invalid', 'false'); close(true); syncQ(s); dayNote(sel); onPick(); }
     // atajos "Mañana · dom 22 nov" / "Pasado mañana · lun 23 nov" (21-nov, P4): salen de firstDay(), así que pasadas
     // las 10 PM RD (CUTOFF_H) el primero ya es pasado mañana. Debajo, el corte dicho antes de que pase.
     var qd = null, fQ = new Intl.DateTimeFormat(loc, { weekday: 'short', day: 'numeric', month: 'short' });
