@@ -690,6 +690,17 @@
     var s1 = [$('.fld.dp', fm), $('.row2', fm), $('.bk-veh', fm)].filter(Boolean);
     var s2 = [$('.pk-shift', fm), $('.pk-sel', fm), $('[name=name]', fm) && $('[name=name]', fm).closest('.fld'), $('[name=whatsapp]', fm) && $('[name=whatsapp]', fm).closest('.row2'), $('[name=email]', fm) && $('[name=email]', fm).closest('.row2, .fld'), $('.hint', fm), payB].filter(Boolean);
     if (!(dIn && payB && s1.length >= 2 && s2.length >= 4)) return;
+    // paso 2 (Clarity 23–26 nov): el primer campo era un cuadro vacío con solo "Correo"; la mayoría se iba sin escribirlo.
+    // Decimos para qué es (el ticket) y mostramos el formato. Solo cambia el texto del campo.
+    (function () {
+      var em = $('[name=email]', fm), lb = em && em.id ? $('label[for="' + em.id + '"]', fm) : null; if (!em) return;
+      var EM = { en: ['Email (your ticket goes here)', 'you@email.com'], es: ['Correo (ahí te llega tu ticket)', 'tu@correo.com'],
+        fr: ['E-mail (pour recevoir votre billet)', 'vous@email.com'], pt: ['E-mail (seu ticket chega aqui)', 'voce@email.com'],
+        de: ['E-Mail (hierhin kommt Ihr Ticket)', 'sie@email.de'], it: ['Email (qui ti arriva il biglietto)', 'tu@email.it'],
+        pl: ['E-mail (tu wyślemy bilet)', 'ty@email.com'] }[lg(L)] || ['Email (your ticket goes here)', 'you@email.com'];
+      if (lb) lb.textContent = EM[0]; if (!em.placeholder) em.placeholder = EM[1];
+      em.setAttribute('inputmode', 'email'); em.setAttribute('autocapitalize', 'off'); em.setAttribute('spellcheck', 'false');
+    })();
     // paso 2 (Clarity 23-nov): quien llega al pago abre las preguntas de cancelación, lluvia y pago seguro y se va sin volver.
     // Cancelación y pago seguro ya están bajo el botón (.bk-notes / .bk-trust); faltaba la lluvia. Mismo texto que las FAQ.
     var WX = { en: 'Bad weather? If we cancel, you pick a new date or a full refund.', es: '¿Mal tiempo? Si cancelamos, eliges otra fecha o el reembolso completo.',
